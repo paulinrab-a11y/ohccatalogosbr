@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+      <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#e9eef6"/></linearGradient></defs>
+      <rect width="1200" height="900" rx="22" fill="url(#bg)"/>
+      <rect x="58" y="55" width="1084" height="790" rx="24" fill="none" stroke="#d8dde7" stroke-width="3"/>
+      <text x="92" y="118" font-family="Arial, sans-serif" font-size="64" font-weight="800" fill="#214fa1">OHC</text>
+      <text x="94" y="154" font-family="Arial, sans-serif" font-size="25" font-weight="800" fill="#e3111b">MOTORS</text>
+      <g transform="translate(105 115)">
+          <path d="M22 137 C38 71 99 33 205 27 C282 22 346 43 372 91 C386 117 373 149 344 163 C283 193 151 196 55 168 C34 162 17 154 22 137Z" fill="#17191c" stroke="#49a8ff" stroke-width="8"/>
+          <path d="M70 140 C112 91 185 72 309 78" fill="none" stroke="#ffffff" stroke-width="15" stroke-linecap="round"/>
+          <path d="M102 150 C145 119 206 108 326 111" fill="none" stroke="#49a8ff" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="318" cy="137" r="14" fill="#ffffff"/>
+        </g>
+      <text x="600" y="535" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" font-weight="800" fill="#16191d">Farol BMW G20 — Laser Pro M340i</text>
+      <text x="600" y="590" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#49a8ff">Laser LED</text>
+      <text x="600" y="642" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#4b5563">BMW Série 3 G20 / M340i</text>
+      <rect x="415" y="694" width="370" height="62" rx="31" fill="#101113"/>
+      <text x="600" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#ffffff">SKU F01.00003</text>
+      <text x="600" y="810" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#7a818b">Imagem ilustrativa da categoria · substituir pela foto original quando disponível</text>
+    </svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+      <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#e9eef6"/></linearGradient></defs>
+      <rect width="1200" height="900" rx="22" fill="url(#bg)"/>
+      <rect x="58" y="55" width="1084" height="790" rx="24" fill="none" stroke="#d8dde7" stroke-width="3"/>
+      <text x="92" y="118" font-family="Arial, sans-serif" font-size="64" font-weight="800" fill="#214fa1">OHC</text>
+      <text x="94" y="154" font-family="Arial, sans-serif" font-size="25" font-weight="800" fill="#e3111b">MOTORS</text>
+      <g transform="translate(112 122)">
+          <path d="M20 120 C45 45 145 12 310 38 C345 44 370 77 363 113 C357 148 329 171 292 176 C184 192 98 183 42 160 C23 152 13 139 20 120Z" fill="#17191c" stroke="#e3111b" stroke-width="8"/>
+          <path d="M65 128 C102 77 180 59 298 71" fill="none" stroke="#e3111b" stroke-width="18" stroke-linecap="round"/>
+          <path d="M95 145 C147 108 216 96 310 101" fill="none" stroke="#ff7a23" stroke-width="8" stroke-linecap="round" opacity=".95"/>
+          <circle cx="315" cy="127" r="17" fill="#e3111b"/>
+        </g>
+      <text x="600" y="535" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" font-weight="800" fill="#16191d">Par de Lanternas Traseiras — Modelo M4 CS</text>
+      <text x="600" y="590" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#e3111b">LED sequencial</text>
+      <text x="600" y="642" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#4b5563">BMW 320/328 F30 (2013–2018)</text>
+      <rect x="415" y="694" width="370" height="62" rx="31" fill="#101113"/>
+      <text x="600" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#ffffff">SKU L01.00006</text>
+      <text x="600" y="810" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#7a818b">Imagem ilustrativa da categoria · substituir pela foto original quando disponível</text>
+    </svg>

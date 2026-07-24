@@ -1,0 +1,1200 @@
+[
+  {
+    "marca": "Audi",
+    "modelo": "Audi B9 - Couro",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro"
+    ],
+    "sku": "1.02.A01.00019",
+    "imagens": [
+      "imagens/audi-audi-b9-couro-1.webp",
+      "imagens/audi-audi-b9-couro-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "A01.00019"
+    ]
+  },
+  {
+    "marca": "Audi",
+    "modelo": "Audi R8 - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.02.A01.00003",
+    "imagens": [
+      "imagens/audi-audi-r8-carbono-1.webp",
+      "imagens/audi-audi-r8-carbono-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "A01.00003"
+    ]
+  },
+  {
+    "marca": "Audi",
+    "modelo": "Audi R8 - Couro",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro"
+    ],
+    "sku": "1.02.A01.00005",
+    "imagens": [
+      "imagens/audi-audi-r8-couro-1.webp",
+      "imagens/audi-audi-r8-couro-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "A01.00005"
+    ]
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW M3 15ª geração — Alcântara & Carbono Shift Light",
+    "material": "Alcântara e fibra de carbono com Shift Light",
+    "cor": "Preto / Carbono / Alcântara",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Alcântara",
+      "Fibra de carbono",
+      "Shift Light"
+    ],
+    "sku": "3.02.B02.00125",
+    "imagens": [
+      "imagens/bmw-bmw-alcantara-carbono-shift-light-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "BMW M3 15ª geração — confirmar formato e encaixe pelo SKU",
+    "descricao": "Volante BMW M3 em Alcântara e fibra de carbono com Shift Light. SKU confirmado: 3.02.B02.00125."
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW - Alcântara Shift Light",
+    "material": "Alcântara com Shift Light",
+    "cor": "Preto / Alcântara",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Alcântara",
+      "Shift Light"
+    ],
+    "sku": "3.02.B02.00144",
+    "imagens": [
+      "imagens/bmw-bmw-alcantara-shift-light-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW - Base Reta em Couro",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro",
+      "Base reta"
+    ],
+    "sku": "B02.00090",
+    "imagens": [
+      "imagens/bmw-bmw-base-reta-em-couro-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW CS 24ª geração — Chassi G",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro",
+      "Base esportiva"
+    ],
+    "sku": "1.02.B02.00065",
+    "compatibilidade": "BMW CS 24ª geração adaptado ao chassi G",
+    "imagens": [
+      "imagens/extra-1-02-b02-00065-bmw-cs-24a-geracao-chassi-g.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "descricao": "Modelo adicional localizado na base de produtos da OHC Motors."
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW E60 - Pré-Set/2005",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro"
+    ],
+    "sku": "1.02.B02.00058",
+    "imagens": [
+      "imagens/bmw-bmw-e60-pre-set-2005-1.webp",
+      "imagens/bmw-bmw-e60-pre-set-2005-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B02.00058"
+    ]
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW E60 - Pós-Set/2005",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro"
+    ],
+    "sku": "1.02.B02.00022",
+    "imagens": [
+      "imagens/bmw-bmw-e60-pos-set-2005-1.webp",
+      "imagens/bmw-bmw-e60-pos-set-2005-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B02.00022"
+    ]
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW M3 - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.02.B02.00062",
+    "imagens": [
+      "imagens/bmw-bmw-m3-carbono-1.webp",
+      "imagens/bmw-bmw-m3-carbono-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B02.00062"
+    ]
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW M3 15ª geração — Couro Aro Redondo",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro",
+      "Aro redondo"
+    ],
+    "sku": "1.02.B02.00008",
+    "imagens": [
+      "imagens/bmw-bmw-m3-couro-1.webp",
+      "imagens/bmw-bmw-m3-couro-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "BMW M3 15ª geração — aro redondo",
+    "descricao": "Variação BMW M3 em couro com aro totalmente redondo. Produto distinto das versões de base reta.",
+    "sku_aliases": [
+      "B02.00008"
+    ]
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW M3 - Smart",
+    "material": "Fibra de carbono com display LED",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Shift Light",
+      "Display digital"
+    ],
+    "sku": "1.02.B02.00002",
+    "imagens": [
+      "imagens/bmw-bmw-m3-smart-1.webp",
+      "imagens/bmw-bmw-m3-smart-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B02.00002"
+    ]
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW M3 15ª geração — Couro Base Reta",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro",
+      "Base reta"
+    ],
+    "sku": "1.02.B02.00076",
+    "compatibilidade": "BMW M3 15ª geração — base reta",
+    "imagens": [
+      "imagens/extra-1-02-b02-00076-bmw-m3-15a-geracao-couro.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "descricao": "Variação BMW M3 em couro com desenho esportivo de base reta. Produto distinto da versão de aro redondo."
+  },
+  {
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "marca": "BMW",
+    "modelo": "BMW M3 15ª geração — Carbono e Couro com Shift Light (Base Reta)",
+    "material": "Fibra de carbono e couro perfurado com Shift Light",
+    "cor": "Preto / Carbono",
+    "compatibilidade": "BMW M3 15ª geração — confirmar encaixe e comandos pelo SKU 3.02.B02.00002",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Couro perfurado",
+      "Base reta",
+      "Shift Light",
+      "Display digital"
+    ],
+    "sku": "3.02.B02.00002",
+    "imagens": [
+      "imagens/bmw-m3-carbono-couro-shift-light-base-reta-3-02-b02-00002.webp"
+    ],
+    "descricao": "Volante BMW M3 com base reta, acabamento em fibra de carbono nas partes superior e inferior, laterais em couro perfurado e sistema Shift Light com display digital. Produto distinto do SKU 3.02.B02.00125."
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW M5 - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.02.B02.00061",
+    "imagens": [
+      "imagens/bmw-bmw-m5-carbono-1.webp",
+      "imagens/bmw-bmw-m5-carbono-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B02.00061"
+    ]
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW M5 - Couro",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro"
+    ],
+    "sku": "1.02.B02.00007",
+    "imagens": [
+      "imagens/bmw-bmw-m5-couro-1.webp",
+      "imagens/bmw-bmw-m5-couro-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B02.00007"
+    ]
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW M5 - Smart",
+    "material": "Fibra de carbono com display LED",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Shift Light",
+      "Display digital"
+    ],
+    "sku": "1.02.B02.00003",
+    "imagens": [
+      "imagens/bmw-bmw-m5-smart-1.webp",
+      "imagens/bmw-bmw-m5-smart-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B02.00003"
+    ]
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW M5 Chassi G 20ª geração — LED",
+    "material": "Fibra de carbono com display LED",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Shift Light",
+      "Display digital"
+    ],
+    "sku": "1.02.B02.00040",
+    "compatibilidade": "BMW M5 com chassi G — volante de 20ª geração",
+    "imagens": [
+      "imagens/extra-1-02-b02-00040-bmw-m5-chassi-g-20a-geracao-led.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "descricao": "Modelo adicional localizado na base de produtos da OHC Motors."
+  },
+  {
+    "marca": "Ford",
+    "modelo": "Ford Mustang - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.01.F02.00041",
+    "imagens": [
+      "imagens/ford-ford-mustang-carbono-1.webp",
+      "imagens/ford-ford-mustang-carbono-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "F02.00041"
+    ]
+  },
+  {
+    "marca": "Hyundai",
+    "modelo": "Hyundai Elantra GT - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.01.X01.00004",
+    "imagens": [
+      "imagens/hyundai-hyundai-elantra-gt-carbono-1.webp",
+      "imagens/hyundai-hyundai-elantra-gt-carbono-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "X01.00004"
+    ]
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG - Carbono com Shift Light",
+    "material": "Fibra de carbono com Shift Light",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Shift Light"
+    ],
+    "sku": "B01.00070",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-carbono-com-shift-light-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG 809 - Carbono (CAN)",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Protocolo CAN"
+    ],
+    "sku": "1.02.B01.00044",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-809-carbono-can-1.webp",
+      "imagens/mercedes-benz-mercedes-amg-809-carbono-can-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B01.00044"
+    ]
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG 809 — Carbono LIN Base Reta",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Protocolo LIN",
+      "Base reta"
+    ],
+    "sku": "1.02.B01.00046",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-809-carbono-lin-1.webp",
+      "imagens/mercedes-benz-mercedes-amg-809-carbono-lin-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Mercedes AMG 809 — protocolo LIN, base reta",
+    "descricao": "Volante Mercedes AMG 809 em carbono, protocolo LIN e desenho de base reta.",
+    "sku_aliases": [
+      "B01.00046"
+    ]
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG 809 - Couro (CAN)",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro",
+      "Protocolo CAN"
+    ],
+    "sku": "1.02.B01.00054",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-809-couro-can-1.webp",
+      "imagens/mercedes-benz-mercedes-amg-809-couro-can-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B01.00054"
+    ]
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG 809 - Couro (LIN)",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro",
+      "Protocolo LIN"
+    ],
+    "sku": "1.02.B01.00056",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-809-couro-lin-1.webp",
+      "imagens/mercedes-benz-mercedes-amg-809-couro-lin-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B01.00056"
+    ]
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG 809 — Carbono/G LIN Aro Redondo",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Protocolo LIN",
+      "Aro redondo"
+    ],
+    "sku": "1.02.B01.00061",
+    "compatibilidade": "Mercedes AMG 809 — protocolo LIN, aro redondo",
+    "imagens": [
+      "imagens/extra-1-02-b01-00061-mercedes-amg-809-carbono-g-lin.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "descricao": "Volante Mercedes AMG 809 em carbono/G, protocolo LIN e formato de aro redondo. Produto distinto do modelo de base reta."
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG Classe E - Carbono (CAN)",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Protocolo CAN"
+    ],
+    "sku": "1.02.B01.00036",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-classe-e-carbono-can-1.webp",
+      "imagens/mercedes-benz-mercedes-amg-classe-e-carbono-can-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B01.00036"
+    ]
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG Classe E - Carbono (LIN)",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Protocolo LIN"
+    ],
+    "sku": "1.02.B01.00031",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-classe-e-carbono-lin-1.webp",
+      "imagens/mercedes-benz-mercedes-amg-classe-e-carbono-lin-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B01.00031"
+    ]
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG Classe E - Couro (CAN)",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro",
+      "Protocolo CAN"
+    ],
+    "sku": "1.02.B01.00035",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-classe-e-couro-can-1.webp",
+      "imagens/mercedes-benz-mercedes-amg-classe-e-couro-can-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B01.00035"
+    ]
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG Classe E - Couro (LIN)",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro",
+      "Protocolo LIN"
+    ],
+    "sku": "1.02.B01.00030",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-classe-e-couro-lin-1.webp",
+      "imagens/mercedes-benz-mercedes-amg-classe-e-couro-lin-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B01.00030"
+    ]
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes AMG Classe E 21ª geração — LED LINK",
+    "material": "Fibra de carbono com Shift Light",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Shift Light",
+      "Fio LINK"
+    ],
+    "sku": "1.02.B01.00032",
+    "compatibilidade": "Mercedes AMG Classe E — volante de 21ª geração",
+    "imagens": [
+      "imagens/extra-1-02-b01-00032-mercedes-amg-classe-e-21a-geracao-led-link.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "descricao": "Modelo adicional localizado na base de produtos da OHC Motors."
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes-AMG - Carbono All Black",
+    "material": "Fibra de carbono",
+    "cor": "All Black",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "All Black"
+    ],
+    "sku": "3.02.B01.00064",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-carbono-all-black-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes-AMG - Carbono Shift Light Vermelho",
+    "material": "Fibra de carbono com Shift Light e detalhes em vermelho",
+    "cor": "Preto / Carbono / Vermelho",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Shift Light",
+      "Detalhes em vermelho"
+    ],
+    "sku": "1.02.B01.00041",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-carbono-shift-light-vermelho-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
+  },
+  {
+    "marca": "Mitsubishi",
+    "modelo": "Mitsubishi EVO - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.01.S02.00002",
+    "imagens": [
+      "imagens/mitsubishi-mitsubishi-evo-carbono-1.webp",
+      "imagens/mitsubishi-mitsubishi-evo-carbono-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "S02.00002"
+    ]
+  },
+  {
+    "marca": "Porsche",
+    "modelo": "Porsche - Carbono Shift Light",
+    "material": "Fibra de carbono com Shift Light",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Shift Light"
+    ],
+    "sku": "3.02.B08.00017",
+    "imagens": [
+      "imagens/porsche-porsche-carbono-shift-light-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
+  },
+  {
+    "marca": "Porsche",
+    "modelo": "Porsche 718 18ª geração — Couro",
+    "material": "Couro",
+    "cor": "Preto / Detalhes prateados",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro"
+    ],
+    "sku": "1.02.B08.00007",
+    "compatibilidade": "Porsche 718 — volante de 18ª geração",
+    "imagens": [
+      "imagens/extra-1-02-b08-00007-porsche-718-18a-geracao-couro.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "descricao": "Modelo adicional localizado na base de produtos da OHC Motors."
+  },
+  {
+    "marca": "Porsche",
+    "modelo": "Porsche 718 18ª geração — Couro Black",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro",
+      "Acabamento Black"
+    ],
+    "sku": "1.02.B08.00011",
+    "compatibilidade": "Porsche 718 — volante de 18ª geração",
+    "imagens": [
+      "imagens/extra-1-02-b08-00011-porsche-718-18a-geracao-couro-black.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "descricao": "Modelo adicional localizado na base de produtos da OHC Motors."
+  },
+  {
+    "marca": "Porsche",
+    "modelo": "Porsche 911 - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.02.B08.00020",
+    "imagens": [
+      "imagens/porsche-porsche-911-carbono-1.webp",
+      "imagens/porsche-porsche-911-carbono-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B08.00020"
+    ]
+  },
+  {
+    "marca": "Porsche",
+    "modelo": "Porsche 911 - Couro",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro"
+    ],
+    "sku": "1.02.B08.00019",
+    "imagens": [
+      "imagens/porsche-porsche-911-couro-1.webp",
+      "imagens/porsche-porsche-911-couro-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "B08.00019"
+    ]
+  },
+  {
+    "marca": "Volkswagen",
+    "modelo": "Volkswagen CC - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.01.D01.00015",
+    "imagens": [
+      "imagens/volkswagen-volkswagen-cc-carbono-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "D01.00015"
+    ]
+  },
+  {
+    "marca": "Volkswagen",
+    "modelo": "Volkswagen Golf GTI - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.02.D01.00009",
+    "imagens": [
+      "imagens/volkswagen-volkswagen-golf-gti-carbono-1.webp",
+      "imagens/volkswagen-volkswagen-golf-gti-carbono-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "D01.00009"
+    ]
+  },
+  {
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "marca": "Volkswagen",
+    "modelo": "Volkswagen Golf GTI 2015 — Carbono com Luz Branca",
+    "material": "Fibra de carbono com iluminação branca",
+    "cor": "Preto / Carbono",
+    "compatibilidade": "Volkswagen Golf GTI — modelo 2015",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Luz branca"
+    ],
+    "sku": "1.01.D01.00009",
+    "imagens": [
+      "imagens/extra-1-01-d01-00009-golf-gti-luz-branca.webp"
+    ],
+    "descricao": "Configuração adicional do Golf GTI encontrada na base de produtos."
+  },
+  {
+    "marca": "Volkswagen",
+    "modelo": "Volkswagen Linha Completa - Couro",
+    "material": "Couro",
+    "cor": "Preto",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Couro"
+    ],
+    "sku": "1.02.D01.00011",
+    "imagens": [
+      "imagens/volkswagen-volkswagen-linha-completa-couro-1.webp",
+      "imagens/volkswagen-volkswagen-linha-completa-couro-2.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "D01.00011"
+    ]
+  },
+  {
+    "marca": "Volkswagen",
+    "modelo": "Volkswagen Passat - Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono"
+    ],
+    "sku": "1.01.D01.00013",
+    "imagens": [
+      "imagens/volkswagen-volkswagen-passat-carbono-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "sku_aliases": [
+      "D01.00013"
+    ]
+  },
+  {
+    "sku": "F01.00001",
+    "tipo": "Farol",
+    "marca": "BMW",
+    "modelo": "Farol BMW F30 320i / 328",
+    "material": "Full LED + DRL",
+    "cor": "Black Housing",
+    "compatibilidade": "BMW Série 3 F30 320i/328 (2013–2018)",
+    "recursos": [
+      "Full LED",
+      "DRL em L",
+      "Pisca sequencial"
+    ],
+    "categoria": "Faróis & Lanternas",
+    "descricao": "Produto listado no catálogo digital de iluminação da OHC Motors.",
+    "imagens": [
+      "imagens/ilustracao-f01-00001.svg"
+    ],
+    "imagem_ilustrativa": true
+  },
+  {
+    "sku": "F01.00002",
+    "tipo": "Farol",
+    "marca": "BMW",
+    "modelo": "Farol BMW F30 — Angel Eyes",
+    "material": "Bi-Xenon / LED",
+    "cor": "Black Housing",
+    "compatibilidade": "BMW Série 3 F30/F31",
+    "recursos": [
+      "Angel Eyes",
+      "Bi-projetor",
+      "DRL"
+    ],
+    "categoria": "Faróis & Lanternas",
+    "descricao": "Produto listado no catálogo digital de iluminação da OHC Motors.",
+    "imagens": [
+      "imagens/ilustracao-f01-00002.svg"
+    ],
+    "imagem_ilustrativa": true
+  },
+  {
+    "sku": "F01.00003",
+    "tipo": "Farol",
+    "marca": "BMW",
+    "modelo": "Farol BMW G20 — Laser Pro M340i",
+    "material": "Laser LED",
+    "cor": "Black Housing",
+    "compatibilidade": "BMW Série 3 G20 / M340i",
+    "recursos": [
+      "Laser LED branco",
+      "DRL Icon",
+      "Pisca sequencial"
+    ],
+    "categoria": "Faróis & Lanternas",
+    "descricao": "Produto listado no catálogo digital de iluminação da OHC Motors.",
+    "imagens": [
+      "imagens/ilustracao-f01-00003.svg"
+    ],
+    "imagem_ilustrativa": true
+  },
+  {
+    "sku": "L01.00003",
+    "tipo": "Lanterna",
+    "marca": "BMW",
+    "modelo": "Lanterna BMW F30 — LCI Original",
+    "material": "LED",
+    "cor": "Vermelho",
+    "compatibilidade": "BMW Série 3 F30/F31 (LCI)",
+    "recursos": [
+      "Estilo LCI",
+      "Pisca sequencial",
+      "Par traseiro"
+    ],
+    "categoria": "Faróis & Lanternas",
+    "descricao": "Produto listado no catálogo digital de iluminação da OHC Motors.",
+    "imagens": [
+      "imagens/ilustracao-l01-00003.svg"
+    ],
+    "imagem_ilustrativa": true
+  },
+  {
+    "sku": "L01.00002",
+    "tipo": "Lanterna",
+    "marca": "BMW",
+    "modelo": "Lanterna BMW F32 — Vermelha M4 Style",
+    "material": "LED",
+    "cor": "Vermelho cristal",
+    "compatibilidade": "BMW Série 4 F32",
+    "recursos": [
+      "Estilo M4",
+      "Pisca sequencial",
+      "Par traseiro"
+    ],
+    "categoria": "Faróis & Lanternas",
+    "descricao": "Produto listado no catálogo digital de iluminação da OHC Motors.",
+    "imagens": [
+      "imagens/ilustracao-l01-00002.svg"
+    ],
+    "imagem_ilustrativa": true
+  },
+  {
+    "sku": "L01.00004",
+    "tipo": "Lanterna",
+    "marca": "BMW",
+    "modelo": "Lanterna BMW G28 — Dragon Scale",
+    "material": "LED sequencial",
+    "cor": "Smoked / Black",
+    "compatibilidade": "BMW Série 3 G20/G28 (2019–2022)",
+    "recursos": [
+      "LED dinâmico",
+      "Pisca sequencial",
+      "Dragon Scale"
+    ],
+    "categoria": "Faróis & Lanternas",
+    "descricao": "Produto listado no catálogo digital de iluminação da OHC Motors.",
+    "imagens": [
+      "imagens/ilustracao-l01-00004.svg"
+    ],
+    "imagem_ilustrativa": true
+  },
+  {
+    "sku": "L01.00001",
+    "tipo": "Lanterna",
+    "marca": "BMW",
+    "modelo": "Lanterna BMW X3 — G08",
+    "material": "LED sequencial",
+    "cor": "Smoked / Vermelho",
+    "compatibilidade": "BMW X3 G08 (2018–2021)",
+    "recursos": [
+      "LED dinâmico",
+      "Pisca sequencial",
+      "Par traseiro"
+    ],
+    "categoria": "Faróis & Lanternas",
+    "descricao": "Produto listado no catálogo digital de iluminação da OHC Motors.",
+    "imagens": [
+      "imagens/ilustracao-l01-00001.svg"
+    ],
+    "imagem_ilustrativa": true
+  },
+  {
+    "sku": "L01.00005",
+    "tipo": "Lanterna",
+    "marca": "BMW",
+    "modelo": "Lanterna Dragon Scale F32",
+    "material": "LED",
+    "cor": "Vermelho",
+    "compatibilidade": "BMW Série 3 F30 320/328 (2013–2018)",
+    "recursos": [
+      "Dragon Scale",
+      "Pisca sequencial",
+      "Par traseiro"
+    ],
+    "categoria": "Faróis & Lanternas",
+    "descricao": "Produto listado no catálogo digital de iluminação da OHC Motors.",
+    "imagens": [
+      "imagens/ilustracao-l01-00005.svg"
+    ],
+    "imagem_ilustrativa": true
+  },
+  {
+    "sku": "L01.00006",
+    "tipo": "Lanterna",
+    "marca": "BMW",
+    "modelo": "Par de Lanternas Traseiras — Modelo M4 CS",
+    "material": "LED sequencial",
+    "cor": "Vermelho cristal",
+    "compatibilidade": "BMW 320/328 F30 (2013–2018)",
+    "recursos": [
+      "LED dinâmico",
+      "Modelo M4 CS",
+      "Pisca sequencial"
+    ],
+    "categoria": "Faróis & Lanternas",
+    "descricao": "Produto listado no catálogo digital de iluminação da OHC Motors.",
+    "imagens": [
+      "imagens/ilustracao-l01-00006.svg"
+    ],
+    "imagem_ilustrativa": true
+  },
+  {
+    "marca": "BMW",
+    "modelo": "BMW - Acabamento em Fibra de Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "recursos": [
+      "Acabamento em fibra de carbono"
+    ],
+    "sku": "B02.00500",
+    "imagens": [
+      "imagens/bmw-bmw-acabamento-em-fibra-de-carbono-1.webp"
+    ],
+    "categoria": "Acessórios",
+    "tipo": "Acabamento",
+    "compatibilidade": "BMW Série F / M3 — confirmar acabamento e encaixe",
+    "descricao": "Acabamento central decorativo em fibra de carbono para volante BMW."
+  },
+  {
+    "categoria": "Acessórios",
+    "tipo": "Paddle Shift",
+    "marca": "BMW",
+    "modelo": "Paddle Shift BMW em Fibra de Carbono",
+    "material": "Fibra de carbono",
+    "cor": "Preto / Carbono",
+    "compatibilidade": "Volantes BMW compatíveis — confirmar encaixe pelo veículo",
+    "recursos": [
+      "Par de aletas",
+      "Fibra de carbono",
+      "Acabamento esportivo"
+    ],
+    "sku": "1.10.B02.20007",
+    "imagens": [
+      "imagens/acessorio-bmw-paddle-carbono.webp"
+    ],
+    "descricao": "Par de aletas Paddle Shift em fibra de carbono."
+  }
+]
