@@ -388,8 +388,8 @@ function ProductModal({ p, onClose }: { p: Produto; onClose: () => void }) {
         <div className="grid gap-6 p-6 md:grid-cols-2">
           <div className="flex flex-col gap-3">
             {p.imagens.map((img, i) => (
-              <div key={i} className="overflow-hidden rounded-md border border-border bg-secondary">
-                <img src={`/${img}`} alt={`${p.modelo} ${i + 1}`} className="h-full w-full object-cover" />
+              <div key={i} className="aspect-square overflow-hidden rounded-md border border-border bg-white">
+                <img src={`/${img}`} alt={`${p.modelo} ${i + 1}`} className="h-full w-full object-contain p-4" />
               </div>
             ))}
           </div>
