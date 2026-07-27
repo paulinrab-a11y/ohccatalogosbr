@@ -361,7 +361,7 @@ function ProductCard({ p, onOpen }: { p: Produto; onOpen: () => void }) {
         </div>
         <div className="line-clamp-2 text-sm font-bold leading-snug">{p.modelo}</div>
         <div className="mt-auto flex items-center justify-between pt-2 text-[11px] text-muted-foreground">
-          <span className="font-mono">{p.sku}</span>
+          <span className="font-mono">{p.sku || "SKU não informado"}</span>
           <span className="font-bold text-primary">Ver detalhes →</span>
         </div>
       </div>
@@ -399,7 +399,7 @@ function ProductModal({ p, onClose }: { p: Produto; onClose: () => void }) {
                 {p.marca} · {p.categoria}
               </div>
               <h3 className="mt-2 font-display text-3xl leading-tight tracking-wide">{p.modelo}</h3>
-              <div className="mt-1 font-mono text-xs text-muted-foreground">SKU: {p.sku}</div>
+              <div className="mt-1 font-mono text-xs text-muted-foreground">SKU: {p.sku || "não informado"}</div>
             </div>
 
             <p className="text-sm text-muted-foreground">{p.descricao}</p>
