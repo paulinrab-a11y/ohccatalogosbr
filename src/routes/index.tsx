@@ -36,8 +36,12 @@ export const Route = createFileRoute("/")({
         content: "Volantes, faróis, lanternas e acessórios premium para carros esportivos e de luxo.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://ohccatalogosbr.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "OHC Motors — Catálogo Master" },
+      { name: "twitter:description", content: "Volantes, faróis, lanternas e acessórios premium para carros esportivos e de luxo." },
     ],
+    links: [{ rel: "canonical", href: "https://ohccatalogosbr.lovable.app/" }],
   }),
   component: Catalog,
 });
