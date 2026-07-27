@@ -70,7 +70,7 @@
   },
   {
     "marca": "BMW",
-    "modelo": "BMW M3 15ª geração — Alcântara & Carbono Shift Light",
+    "modelo": "BMW M3 Alcântara & Carbono Shift Light",
     "material": "Alcântara e fibra de carbono com Shift Light",
     "cor": "Preto / Carbono / Alcântara",
     "recursos": [
@@ -131,7 +131,7 @@
   },
   {
     "marca": "BMW",
-    "modelo": "BMW CS 24ª geração — Chassi G",
+    "modelo": "BMW CS Chassi G",
     "material": "Couro",
     "cor": "Preto",
     "recursos": [
@@ -220,7 +220,7 @@
   },
   {
     "marca": "BMW",
-    "modelo": "BMW M3 15ª geração — Couro Aro Redondo",
+    "modelo": "BMW M3 Couro Aro Redondo",
     "material": "Couro",
     "cor": "Preto",
     "recursos": [
@@ -269,7 +269,7 @@
   },
   {
     "marca": "BMW",
-    "modelo": "BMW M3 15ª geração — Couro Base Reta",
+    "modelo": "BMW M3 Couro Base Reta",
     "material": "Couro",
     "cor": "Preto",
     "recursos": [
@@ -291,7 +291,7 @@
     "categoria": "Volantes",
     "tipo": "Volante",
     "marca": "BMW",
-    "modelo": "BMW M3 15ª geração — Carbono e Couro com Shift Light (Base Reta)",
+    "modelo": "BMW M3 Carbono e Couro com Shift Light (Base Reta)",
     "material": "Fibra de carbono e couro perfurado com Shift Light",
     "cor": "Preto / Carbono",
     "compatibilidade": "BMW M3 15ª geração — confirmar encaixe e comandos pelo SKU 3.02.B02.00002",
@@ -383,7 +383,7 @@
   },
   {
     "marca": "BMW",
-    "modelo": "BMW M5 Chassi G 20ª geração — LED",
+    "modelo": "BMW M5 Chassi G LED",
     "material": "Fibra de carbono com display LED",
     "cor": "Preto / Carbono",
     "recursos": [
@@ -683,7 +683,7 @@
   },
   {
     "marca": "Mercedes-Benz",
-    "modelo": "Mercedes AMG Classe E 21ª geração — LED LINK",
+    "modelo": "Mercedes AMG Classe E LED LINK",
     "material": "Fibra de carbono com Shift Light",
     "cor": "Preto / Carbono",
     "recursos": [
@@ -788,7 +788,7 @@
   },
   {
     "marca": "Porsche",
-    "modelo": "Porsche 718 18ª geração — Couro",
+    "modelo": "Porsche 718 Couro",
     "material": "Couro",
     "cor": "Preto / Detalhes prateados",
     "recursos": [
@@ -807,7 +807,7 @@
   },
   {
     "marca": "Porsche",
-    "modelo": "Porsche 718 18ª geração — Couro Black",
+    "modelo": "Porsche 718 Couro Black",
     "material": "Couro",
     "cor": "Preto",
     "recursos": [
