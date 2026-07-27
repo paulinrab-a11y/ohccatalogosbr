@@ -52,24 +52,39 @@ function whatsappLink(p?: Produto) {
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
 
+const CATEGORIAS = ["Volantes", "Faróis & Lanternas", "Acessórios"] as const;
+
 function Catalog() {
-  const marcas = useMemo(() => ["Todas", ...Array.from(new Set(produtos.map((p) => p.marca))).sort()], []);
-  const categorias = useMemo(() => ["Todas", ...Array.from(new Set(produtos.map((p) => p.categoria)))], []);
+  const marcas = useMemo(
+    () => ["Todas", ...Array.from(new Set(produtos.map((p) => p.marca))).sort((a, b) => a.localeCompare(b, "pt-BR"))],
+    [],
+  );
 
   const [marca, setMarca] = useState("Todas");
-  const [categoria, setCategoria] = useState("Todas");
+  const [categoria, setCategoria] = useState<(typeof CATEGORIAS)[number]>("Volantes");
   const [q, setQ] = useState("");
   const [selected, setSelected] = useState<Produto | null>(null);
 
-  const filtered = produtos.filter((p) => {
-    if (marca !== "Todas" && p.marca !== marca) return false;
-    if (categoria !== "Todas" && p.categoria !== categoria) return false;
-    if (q) {
-      const hay = `${p.marca} ${p.modelo} ${p.sku} ${p.material} ${p.tipo}`.toLowerCase();
-      if (!hay.includes(q.toLowerCase())) return false;
+  const filtered = produtos
+    .filter((p) => {
+      if (p.categoria !== categoria) return false;
+      if (marca !== "Todas" && p.marca !== marca) return false;
+      if (q) {
+        const hay = `${p.marca} ${p.modelo} ${p.sku} ${p.material} ${p.tipo}`.toLowerCase();
+        if (!hay.includes(q.toLowerCase())) return false;
+      }
+      return true;
+    })
+    .sort((a, b) => a.marca.localeCompare(b.marca, "pt-BR") || a.modelo.localeCompare(b.modelo, "pt-BR"));
+
+  const grouped = useMemo(() => {
+    const map = new Map<string, Produto[]>();
+    for (const p of filtered) {
+      if (!map.has(p.marca)) map.set(p.marca, []);
+      map.get(p.marca)!.push(p);
     }
-    return true;
-  });
+    return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b, "pt-BR"));
+  }, [filtered]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
