@@ -130,7 +130,7 @@
   },
   {
     "marca": "BMW",
-    "modelo": "BMW E60 - Pré - Set/2005",
+    "modelo": "BMW E60 Pré-Set/2005",
     "material": "Couro",
     "cor": "Preto",
     "recursos": [
@@ -153,7 +153,7 @@
   },
   {
     "marca": "BMW",
-    "modelo": "BMW E60 - Pós - Set/2005",
+    "modelo": "BMW E60 Pós-Set/2005",
     "material": "Couro",
     "cor": "Preto",
     "recursos": [
@@ -449,47 +449,6 @@
   },
   {
     "marca": "Mercedes-Benz",
-    "modelo": "Mercedes - AMG - Carbono All Black",
-    "material": "Fibra de carbono",
-    "cor": "All Black",
-    "recursos": [
-      "Paddle Shift",
-      "Comando multifuncional",
-      "Fibra de carbono",
-      "All Black"
-    ],
-    "sku": "3.02.B01.00064",
-    "imagens": [
-      "imagens/mercedes-benz-mercedes-amg-carbono-all-black-1.webp"
-    ],
-    "categoria": "Volantes",
-    "tipo": "Volante",
-    "compatibilidade": "Confirmar aplicação pelo SKU",
-    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
-  },
-  {
-    "marca": "Mercedes-Benz",
-    "modelo": "Mercedes - AMG - Carbono Shift Light Vermelho",
-    "material": "Fibra de carbono com Shift Light e detalhes em vermelho",
-    "cor": "Preto / Carbono / Vermelho",
-    "recursos": [
-      "Paddle Shift",
-      "Comando multifuncional",
-      "Fibra de carbono",
-      "Shift Light",
-      "Detalhes em vermelho"
-    ],
-    "sku": "1.02.B01.00041",
-    "imagens": [
-      "imagens/mercedes-benz-mercedes-amg-carbono-shift-light-vermelho-1.webp"
-    ],
-    "categoria": "Volantes",
-    "tipo": "Volante",
-    "compatibilidade": "Confirmar aplicação pelo SKU",
-    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
-  },
-  {
-    "marca": "Mercedes-Benz",
     "modelo": "Mercedes AMG - Carbono com Shift Light",
     "material": "Fibra de carbono com Shift Light",
     "cor": "Preto / Carbono",
@@ -742,6 +701,47 @@
     "categoria": "Volantes",
     "tipo": "Volante",
     "descricao": "Modelo adicional localizado na base de produtos da OHC Motors."
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes-AMG - Carbono All Black",
+    "material": "Fibra de carbono",
+    "cor": "All Black",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "All Black"
+    ],
+    "sku": "3.02.B01.00064",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-carbono-all-black-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
+  },
+  {
+    "marca": "Mercedes-Benz",
+    "modelo": "Mercedes-AMG - Carbono Shift Light Vermelho",
+    "material": "Fibra de carbono com Shift Light e detalhes em vermelho",
+    "cor": "Preto / Carbono / Vermelho",
+    "recursos": [
+      "Paddle Shift",
+      "Comando multifuncional",
+      "Fibra de carbono",
+      "Shift Light",
+      "Detalhes em vermelho"
+    ],
+    "sku": "1.02.B01.00041",
+    "imagens": [
+      "imagens/mercedes-benz-mercedes-amg-carbono-shift-light-vermelho-1.webp"
+    ],
+    "categoria": "Volantes",
+    "tipo": "Volante",
+    "compatibilidade": "Confirmar aplicação pelo SKU",
+    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra."
   },
   {
     "marca": "Mitsubishi",
