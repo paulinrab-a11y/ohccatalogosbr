@@ -399,7 +399,7 @@ function ProductModal({ p, onClose }: { p: Produto; onClose: () => void }) {
                 {p.marca} · {p.categoria}
               </div>
               <h3 className="mt-2 font-display text-3xl leading-tight tracking-wide">{p.modelo}</h3>
-              <div className="mt-1 font-mono text-xs text-muted-foreground">SKU: {p.sku}</div>
+              <div className="mt-1 font-mono text-xs text-muted-foreground">SKU: {p.sku || "não informado"}</div>
             </div>
 
             <p className="text-sm text-muted-foreground">{p.descricao}</p>
