@@ -184,33 +184,69 @@ function Catalog() {
             />
           </div>
 
-          <FilterRow label="Categoria" options={categorias} value={categoria} onChange={setCategoria} />
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="mr-2 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
+              Categoria
+            </span>
+            {CATEGORIAS.map((c) => {
+              const active = c === categoria;
+              return (
+                <button
+                  key={c}
+                  onClick={() => setCategoria(c)}
+                  className={`rounded-md border px-3 py-1.5 text-xs font-bold transition ${
+                    active
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-secondary text-secondary-foreground hover:border-accent/60"
+                  }`}
+                >
+                  {c}
+                </button>
+              );
+            })}
+          </div>
           <FilterRow label="Marca" options={marcas} value={marca} onChange={setMarca} />
 
           <div className="flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
             <div>
-              Mostrando <span className="font-bold text-foreground">{filtered.length}</span> de{" "}
-              {produtos.length} produtos
+              Mostrando <span className="font-bold text-foreground">{filtered.length}</span> produtos em{" "}
+              <span className="font-bold text-foreground">{categoria}</span>
             </div>
             <div className="hidden sm:block">
-              {categoria === "Todas" ? "Todas as categorias" : categoria} ·{" "}
               {marca === "Todas" ? "Todas as marcas" : marca}
             </div>
           </div>
         </div>
 
-        {/* Grid */}
-        <div className="mt-6 grid grid-cols-1 gap-5 pb-16 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((p) => (
-            <ProductCard key={p.sku} p={p} onOpen={() => setSelected(p)} />
+        {/* Grid grouped by brand */}
+        <div className="mt-8 flex flex-col gap-10 pb-16">
+          {grouped.map(([brandName, items]) => (
+            <div key={brandName}>
+              <div className="mb-4 flex items-center gap-3">
+                <div className="h-px flex-1 bg-border" />
+                <h2 className="font-display text-2xl tracking-wider text-foreground">
+                  {brandName}
+                </h2>
+                <span className="rounded-full border border-border bg-secondary px-2 py-0.5 text-[10px] font-bold text-muted-foreground">
+                  {items.length}
+                </span>
+                <div className="h-px flex-1 bg-border" />
+              </div>
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {items.map((p) => (
+                  <ProductCard key={p.sku} p={p} onOpen={() => setSelected(p)} />
+                ))}
+              </div>
+            </div>
           ))}
-          {filtered.length === 0 && (
-            <div className="col-span-full rounded-lg border border-dashed border-border p-10 text-center text-muted-foreground">
+          {grouped.length === 0 && (
+            <div className="rounded-lg border border-dashed border-border p-10 text-center text-muted-foreground">
               Nenhum produto encontrado com esses filtros.
             </div>
           )}
         </div>
       </section>
+
 
       <footer className="border-t border-border bg-card">
         <div className="flex h-1 w-full">
