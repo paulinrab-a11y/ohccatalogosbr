@@ -154,3 +154,59 @@
   font-family: var(--font-display);
   letter-spacing: 0.01em;
 }
+
+/* ===== Print styles for catalog ===== */
+@media print {
+  /* Force light theme on paper */
+  :root {
+    --background: oklch(1 0 0) !important;
+    --foreground: oklch(0.12 0.02 260) !important;
+    --card: oklch(1 0 0) !important;
+    --card-foreground: oklch(0.12 0.02 260) !important;
+    --secondary: oklch(0.96 0 005 260) !important;
+    --secondary-foreground: oklch(0.12 0.02 260) !important;
+    --border: oklch(0.82 0.01 260) !important;
+    --muted-foreground: oklch(0.4 0.02 260) !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #1a1a2e !important;
+  }
+
+  /* Hide UI chrome that doesn't belong on paper */
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Remove decorative gradients / borders */
+  .print\\:reset,
+  section[class*="relative overflow-hidden"] {
+    background: none !important;
+  }
+
+  /* Expand the catalog grid for paper: 3 columns A4 */
+  .print-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Keep product images compact and uniform */
+  .product-img {
+    max-height: 180px !important;
+    object-fit: contain !important;
+  }
+
+  /* Avoid breaking cards across pages */
+  .product-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Page margins */
+  @page {
+    size: A4;
+    margin: 1.5cm;
+  }
+}
