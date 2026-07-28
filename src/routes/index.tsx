@@ -132,7 +132,7 @@ function Catalog() {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
+      <section className="no-print relative overflow-hidden border-b border-border">
         <div
           className="absolute inset-0"
           style={{
