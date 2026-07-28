@@ -108,21 +108,31 @@ function Catalog() {
             <span className="text-border">·</span>
             <a href="#catalogo" className="transition hover:text-foreground">Acessórios</a>
           </nav>
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-bold uppercase tracking-wider text-primary-foreground transition hover:opacity-90 sm:px-4 sm:text-sm"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Falar no WhatsApp</span>
-            <span className="sm:hidden">WhatsApp</span>
-          </a>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => window.print()}
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-secondary px-3 py-2 text-xs font-bold uppercase tracking-wider text-secondary-foreground transition hover:border-accent hover:text-accent sm:px-4 sm:text-sm"
+              title="Imprimir catálogo"
+            >
+              <PrinterIcon className="h-4 w-4" />
+              <span className="hidden sm:inline">Imprimir</span>
+            </button>
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-bold uppercase tracking-wider text-primary-foreground transition hover:opacity-90 sm:px-4 sm:text-sm"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              <span className="hidden sm:inline">Falar no WhatsApp</span>
+              <span className="sm:hidden">WhatsApp</span>
+            </a>
+          </div>
         </div>
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
+      <section className="no-print relative overflow-hidden border-b border-border">
         <div
           className="absolute inset-0"
           style={{
@@ -173,7 +183,16 @@ function Catalog() {
 
       {/* Filters */}
       <section id="catalogo" className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-5">
+        {/* Print-only header */}
+        <div className="hidden print:block">
+          <h1 className="font-display text-4xl tracking-wide" style={{ color: "#1a1a2e" }}>
+            CATÁLOGO OHC MOTORS
+          </h1>
+          <p className="text-sm" style={{ color: "#555" }}>
+            Volantes, Faróis & Lanternas e Acessórios · {produtos.length} produtos
+          </p>
+        </div>
+        <div className="no-print flex flex-col gap-5">
           <div className="relative">
             <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -219,7 +238,7 @@ function Catalog() {
         </div>
 
         {/* Grid grouped by brand */}
-        <div className="mt-8 flex flex-col gap-10 pb-16">
+        <div className="mt-8 flex flex-col gap-10 pb-16 print-grid">
           {grouped.map(([brandName, items]) => (
             <div key={brandName}>
               <div className="mb-4 flex items-center gap-3">
@@ -336,7 +355,7 @@ function ProductCard({ p, onOpen }: { p: Produto; onOpen: () => void }) {
   return (
     <button
       onClick={onOpen}
-      className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card text-left transition hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_10px_40px_-15px_oklch(0.47_0.17_265/0.5)]"
+      className="product-card group flex flex-col overflow-hidden rounded-lg border border-border bg-card text-left transition hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_10px_40px_-15px_oklch(0.47_0.17_265/0.5)]"
     >
       <div className="relative aspect-square overflow-hidden bg-white">
         {img ? (
@@ -344,7 +363,7 @@ function ProductCard({ p, onOpen }: { p: Produto; onOpen: () => void }) {
             src={`/${img}`}
             alt={`${p.marca} ${p.modelo}`}
             loading="lazy"
-            className="h-full w-full object-contain p-4 transition duration-500 group-hover:scale-105"
+            className="product-img h-full w-full object-contain p-4 transition duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
@@ -362,7 +381,7 @@ function ProductCard({ p, onOpen }: { p: Produto; onOpen: () => void }) {
         <div className="line-clamp-2 text-sm font-bold leading-snug">{p.modelo}</div>
         <div className="mt-auto flex items-center justify-between pt-2 text-[11px] text-muted-foreground">
           <span className="font-mono">{p.sku || "SKU não informado"}</span>
-          <span className="font-bold text-primary">Ver detalhes →</span>
+          <span className="no-print font-bold text-primary">Ver detalhes →</span>
         </div>
       </div>
     </button>
@@ -372,7 +391,7 @@ function ProductCard({ p, onOpen }: { p: Produto; onOpen: () => void }) {
 function ProductModal({ p, onClose }: { p: Produto; onClose: () => void }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
+      className="no-print fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
@@ -461,6 +480,16 @@ function SearchIcon({ className }: { className?: string }) {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className} aria-hidden="true">
       <circle cx="11" cy="11" r="7" />
       <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function PrinterIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className} aria-hidden="true">
+      <path d="M6 9V2h12v7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="6" y="14" width="12" height="8" rx="1" />
     </svg>
   );
 }
