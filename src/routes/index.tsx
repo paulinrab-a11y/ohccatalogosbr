@@ -229,7 +229,7 @@ function Catalog() {
         </div>
 
         {/* Grid grouped by brand */}
-        <div className="mt-8 flex flex-col gap-10 pb-16">
+        <div className="mt-8 flex flex-col gap-10 pb-16 print-grid">
           {grouped.map(([brandName, items]) => (
             <div key={brandName}>
               <div className="mb-4 flex items-center gap-3">
