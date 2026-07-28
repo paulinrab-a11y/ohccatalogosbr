@@ -355,7 +355,7 @@ function ProductCard({ p, onOpen }: { p: Produto; onOpen: () => void }) {
   return (
     <button
       onClick={onOpen}
-      className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card text-left transition hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_10px_40px_-15px_oklch(0.47_0.17_265/0.5)]"
+      className="product-card group flex flex-col overflow-hidden rounded-lg border border-border bg-card text-left transition hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_10px_40px_-15px_oklch(0.47_0.17_265/0.5)]"
     >
       <div className="relative aspect-square overflow-hidden bg-white">
         {img ? (
@@ -363,7 +363,7 @@ function ProductCard({ p, onOpen }: { p: Produto; onOpen: () => void }) {
             src={`/${img}`}
             alt={`${p.marca} ${p.modelo}`}
             loading="lazy"
-            className="h-full w-full object-contain p-4 transition duration-500 group-hover:scale-105"
+            className="product-img h-full w-full object-contain p-4 transition duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
