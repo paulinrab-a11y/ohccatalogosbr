@@ -80,14 +80,14 @@
       "Fibra de carbono",
       "Shift Light"
     ],
-    "sku": "3.02.B02.00125",
+    "sku": "3.02.B02.00002",
     "imagens": [
       "imagens/bmw-bmw-alcantara-carbono-shift-light-1.webp"
     ],
     "categoria": "Volantes",
     "tipo": "Volante",
     "compatibilidade": "BMW M3 — confirmar formato e encaixe pelo SKU",
-    "descricao": "Volante BMW M3 em Alcântara e fibra de carbono com Shift Light. SKU confirmado: 3.02.B02.00125."
+    "descricao": "Volante BMW M3 em Alcântara e fibra de carbono com Shift Light. SKU confirmado: 3.02.B02.00002."
   },
   {
     "marca": "BMW",
@@ -274,7 +274,7 @@
     "modelo": "BMW M3 — Carbono e Couro com Shift Light (Base Reta)",
     "material": "Fibra de carbono e couro perfurado com Shift Light",
     "cor": "Preto / Carbono",
-    "compatibilidade": "BMW M3 — confirmar encaixe e comandos pelo SKU 3.02.B02.00002",
+    "compatibilidade": "BMW M3 — confirmar encaixe e comandos pelo SKU 3.02.B02.00125",
     "recursos": [
       "Paddle Shift",
       "Comando multifuncional",
@@ -284,11 +284,11 @@
       "Shift Light",
       "Display digital"
     ],
-    "sku": "3.02.B02.00002",
+    "sku": "3.02.B02.00125",
     "imagens": [
       "imagens/bmw-m3-carbono-couro-shift-light-base-reta-3-02-b02-00002.webp"
     ],
-    "descricao": "Volante BMW M3 com base reta, acabamento em fibra de carbono nas partes superior e inferior, laterais em couro perfurado e sistema Shift Light com display digital. Produto distinto do SKU 3.02.B02.00125."
+    "descricao": "Volante BMW M3 com base reta, acabamento em fibra de carbono nas partes superior e inferior, laterais em couro perfurado e sistema Shift Light com display digital. Produto distinto do SKU 3.02.B02.00002."
   },
   {
     "marca": "BMW",
