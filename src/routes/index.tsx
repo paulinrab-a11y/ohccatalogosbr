@@ -108,16 +108,26 @@ function Catalog() {
             <span className="text-border">·</span>
             <a href="#catalogo" className="transition hover:text-foreground">Acessórios</a>
           </nav>
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-bold uppercase tracking-wider text-primary-foreground transition hover:opacity-90 sm:px-4 sm:text-sm"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Falar no WhatsApp</span>
-            <span className="sm:hidden">WhatsApp</span>
-          </a>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => window.print()}
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-secondary px-3 py-2 text-xs font-bold uppercase tracking-wider text-secondary-foreground transition hover:border-accent hover:text-accent sm:px-4 sm:text-sm"
+              title="Imprimir catálogo"
+            >
+              <PrinterIcon className="h-4 w-4" />
+              <span className="hidden sm:inline">Imprimir</span>
+            </button>
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-bold uppercase tracking-wider text-primary-foreground transition hover:opacity-90 sm:px-4 sm:text-sm"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              <span className="hidden sm:inline">Falar no WhatsApp</span>
+              <span className="sm:hidden">WhatsApp</span>
+            </a>
+          </div>
         </div>
       </header>
 
