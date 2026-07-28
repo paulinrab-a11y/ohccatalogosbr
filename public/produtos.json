@@ -224,15 +224,14 @@
   },
   {
     "marca": "BMW",
-    "modelo": "BMW M3 - Smart",
-    "material": "Fibra de carbono com display LED",
+    "modelo": "BMW M3 — Carbono com Shift Light",
+    "material": "Fibra de carbono com Shift Light",
     "cor": "Preto / Carbono",
     "recursos": [
       "Paddle Shift",
       "Comando multifuncional",
       "Fibra de carbono",
-      "Shift Light",
-      "Display digital"
+      "Shift Light"
     ],
     "sku": "1.02.B02.00002",
     "imagens": [
@@ -242,7 +241,7 @@
     "categoria": "Volantes",
     "tipo": "Volante",
     "compatibilidade": "Confirmar aplicação pelo SKU",
-    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "descricao": "Volante BMW M3 em fibra de carbono com sistema Shift Light. Confirme o veículo e a configuração antes da compra.",
     "sku_aliases": [
       "B02.00002"
     ]
@@ -339,15 +338,14 @@
   },
   {
     "marca": "BMW",
-    "modelo": "BMW M5 - Smart",
-    "material": "Fibra de carbono com display LED",
+    "modelo": "BMW M5 — Carbono com Shift Light",
+    "material": "Fibra de carbono com Shift Light",
     "cor": "Preto / Carbono",
     "recursos": [
       "Paddle Shift",
       "Comando multifuncional",
       "Fibra de carbono",
-      "Shift Light",
-      "Display digital"
+      "Shift Light"
     ],
     "sku": "1.02.B02.00003",
     "imagens": [
@@ -357,14 +355,14 @@
     "categoria": "Volantes",
     "tipo": "Volante",
     "compatibilidade": "Confirmar aplicação pelo SKU",
-    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "descricao": "Volante BMW M5 em fibra de carbono com sistema Shift Light. Confirme o veículo e a configuração antes da compra.",
     "sku_aliases": [
       "B02.00003"
     ]
   },
   {
     "marca": "BMW",
-    "modelo": "BMW M5 Chassi G — Shift Light",
+    "modelo": "BMW M3 Chassi G — Shift Light",
     "material": "Fibra de carbono com display LED",
     "cor": "Preto / Carbono",
     "recursos": [
@@ -374,13 +372,13 @@
       "Display digital"
     ],
     "sku": "1.02.B02.00040",
-    "compatibilidade": "BMW M5 com chassi G — confirmar aplicação pelo SKU",
+    "compatibilidade": "BMW M3 com chassi G — confirmar aplicação pelo SKU",
     "imagens": [
       "imagens/extra-1-02-b02-00040-bmw-m5-chassi-g-20a-geracao-led.webp"
     ],
     "categoria": "Volantes",
     "tipo": "Volante",
-    "descricao": "Modelo adicional localizado na base de produtos da OHC Motors."
+    "descricao": "Volante BMW M3 com chassi G e sistema Shift Light. Confirme o veículo e a configuração antes da compra."
   },
   {
     "marca": "Ford",
@@ -914,11 +912,12 @@
     ],
     "categoria": "Volantes",
     "tipo": "Volante",
-    "compatibilidade": "Confirmar aplicação pelo SKU",
-    "descricao": "Volante esportivo com aplicação específica. Confirme o veículo e a configuração antes da compra.",
+    "compatibilidade": "Compatibilidade por modelo e ano em revisão. Confirme a aplicação pelo SKU antes da compra.",
+    "descricao": "Volante Volkswagen em couro com comandos multifuncionais e Paddle Shift. Compatibilidade por modelo e ano em revisão — confirme a aplicação pelo SKU antes da compra.",
     "sku_aliases": [
       "D01.00011"
-    ]
+    ],
+    "revisao_compatibilidade": true
   },
   {
     "marca": "Volkswagen",
