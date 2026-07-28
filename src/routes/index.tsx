@@ -381,7 +381,7 @@ function ProductCard({ p, onOpen }: { p: Produto; onOpen: () => void }) {
         <div className="line-clamp-2 text-sm font-bold leading-snug">{p.modelo}</div>
         <div className="mt-auto flex items-center justify-between pt-2 text-[11px] text-muted-foreground">
           <span className="font-mono">{p.sku || "SKU não informado"}</span>
-          <span className="font-bold text-primary">Ver detalhes →</span>
+          <span className="no-print font-bold text-primary">Ver detalhes →</span>
         </div>
       </div>
     </button>
