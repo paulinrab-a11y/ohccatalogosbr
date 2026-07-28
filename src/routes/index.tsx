@@ -183,7 +183,16 @@ function Catalog() {
 
       {/* Filters */}
       <section id="catalogo" className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-5">
+        {/* Print-only header */}
+        <div className="hidden print:block">
+          <h1 className="font-display text-4xl tracking-wide" style={{ color: "#1a1a2e" }}>
+            CATÁLOGO OHC MOTORS
+          </h1>
+          <p className="text-sm" style={{ color: "#555" }}>
+            Volantes, Faróis & Lanternas e Acessórios · {produtos.length} produtos
+          </p>
+        </div>
+        <div className="no-print flex flex-col gap-5">
           <div className="relative">
             <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
