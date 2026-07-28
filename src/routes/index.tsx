@@ -391,7 +391,7 @@ function ProductCard({ p, onOpen }: { p: Produto; onOpen: () => void }) {
 function ProductModal({ p, onClose }: { p: Produto; onClose: () => void }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
+      className="no-print fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
