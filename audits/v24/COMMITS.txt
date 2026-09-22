@@ -1,0 +1,4 @@
+b1a4556 docs: conclua evidencias da instalacao limpa e riscos residuais (#1)
+555f243 docs: registre evidencias limites e reversao da auditoria (#1)
+46cdc16 fix: limite entradas e valide revogacao no backend de testes (#1)
+942c725 fix: proteja frontend e valide qualidade do pacote v24 (#1)

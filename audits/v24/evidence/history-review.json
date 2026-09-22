@@ -1,0 +1,12 @@
+{
+  "repository": "paulinrab-a11y/ohccatalogosbr",
+  "head": "8b61f78d6f6422b4113d186f4b14b3916c693a07",
+  "reachable_commits_inspected": 78,
+  "changed_file_patches_inspected": 380,
+  "additional_full_text_files_inspected": ["src/data/produtos.json at de398a7805368be8f5fe00248c72a61dc9bdae92", "bun.lock at a903264c3a3dd838246fe6b7bfd2da290982d4fe"],
+  "confirmed_private_secrets": 0,
+  "method": "GitHub API read-only commit patches plus full text for omitted large text patches; pattern inspection; no values reproduced",
+  "scope_limits": ["Not a full authenticated git clone", "No unreachable/deleted refs, external artifacts or server log history", "Tags endpoint unavailable; git refs/tags returned 404", "Private logs were not exported", "Local ZIP baseline and current source/build scanned separately"],
+  "history_rewritten": false,
+  "credentials_rotated": false
+}
