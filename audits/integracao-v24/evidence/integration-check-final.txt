@@ -1,0 +1,393 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 check
+> npm run typecheck && npm run lint && npm run format:check && npm run unused && npm test && npm run build && npm run security:scan
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 typecheck
+> tsc --noEmit
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 lint
+> biome lint src server api
+
+src/components/AdminManagement.tsx:69:13 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    67 │   previous_rule_version?: number | null;
+    68 │   new_rule_version?: number | null;
+  > 69 │   details?: any;
+       │             ^^^
+    70 │   created_at: string;
+    71 │ };
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:167:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    165 │       });
+    166 │       setProducts(data.products || []);
+  > 167 │     } catch (e: any) {
+        │                 ^^^
+    168 │       if (e?.status === 503)
+    169 │         setProducts(fallbackProducts.map((p) => ({ ...p, ativo: true })));
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:220:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    218 │       );
+    219 │       await load();
+  > 220 │     } catch (e: any) {
+        │                 ^^^
+    221 │       setError(e.message || "Não foi possível alterar o status.");
+    222 │     }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:257:58 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    255 │             className="admin-input lg:w-44"
+    256 │             value={status}
+  > 257 │             onChange={(e) => setStatus(e.target.value as any)}
+        │                                                          ^^^
+    258 │           >
+    259 │             <option value="all">Todos os status</option>
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:373:36 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    371 │   onSaved: () => Promise<void>;
+    372 │ }) {
+  > 373 │   const [form, setForm] = useState<any>(() => ({
+        │                                    ^^^
+    374 │     id: product?.id,
+    375 │     sku: product?.sku || "",
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:406:39 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    404 │   const [saving, setSaving] = useState(false);
+    405 │   const [error, setError] = useState("");
+  > 406 │   const field = (name: string, value: any) =>
+        │                                       ^^^
+    407 │     setForm((current: any) => ({ ...current, [name]: value }));
+    408 │   const save = async () => {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:407:23 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    405 │   const [error, setError] = useState("");
+    406 │   const field = (name: string, value: any) =>
+  > 407 │     setForm((current: any) => ({ ...current, [name]: value }));
+        │                       ^^^
+    408 │   const save = async () => {
+    409 │     setSaving(true);
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:414:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    412 │       await adminManage({ action: "product_save", product: form });
+    413 │       await onSaved();
+  > 414 │     } catch (e: any) {
+        │                 ^^^
+    415 │       setError(e.message || "Não foi possível salvar o produto.");
+    416 │     } finally {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:645:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    643 │       });
+    644 │       setMedia(data.media || []);
+  > 645 │     } catch (e: any) {
+        │                 ^^^
+    646 │       setError(e.message || "Falha ao carregar mídia.");
+    647 │     } finally {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:673:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    671 │       setNotice("Arquivo enviado para site-assets.");
+    672 │       await load();
+  > 673 │     } catch (e: any) {
+        │                 ^^^
+    674 │       setError(e.message || "Falha no upload.");
+    675 │     } finally {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:688:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    686 │       await adminManage({ action: "media_delete", path: asset.path });
+    687 │       await load();
+  > 688 │     } catch (e: any) {
+        │                 ^^^
+    689 │       setError(e.message || "Falha ao excluir arquivo.");
+    690 │     }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:793:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    791 │       });
+    792 │       setAdmins(data.admins || []);
+  > 793 │     } catch (e: any) {
+        │                 ^^^
+    794 │       setError(e.message || "Falha ao carregar administradores.");
+    795 │     } finally {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:816:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    814 │       setNotice(`Acesso administrativo concedido a ${value}.`);
+    815 │       await load();
+  > 816 │     } catch (e: any) {
+        │                 ^^^
+    817 │       setError(e.message || "Não foi possível conceder acesso.");
+    818 │     }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/AdminManagement.tsx:833:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    831 │       setNotice(`Acesso removido de ${admin.email}.`);
+    832 │       await load();
+  > 833 │     } catch (e: any) {
+        │                 ^^^
+    834 │       setError(e.message || "Não foi possível remover o acesso.");
+    835 │     }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/lib/adminApi.ts:14:44 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    12 │     const error = new Error(
+    13 │       data?.error || "Não foi possível concluir a solicitação.",
+  > 14 │     ) as Error & { status?: number; data?: any };
+       │                                            ^^^
+    15 │     error.status = response.status;
+    16 │     error.data = data;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/lib/adminApi.ts:38:39 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    36 │ };
+    37 │ 
+  > 38 │ export async function adminAction<T = any>(payload: Record<string, unknown>) {
+       │                                       ^^^
+    39 │   return api<T>("/api/admin/action", {
+    40 │     method: "POST",
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/lib/adminApi.ts:45:39 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    43 │ }
+    44 │ 
+  > 45 │ export async function adminManage<T = any>(payload: Record<string, unknown>) {
+       │                                       ^^^
+    46 │   return api<T>("/api/admin/manage", {
+    47 │     method: "POST",
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/pages/AdminLogin.tsx:41:19 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    39 │         history.replaceState(null, "", "/admin/login");
+    40 │         go("/admin");
+  > 41 │       } catch (e: any) {
+       │                   ^^^
+    42 │         history.replaceState(null, "", "/admin/login");
+    43 │         setPhase("email");
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/pages/AdminLogin.tsx:63:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    61 │         "Se o e-mail estiver autorizado, você receberá um link de acesso. Se a mensagem trouxer um código de 6 dígitos, você também pode digitá-lo abaixo.",
+    62 │       );
+  > 63 │     } catch (e: any) {
+       │                 ^^^
+    64 │       setPhase("email");
+    65 │       setError(e.message || "Não foi possível enviar o acesso.");
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/pages/AdminLogin.tsx:76:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    74 │       await adminAuth.createSession({ email, token });
+    75 │       go("/admin");
+  > 76 │     } catch (e: any) {
+       │                 ^^^
+    77 │       setPhase("sent");
+    78 │       setError(e.message || "Código inválido ou expirado.");
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+The number of diagnostics exceeds the limit allowed. Use --max-diagnostics to increase it.
+Diagnostics not shown: 16.
+Checked 59 files in 22ms. No fixes applied.
+Found 36 warnings.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 format:check
+> biome format src server api
+
+Checked 59 files in 16ms. No fixes applied.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 unused
+> knip
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 test
+> node --import tsx --test tests/*.test.ts
+
+✔ live grants/policies reproduced locally: anon + users A/B cannot CRUD private rows (3409.315471ms)
+✔ session predicate rejects wrong owner, expired and deleted sessions; execute restricted (3441.672922ms)
+✔ actual database limiter accepts 60 and rejects the 61st request across callers (1309.919736ms)
+✔ edge rejects anonymous direct admin calls and methods before any database operation (8.893095ms)
+✔ edge checks provider identity and current session, rejects forged metadata, invalid/expired/revoked tokens (21.782706ms)
+✔ edge bounds JSON bodies and rejects malformed JSON, arrays, wrong MIME (351.0133ms)
+✔ edge rejects spoofed uploads, bad size, too many files and oversized base64 before DB (51.417665ms)
+✔ edge returns shared limiter 429 and Retry-After without writing a request (2.815947ms)
+✔ edge ignores mass assignment and derives actor from validated backend identity (3.393262ms)
+✔ edge errors are redacted, private responses no-store; cleanup failure cannot duplicate accepted request (5.317873ms)
+✔ navigation rejects external, protocol-relative, control and unregistered destinations (1.556472ms)
+✔ compatibility keeps the actual catalog SKU and business message (0.495799ms)
+✔ compatibility rejects invalid types, years, unexpected privileges and oversized text (0.598704ms)
+✔ telemetry drops PII, tokens, queries, request bodies and original messages (1.022024ms)
+✔ 65 original products retain resolvable local original images (6.396513ms)
+✔ deployment headers protect content without swallowing backend or model paths (0.768871ms)
+✔ atomic role mutation preserves final admin and rechecks revocation after serialization (3352.861805ms)
+✔ database shared limiter applies origin and account-pair limits, expiry and restricted grants (3490.01719ms)
+{"level":"error","event":"gateway_request_failed","request_id":"15c577ab-f1e7-43f7-aced-11e58e214761"}
+✔ gateway validates current server session before every administrative action (8.262753ms)
+✔ gateway rejects user metadata privilege escalation and expired JWT (1.451173ms)
+✔ same-origin JSON required including scheme; missing/forged Origin rejected before Auth (0.606897ms)
+✔ valid OTP establishes Secure HttpOnly SameSite cookies; tokens stay out of JSON (3.667581ms)
+✔ logout revokes server session and clears both cookies; provider failure not reported as success (11.541337ms)
+✔ login limits use HMAC identifiers, 429 and no user-enumerating response (1.123588ms)
+✔ public gateway forces submit action and discards private headers (1.560853ms)
+✔ privilege changes use the verified user token, not service identity or client actor (2.060823ms)
+✔ body validation rejects malformed stream, arrays, null, oversized parsed and streamed bytes (35.725438ms)
+✔ media blocks executable types, forged WebP, oversized encoded data and traversal before network (28.765529ms)
+✔ public catalog projects allowed fields and never exposes private price or admin metadata (1.425729ms)
+✔ server decodes real pixels, preserves dimensions and strips EXIF (43.656705ms)
+✔ server rejects signature-only files, mismatched MIME, forged size and excess pixels (110.815822ms)
+✔ public input requires consent and strict types and discards administrative fields (1.047763ms)
+✔ actual Sentry client captures error through privacy filter into a local fake transport (8.558179ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8659.60139
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 build
+> vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 1478 modules transformed.
+rendering chunks...
+[plugin vite:reporter] 
+(!) /workspace/scratch/80c05b4de250/audit-v24/ohc/node_modules/gsap/index.js is dynamically imported by /workspace/scratch/80c05b4de250/audit-v24/ohc/src/components/SteeringExperience/useScrollProgress.ts but also statically imported by /workspace/scratch/80c05b4de250/audit-v24/ohc/src/components/SplitText.tsx, dynamic import will not move module into another chunk.
+
+computing gzip size...
+dist/index.html                          1.11 kB │ gzip:   0.57 kB
+dist/assets/index-90s3MnA5.css          45.05 kB │ gzip:  10.25 kB
+dist/assets/adminApi-CayVykeJ.js         0.83 kB │ gzip:   0.44 kB
+dist/assets/AdminLogin-BrjC-YqX.js       4.22 kB │ gzip:   1.75 kB
+dist/assets/LightRays-D5QcthZL.js        5.13 kB │ gzip:   2.18 kB
+dist/assets/lenis-D7cjh7zN.js           19.94 kB │ gzip:   5.78 kB
+dist/assets/ScrollTrigger-BUUH0zBK.js   44.02 kB │ gzip:  18.28 kB
+dist/assets/Admin-CjTofK4g.js           55.76 kB │ gzip:  13.42 kB
+dist/assets/index-DyuN6hl9.js          133.45 kB │ gzip:  39.39 kB
+dist/assets/index-DxL6lWx3.js          428.79 kB │ gzip: 140.73 kB
+dist/assets/SteeringScene-CzTuD2t9.js  956.30 kB │ gzip: 263.48 kB
+✓ built in 6.31s
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 security:scan
+> node scripts/scan-secrets.mjs
+
+{
+  "scanned": 320,
+  "history_blobs": 158,
+  "findings": [],
+  "limits": "Pattern-based inspection, not proof of absence; binaries excluded; no secret values logged."
+}
