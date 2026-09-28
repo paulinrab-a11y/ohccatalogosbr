@@ -1,0 +1,23 @@
+name: Correção
+description: Algo no site está errado ou quebrado
+title: "Corrigir "
+labels: ["correção"]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: O que está errado
+      description: O que acontece hoje, em que página/dispositivo, com print se possível.
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que deveria acontecer
+    validations:
+      required: true
+  - type: textarea
+    id: arquivos
+    attributes:
+      label: Arquivos prováveis
+      placeholder: src/pages/Home.tsx

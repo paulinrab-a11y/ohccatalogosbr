@@ -1,0 +1,33 @@
+name: Nova função
+description: Algo que o site ainda não faz
+title: "Adicionar "
+labels: ["nova função"]
+body:
+  - type: textarea
+    id: objetivo
+    attributes:
+      label: Objetivo
+      description: O que o cliente ou a equipe passa a conseguir fazer.
+    validations:
+      required: true
+  - type: textarea
+    id: escopo
+    attributes:
+      label: Escopo
+      description: O que entra e o que fica de fora.
+    validations:
+      required: true
+  - type: textarea
+    id: aceite
+    attributes:
+      label: Critério de aceite
+    validations:
+      required: true
+  - type: checkboxes
+    id: regras
+    attributes:
+      label: Regras do produto
+      options:
+        - label: Não envolve imagem gerada por IA no lugar de produto
+        - label: Não inventa característica de produto
+        - label: Não toca o Supabase, ou a migration é aditiva e está descrita aqui

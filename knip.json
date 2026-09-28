@@ -1,0 +1,1 @@
+{"entry":["api/**/*.js","tests/**/*.test.ts","e2e/**/*.ts"],"project":["src/**/*.{ts,tsx,css}","api/**/*.js","server/**/*.js"]}

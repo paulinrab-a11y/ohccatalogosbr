@@ -1,26 +1,63 @@
-# OHC Motors Showcase
+# OHC Motors — fonte integrada
 
-preciso que voce faça um site e deixe rodando com o catalogo da OHC Motors
+Aplicação React 18 + Vite + TypeScript do site OHC Motors, incluindo catálogo, compatibilidade, painel administrativo e APIs server-side para Vercel.
 
-This project was built with [Lovable](https://lovable.dev).
+## Estado deste pacote
 
-**Live app**: https://ohccatalogosbr.lovable.app
+Este pacote foi montado a partir do projeto local validado em setembro de 2026. Ele contém:
 
-## Build with Lovable
+- frontend Vite/React;
+- APIs Vercel em `api/`;
+- autenticação administrativa e gestão server-side em `server/`;
+- Edge Function `supabase/functions/ohc-compatibility`;
+- migrations auditadas em `supabase/migrations`;
+- catálogo/imagens e o modelo 3D original em `public/`;
+- testes unitários, de integração e E2E.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/762393d1-9fc0-4e2a-b190-d0c73ebb2721).
+A produção atual não deve ser substituída diretamente. Primeiro publique uma branch de **Preview**, valide CI/Vercel e só depois promova a alteração.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+## Correção adicional de 28/09/2026
 
-## Development
+O carregamento do dashboard administrativo deixou de executar `cleanupExpired()` implicitamente. Limpeza de fotos expiradas continua disponível pela ação administrativa explícita `cleanup` e após o fluxo público de envio. Assim, abrir o dashboard volta a ser uma operação de leitura.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+A migration `20260925110000_harden_legacy_catalog_grants.sql` mantém `SELECT` público controlado por RLS na tabela legada e remove privilégios de escrita de `anon` e `authenticated`. Ela foi validada localmente e deve ser aplicada separadamente ao Supabase de produção somente após o Preview aprovado.
+
+## Validar
+
+Use Node.js 24 e npm:
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+npm ci
+npm run check
+npx playwright install --with-deps chromium
+npm run test:e2e
 ```
+
+`npm run check` executa typecheck, lint, verificação de formatação, Knip, testes, build e scanner de segredos.
+
+## Preview Git/Vercel
+
+No Windows, `scripts/publicar-preview.ps1` cria uma branch temporária no repositório conectado, copia este projeto sem `.env`, `node_modules`, evidências locais ou builds e faz o push sem alterar `main`.
+
+O `vercel.json` força o preset `vite`, `npm ci`, `npm run build` e saída `dist`. Isso é importante porque o projeto Vercel estava anteriormente associado a uma base Git diferente e configurado como Next.js.
+
+## Variáveis
+
+Use `.env.example` apenas como lista de nomes. Segredos server-side nunca devem receber prefixo `VITE_`.
+
+- `SUPABASE_SERVICE_ROLE_KEY`, `OHC_EDGE_TOKEN` e `OHC_RATE_LIMIT_SECRET` são somente server-side;
+- `OHC_ADMIN_EMAILS` é uma restrição adicional opcional sobre usuários que já possuem `app_metadata.role = ohc_admin`;
+- `VITE_SENTRY_DSN` é opcional e publicável.
+
+## Produção
+
+Antes de promover um Preview:
+
+1. CI e build Vercel precisam concluir sem erro;
+2. conferir `/catalogo`, `/compatibilidade`, `/admin/login` e dashboard no Preview;
+3. conferir variáveis server-side na Vercel sem expor seus valores;
+4. aplicar a migration de hardening no Supabase de produção;
+5. implantar a versão correspondente da Edge Function se o diff do Preview incluir a correção do dashboard;
+6. manter o deployment atual disponível para rollback.
+
+Não há declaração de “100% seguro”. A auditoria reduz riscos no escopo efetivamente testado.
