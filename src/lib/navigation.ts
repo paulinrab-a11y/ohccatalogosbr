@@ -1,6 +1,12 @@
 const ROUTES = new Set([
   "/",
   "/catalogo",
+  "/conta",
+  "/conta/criar",
+  "/conta/recuperar",
+  "/conta/redefinir",
+  "/conta/confirmar",
+  "/minha-conta",
   "/produto",
   "/compatibilidade",
   "/admin",
