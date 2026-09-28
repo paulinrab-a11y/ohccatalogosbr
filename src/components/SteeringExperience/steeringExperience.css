@@ -1,0 +1,11 @@
+/* Seção 3D do volante */
+.se-section { position: relative; background: transparent; }
+.se-pin::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(48% 64% at 16% 42%, rgba(33,79,161,.55), transparent 70%), radial-gradient(44% 60% at 86% 64%, rgba(237,28,36,.38), transparent 70%); }
+.se-pin { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
+.se-canvas { position: absolute; inset: 0; }
+.se-canvas canvas { display: block; touch-action: pan-y; }
+.se-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(70% 60% at 50% 55%, transparent 45%, rgba(11,13,17,.6) 100%), linear-gradient(0deg, rgba(11,13,17,.8), transparent 35%); }
+.se-loader { position: absolute; inset: 0; display: grid; place-items: center; gap: 12px; color: #9AA6B8; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; transition: opacity .6s; }
+.se-fallback { position: absolute; inset: 0; display: grid; place-items: center; }
+.se-fallback img { width: min(80vw, 70vh); height: auto; filter: drop-shadow(0 40px 60px rgba(0,0,0,.7)); }
+@media (prefers-reduced-motion: reduce) { .se-pin { height: auto; min-height: 100svh; } }
