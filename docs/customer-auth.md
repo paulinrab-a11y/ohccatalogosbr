@@ -52,7 +52,7 @@ Antes de uma futura publicação autorizada: Site URL `https://www.ohcmotorsbr.c
 
 ## Validação e pendências
 
-Executar `npm ci`, `npm run check`, `npm audit --audit-level=high`, `npm run test:e2e`.
+Validação local em 29/09/2026: `npm ci` passou; `npm run check` passou (39 testes, typecheck, lint, build, knip e scan de segredos); `npm audit --audit-level=high` informou zero vulnerabilidades. E2E: 30 testes passaram em Chromium 153, com configuração local apontando para o executável disponível no executor. O CI usa a instalação padrão do Playwright. Inspeção visual local em 1280 e 390 px, sem exceções JavaScript nessas páginas. Preview remoto e Auth real ainda pendentes.
 
 E2E usa SDK real com HTTP interceptado: login, cadastro, recuperação, confirmação PKCE, redefinição, persistência, logout, erro de sessão, menu e larguras 360/390/430/768/1280. Testes de autorização executam os handlers reais do admin com provider sintético e banco PostgreSQL local via PGlite.
 

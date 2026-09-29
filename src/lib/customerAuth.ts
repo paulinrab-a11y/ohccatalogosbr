@@ -75,6 +75,7 @@ async function initialize() {
   );
   const params = new URLSearchParams(location.search);
   const code = callback ? params.get("code") : null;
+  const flowId = callback ? params.get("sb_flow_id") : null;
   const invalid = callback && (params.has("error") || !!location.hash);
   if (callback && (location.search || location.hash))
     history.replaceState(null, "", location.pathname);
@@ -90,7 +91,10 @@ async function initialize() {
         return;
       }
       if (code) {
-        const { error } = await client.auth.exchangeCodeForSession(code);
+        const { error } = await client.auth.exchangeCodeForSession(
+          code,
+          flowId ? { flowId } : undefined,
+        );
         if (error) {
           publish({ linkError: true });
           return;
