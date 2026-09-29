@@ -1,0 +1,45 @@
+# Isolated local Auth test stack, initialized with Supabase CLI 2.118.0.
+# No linked cloud project, production migrations, real addresses or external SMTP.
+project_id = "ohc-auth-integration"
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+[db.seed]
+enabled = false
+[realtime]
+enabled = false
+[studio]
+enabled = false
+[local_smtp]
+enabled = true
+port = 54324
+[storage]
+enabled = false
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:4173"
+additional_redirect_urls = ["http://127.0.0.1:4173/conta/confirmar", "http://127.0.0.1:4173/conta/redefinir"]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+enable_signup = true
+enable_anonymous_sign_ins = false
+minimum_password_length = 12
+[auth.rate_limit]
+email_sent = 20
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+secure_password_change = true
+max_frequency = "1s"
+[edge_runtime]
+enabled = false
+[analytics]
+enabled = false

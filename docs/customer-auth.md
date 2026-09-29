@@ -12,6 +12,8 @@ As APIs administrativas, cookies HttpOnly, migrations e Edge Function permanecem
 
 ## Configuração
 
+Branch paga não é obrigatória. O usuário recusou custos adicionais. Ver `customer-auth-no-cost.md` para testes locais com Auth real/Mailpit e integração SMTP Mailjet. Um projeto Free separado teve criação recusada pela cota global; nenhum recurso foi criado.
+
 `GET /api/customer-config` retorna somente URL e chave pública. Rejeita `sb_secret_*`, JWT service_role e URLs fora do domínio Supabase. Usa valores do servidor, sem novas variáveis VITE e sem colocar segredo no bundle.
 
 Em produção, após autorização, pode reutilizar `SUPABASE_URL` e `SUPABASE_PUBLISHABLE_KEY` (ou `SUPABASE_ANON_KEY`). Em Preview são obrigatórias variáveis **apenas para Preview e preferencialmente para esta branch**:
