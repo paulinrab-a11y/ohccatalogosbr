@@ -12,7 +12,7 @@ O projeto existente pode atender clientes e administradores com a separação de
 
 | Opção | Custo e uso | Situação |
 | --- | --- | --- |
-| Supabase local + Mailpit no GitHub Actions | Runner padrão gratuito em repositório público; sem projeto Supabase cloud ou conta SMTP externa | Workflow `auth-local.yml`, pendente de resultado inicial |
+| Supabase local + Mailpit no GitHub Actions | Runner padrão gratuito em repositório público; sem projeto Supabase cloud ou conta SMTP externa | Workflow `auth-local.yml` aprovado; execução 36605142890 no commit `8b217d3` |
 | Novo projeto Supabase Free | Consulta do plugin retornou US$ 0/mês | Criação recusada: administrador já atingiu o limite global de dois projetos gratuitos. Nenhum projeto criado |
 | Supabase existente + SMTP Mailjet | Sem nova contratação, respeitando os limites das contas | Precisa conferir configuração Auth existente, remetente e acesso Mailjet antes de aplicar |
 | Mailjet Free | 6.000 e-mails/mês, máximo 200/dia | Primeira opção por já ser usada pelo usuário; não foi inspecionada a conta Mailjet |
@@ -28,6 +28,13 @@ A configuração `tests/auth-local/supabase/config.toml` foi inicializada pelo C
 O workflow instala o CLI fixado, inicia Postgres/Auth/Mailpit em Docker, executa `e2e-real/customer-auth.spec.ts` e remove os volumes locais ao terminar. Não usa secrets de produção. O teste aceita somente a API `http://127.0.0.1:54321`; o endpoint de configuração e o catálogo são fixtures, mas o Auth, os tokens PKCE e o SMTP são reais. Mensagens são capturadas localmente, sem entrega a pessoas reais. Traces, vídeos e screenshots do fluxo autenticado ficam desativados.
 
 Cobre: cadastro, bloqueio de login sem confirmação, confirmação PKCE por e-mail, sessão após reload, login, recuperação, redefinição, rejeição da senha antiga, aceitação da nova senha e logout. Não comprova entrega externa, DNS Mailjet ou funcionamento do Preview remoto.
+
+## Resultado verificado em 30/09/2026
+
+- [Auth real sem cloud](https://github.com/paulinrab-a11y/ohccatalogosbr/actions/runs/36605142890): aprovado no commit `8b217d3380690925b63ebda5144c52c0b588436d`, incluindo o fluxo completo no navegador e encerramento da infraestrutura descartável.
+- [CI geral](https://github.com/paulinrab-a11y/ohccatalogosbr/actions/runs/36605142789): aprovado no mesmo commit, incluindo check, auditoria de dependências e E2E.
+- Preview desse commit: READY na Vercel. A disponibilidade do build não comprova configuração de Auth hospedado ou entrega externa.
+- Produção continua no commit `4f907a677dc7452d51ba2b0f33542fb1e9402e9e`; nenhum merge ou alteração de SMTP foi realizado.
 
 ## Configuração Mailjet a conferir no painel, sem expor segredos
 
