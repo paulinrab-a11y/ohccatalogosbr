@@ -15,6 +15,7 @@ export default function Nav({
   transparent?: boolean;
 }) {
   const customer = useCustomerAuth();
+  const accountLabel = customer.user ? "Minha conta" : "Entrar / Criar conta";
   const accountHref = customer.user ? "/minha-conta" : "/conta";
   const closeRef = useRef<HTMLButtonElement>(null);
   const openRef = useRef<HTMLButtonElement>(null);
@@ -109,7 +110,7 @@ export default function Nav({
               <circle cx="12" cy="8" r="4" />
               <path d="M4 22v-3a8 8 0 0 1 16 0v3" />
             </svg>
-            {customer.user ? "Minha conta" : "Entrar"}
+            {accountLabel}
           </Link>
           <a
             className="ub-wa hidden lg:inline-flex"
@@ -157,7 +158,7 @@ export default function Nav({
           </button>
         </div>
         <nav className="mt-[8vh] grid" aria-label="Navegação móvel">
-          {[...LINKS, [accountHref, "Minha conta"]].map(([h, l], i) => (
+          {[...LINKS, [accountHref, accountLabel]].map(([h, l], i) => (
             <Link
               key={h}
               href={h}

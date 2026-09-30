@@ -60,8 +60,8 @@ test('account UI and menu fit 360,390,430,768 and desktop; keyboard escape resto
  for(const width of [360,390,430,768,1280]){
  await page.setViewportSize({width,height:900});await page.goto('/conta');await expect(page.getByLabel('E-mail',{exact:true})).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
- if(width<1024){await page.getByRole('button',{name:'Abrir menu'}).click();await expect(page.getByRole('button',{name:'Fechar menu'})).toBeFocused();await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Abrir menu'})).toBeFocused();await page.getByRole('button',{name:'Abrir menu'}).click();await page.getByRole('navigation',{name:'Navegação móvel'}).getByRole('link',{name:'Minha conta'}).click();await expect(page.getByRole('button',{name:'Abrir menu'})).toHaveAttribute('aria-expanded','false');expect(await page.evaluate(()=>document.body.classList.contains('menu-open'))).toBe(false);
- } else await expect(page.locator('header').getByRole('link',{name:'Entrar',exact:true})).toBeVisible();
+ if(width<1024){await page.getByRole('button',{name:'Abrir menu'}).click();await expect(page.getByRole('button',{name:'Fechar menu'})).toBeFocused();await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Abrir menu'})).toBeFocused();await page.getByRole('button',{name:'Abrir menu'}).click();await page.getByRole('navigation',{name:'Navegação móvel'}).getByRole('link',{name:'Entrar / Criar conta',exact:true}).click();await expect(page.getByRole('button',{name:'Abrir menu'})).toHaveAttribute('aria-expanded','false');expect(await page.evaluate(()=>document.body.classList.contains('menu-open'))).toBe(false);
+ } else await expect(page.locator('header').getByRole('link',{name:'Entrar / Criar conta',exact:true})).toBeVisible();
  }
 });
 test('unavailable config fails closed without crashing catalog or account',async({page})=>{
@@ -71,3 +71,11 @@ test('expired persisted session does not display private profile data',async({pa
  await page.addInitScript(({key,value})=>localStorage.setItem(key,JSON.stringify(value)),{key,value:session()});
  await page.route(origin+'/auth/v1/user',r=>r.fulfill({status:401,json:{code:'bad_jwt',msg:'Expired'}}));await page.goto('/minha-conta');await expect(page).toHaveURL(/\/conta$/);await expect(page.locator('body')).not.toContainText(user.email);
 });
+
+ test('invalid confirmation does not block navigation back to login', async ({page}) => {
+ await page.goto('/conta/confirmar?error=access_denied');
+ await expect(page.getByRole('alert')).toContainText('navegador e dispositivo');
+ await page.getByRole('link',{name:'Voltar para entrar'}).click();
+ await expect(page.getByLabel('E-mail',{exact:true})).toBeVisible();
+ await expect(page.getByRole('alert')).toHaveCount(0);
+ });

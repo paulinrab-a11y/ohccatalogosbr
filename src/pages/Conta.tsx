@@ -24,6 +24,7 @@ export default function Conta() {
         "/minha-conta": "profile",
       } as Record<string, Mode>
     )[route.path] || "login";
+  const linkError = auth.linkError && (mode === "confirm" || mode === "reset");
   const [busy, setBusy] = useState(false);
   const lock = useRef(false);
   const [error, setError] = useState("");
@@ -31,14 +32,14 @@ export default function Conta() {
   const [done, setDone] = useState(false);
   useEffect(() => {
     document.title = "Minha conta | OHC Motors";
-    if (auth.loading || auth.unavailable || auth.linkError) return;
+    if (auth.loading || auth.unavailable || linkError) return;
     if (mode === "profile" && !auth.user) go("/conta");
     if (
       (mode === "login" || mode === "signup" || mode === "confirm") &&
       auth.user
     )
       go("/minha-conta");
-  }, [auth.loading, auth.user, auth.unavailable, auth.linkError, mode, go]);
+  }, [auth.loading, auth.user, auth.unavailable, linkError, mode, go]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -94,7 +95,7 @@ export default function Conta() {
         else {
           setDone(true);
           setNotice(
-            "Confira seu e-mail para confirmar o cadastro. Se você já tem uma conta, entre ou recupere sua senha.",
+            "Confira seu e-mail para confirmar o cadastro. Abra o link neste mesmo navegador e dispositivo. Se você já tem uma conta, entre ou recupere sua senha.",
           );
         }
       } else if (mode === "recovery") {
@@ -110,7 +111,9 @@ export default function Conta() {
         )
           throw result.error;
         setDone(true);
-        setNotice(RECOVERY_MESSAGE);
+        setNotice(
+          `${RECOVERY_MESSAGE} Abra o link neste mesmo navegador e dispositivo.`,
+        );
       } else if (mode === "reset") {
         const result = await client.auth.updateUser({ password });
         if (result.error) throw result.error;
@@ -153,7 +156,7 @@ export default function Conta() {
   const showForm =
     !auth.loading &&
     !auth.unavailable &&
-    !auth.linkError &&
+    !linkError &&
     !done &&
     ["login", "signup", "recovery", "reset"].includes(mode) &&
     (mode !== "reset" || !!auth.user);
@@ -181,11 +184,12 @@ export default function Conta() {
               mais tarde.
             </p>
           )}
-          {auth.linkError && (
+          {linkError && (
             <div role="alert">
               <p>
-                Este link é inválido, expirou ou foi aberto em outro navegador.
-                Solicite um novo link e abra-o no mesmo navegador.
+                Este link é inválido, expirou, já foi utilizado ou foi aberto em
+                outro navegador. Abra o link no navegador e dispositivo em que
+                iniciou a solicitação. Se não funcionar, solicite um novo link.
               </p>
               <a href="/conta/recuperar" className="btn btn-ghost mt-5">
                 Recuperar acesso
@@ -194,7 +198,7 @@ export default function Conta() {
           )}
           {!auth.loading &&
             !auth.unavailable &&
-            !auth.linkError &&
+            !linkError &&
             mode === "reset" &&
             !auth.user && (
               <p role="alert">
@@ -293,7 +297,7 @@ export default function Conta() {
           )}
           {!auth.loading &&
             !auth.unavailable &&
-            !auth.linkError &&
+            !linkError &&
             mode === "profile" &&
             auth.user && (
               <div className="customer-profile">
