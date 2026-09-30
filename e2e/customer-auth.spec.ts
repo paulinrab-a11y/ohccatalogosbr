@@ -61,7 +61,7 @@ test('account UI and menu fit 360,390,430,768 and desktop; keyboard escape resto
  for(const width of [360,390,430,768,1280]){
  await page.setViewportSize({width,height:900});await page.goto('/conta');await expect(page.getByLabel('E-mail',{exact:true})).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
- if(width<1024){await page.getByRole('button',{name:'Abrir menu'}).click();await expect(page.getByRole('button',{name:'Fechar menu'})).toBeFocused();await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Abrir menu'})).toBeFocused();await page.getByRole('button',{name:'Abrir menu'}).click();await page.getByRole('navigation',{name:'Navegação móvel'}).getByRole('link',{name:/^(Entrar \/ Criar conta|Minha conta)$/,exact:true}).click();await expect(page.getByRole('button',{name:'Abrir menu'})).toHaveAttribute('aria-expanded','false');expect(await page.evaluate(()=>document.body.classList.contains('menu-open'))).toBe(false);
+ if(width<1024){await page.getByRole('button',{name:'Abrir menu'}).click();await expect(page.getByRole('button',{name:'Fechar menu'})).toBeFocused();await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Abrir menu'})).toBeFocused();await page.getByRole('button',{name:'Abrir menu'}).click();await page.locator('nav[aria-label="Navegação móvel"] a').last().click();await expect(page.getByRole('button',{name:'Abrir menu'})).toHaveAttribute('aria-expanded','false');expect(await page.evaluate(()=>document.body.classList.contains('menu-open'))).toBe(false);
  } else await expect(page.locator('header').getByRole('link',{name:/^(Entrar \/ Criar conta|Minha conta)$/,exact:true})).toBeVisible();
  }
 });
