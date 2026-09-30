@@ -57,6 +57,7 @@ test('customer with forged admin metadata never receives administrative UI',asyn
  await login(page);await page.goto('/admin');await expect(page).toHaveURL(/\/admin\/login/);await expect(page.getByLabel('E-mail autorizado')).toBeVisible();await expect(page.getByText('Central administrativa',{exact:true})).toHaveCount(0);
 });
 test('account UI and menu fit 360,390,430,768 and desktop; keyboard escape restores focus',async({page})=>{
+ await page.route(origin+'/auth/v1/user',r=>r.fulfill({status:401,json:{code:'bad_jwt',msg:'No session'}}));
  for(const width of [360,390,430,768,1280]){
  await page.setViewportSize({width,height:900});await page.goto('/conta');await expect(page.getByLabel('E-mail',{exact:true})).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
