@@ -14,7 +14,7 @@ O projeto existente pode atender clientes e administradores com a separação de
 | --- | --- | --- |
 | Supabase local + Mailpit no GitHub Actions | Runner padrão gratuito em repositório público; sem projeto Supabase cloud ou conta SMTP externa | Workflow `auth-local.yml` aprovado; execução 36605142890 no commit `8b217d3` |
 | Novo projeto Supabase Free | Consulta do plugin retornou US$ 0/mês | Criação recusada: administrador já atingiu o limite global de dois projetos gratuitos. Nenhum projeto criado |
-| Supabase existente + SMTP Mailjet | Sem nova contratação, respeitando os limites das contas | Precisa conferir configuração Auth existente, remetente e acesso Mailjet antes de aplicar |
+| Supabase existente + SMTP Mailjet | Sem nova contratação, respeitando os limites das contas | Configurado no projeto existente; acesso administrativo validado no deployment de produção. Fluxo de cliente ainda aguarda Preview Auth separado e destinatário de teste. |
 | Mailjet Free | 6.000 e-mails/mês, máximo 200/dia | Primeira opção por já ser usada pelo usuário; não foi inspecionada a conta Mailjet |
 | Brevo Free | 300 e-mails/dia | Alternativa SMTP se necessária |
 | Resend Free | 3.000 e-mails/mês, máximo 100/dia | Alternativa SMTP se necessária |
@@ -34,7 +34,7 @@ Cobre: cadastro, bloqueio de login sem confirmação, confirmação PKCE por e-m
 - [Auth real sem cloud](https://github.com/paulinrab-a11y/ohccatalogosbr/actions/runs/36605142890): aprovado no commit `8b217d3380690925b63ebda5144c52c0b588436d`, incluindo o fluxo completo no navegador e encerramento da infraestrutura descartável.
 - [CI geral](https://github.com/paulinrab-a11y/ohccatalogosbr/actions/runs/36605142789): aprovado no mesmo commit, incluindo check, auditoria de dependências e E2E.
 - Preview desse commit: READY na Vercel. A disponibilidade do build não comprova configuração de Auth hospedado ou entrega externa.
-- Produção continua no commit `4f907a677dc7452d51ba2b0f33542fb1e9402e9e`; nenhum merge ou alteração de SMTP foi realizado.
+- Produção continua no commit `4f907a677dc7452d51ba2b0f33542fb1e9402e9e`; variáveis seguras e SMTP foram configurados pelo proprietário. Nenhum merge foi realizado.
 
 ## Configuração Mailjet a conferir no painel, sem expor segredos
 
