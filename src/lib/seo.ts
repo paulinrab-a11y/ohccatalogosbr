@@ -1,7 +1,7 @@
 import type { Product } from "./products";
 
-export const SITE_ORIGIN = "https://www.ohcmotorsbr.com.br";
-export const SITE_NAME = "OHC Motors";
+const SITE_ORIGIN = "https://www.ohcmotorsbr.com.br";
+const SITE_NAME = "OHC Motors";
 
 function clean(value: string) {
   return value.replace(/\s+/g, " ").trim();
