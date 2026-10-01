@@ -14,7 +14,9 @@ export default function Catalogo() {
     const brand = route.search.get("marca");
     const context = [category, brand].filter(Boolean).join(" · ");
     applySeo({
-      title: context ? `${context} | Catálogo OHC Motors` : "Catálogo de volantes e acessórios | OHC Motors",
+      title: context
+        ? `${context} | Catálogo OHC Motors`
+        : "Catálogo de volantes e acessórios | OHC Motors",
       description: context
         ? `Encontre produtos OHC Motors para ${context}. Veja fotos, materiais, aplicações, preço e confirme a compatibilidade antes da compra.`
         : "Catálogo OHC Motors de volantes esportivos, grades Mercedes, faróis e acessórios automotivos. Filtre por marca, categoria ou veículo.",
