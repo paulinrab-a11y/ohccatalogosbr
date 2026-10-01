@@ -14,7 +14,7 @@ export default function ProductCard({
     <TiltedCard className="group h-full">
       <SpotlightCard className="flex h-full flex-col">
         <Link
-          href={`/produto?sku=${encodeURIComponent(p.sku)}`}
+          href={`/produto/${encodeURIComponent(p.slug)}`}
           className="block"
         >
           <div className="aspect-square studio-bg">
