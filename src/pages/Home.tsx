@@ -52,9 +52,9 @@ export default function Home() {
   useEffect(() => {
     applySeo({
       title: "OHC Motors | Volantes esportivos e acessórios automotivos",
-      description: "Volantes esportivos OHC Motors em couro, carbono e Alcântara, grades Mercedes com LED e acessórios automotivos. Consulte compatibilidade e atendimento pelo WhatsApp.",
+      description:\n        "Volantes esportivos OHC Motors em couro, carbono e Alcântara, grades Mercedes com LED e acessórios automotivos. Consulte compatibilidade e atendimento pelo WhatsApp.",
       path: "/",
-      schema: { "@context": "https://schema.org", "@graph": [organizationSchema, websiteSchema] },
+      schema: {\n        "@context": "https://schema.org",\n        "@graph": [organizationSchema, websiteSchema],\n      },
     });
   }, []);
   const [ready, setReady] = useState(false);
