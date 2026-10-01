@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import Loader from "../components/Loader";
 import Nav from "../components/Nav";
 import LogoLoop from "../components/LogoLoop";
@@ -11,6 +11,7 @@ import FAQ from "../components/FAQ";
 import Footer, { FinalCTA, FloatingWA } from "../components/Footer";
 import SteeringExperience from "../components/SteeringExperience";
 import { useProducts, brands } from "../lib/products";
+import { applySeo, organizationSchema, websiteSchema } from "../lib/seo";
 import { Link } from "../lib/router";
 const LightRays = lazy(() => import("../components/LightRays"));
 import AmbientLighting from "../components/AmbientLighting";
