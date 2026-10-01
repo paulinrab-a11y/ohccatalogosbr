@@ -13,10 +13,7 @@ export default function ProductCard({
   return (
     <TiltedCard className="group h-full">
       <SpotlightCard className="flex h-full flex-col">
-        <Link
-          href={`/produto/${encodeURIComponent(p.slug)}`}
-          className="block"
-        >
+        <Link href={`/produto/${encodeURIComponent(p.slug)}`} className="block">
           <div className="aspect-square studio-bg">
             {p.image ? (
               <img
