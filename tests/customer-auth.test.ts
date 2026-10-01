@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { emailValue, passwordError, authError } from '../src/lib/customerValidation';
+import { emailValue, passwordError, authError, verificationCode } from '../src/lib/customerValidation';
 import { internalDestination } from '../src/lib/navigation';
 import config from '../api/customer-config.js';
 const response=()=>({statusCode:0,body:{} as Record<string,unknown>,headers:{} as Record<string,unknown>,setHeader(k:string,v:unknown){this.headers[k]=v},end(v:string){this.body=JSON.parse(v)}});
@@ -37,4 +37,11 @@ test('public configuration whitelists values, rejects secrets and blocks product
  process.env.OHC_CUSTOMER_PUBLISHABLE_KEY='sb_publishable_development';
  for(const url of ['https://evil.invalid','https://development.supabase.co@evil.invalid','https://development.supabase.co/path','http://development.supabase.co']){process.env.OHC_CUSTOMER_SUPABASE_URL=url;r=response();await config({method:'GET'},r);assert.equal(r.statusCode,503);}
  r=response();await config({method:'DELETE'},r);assert.equal(r.statusCode,405);
+});
+
+test('email confirmation codes are six numeric digits',()=>{
+ assert.equal(verificationCode(' 123456 '),'123456');
+ assert.equal(verificationCode('12-34-56'),'123456');
+ assert.throws(()=>verificationCode('12345'));
+ assert.throws(()=>verificationCode('abcdef'));
 });
