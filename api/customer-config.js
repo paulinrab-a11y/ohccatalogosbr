@@ -1,69 +1,27 @@
 import { json, secureEndpoint } from "../server/adminAuth.js";
-import { backendUrl, publicKey, problem } from "../server/runtime.js";
+import { backendUrl, publicKey } from "../server/runtime.js";
 
 export default secureEndpoint(async (req, res) => {
-  // Temporary Preview-only diagnostics: never log environment values.
-  if (process.env.VERCEL_ENV === "preview") {
-    const url = process.env.OHC_CUSTOMER_SUPABASE_URL || "";
-    const key = process.env.OHC_CUSTOMER_PUBLISHABLE_KEY || "";
-    let hostValid = false,
-      pathValid = false,
-      protocolValid = false;
-    try {
-      const parsed = new URL(url);
-      hostValid = /^[a-z0-9-]+\.supabase\.co$/.test(parsed.hostname);
-      pathValid =
-        parsed.pathname === "/" &&
-        !parsed.search &&
-        !parsed.hash &&
-        !parsed.username &&
-        !parsed.password;
-      protocolValid = parsed.protocol === "https:";
-    } catch {}
-    let anon = false;
-    try {
-      anon =
-        JSON.parse(Buffer.from(key.split(".")[1], "base64url").toString())
-          .role === "anon";
-    } catch {}
-    console.info(
-      "customer_config_preflight",
-      JSON.stringify({
-        urlPresent: !!url,
-        keyPresent: !!key,
-        urlWhitespace: url !== url.trim(),
-        keyWhitespace: key !== key.trim(),
-        hostValid,
-        pathValid,
-        protocolValid,
-        sameBackend:
-          url ===
-          (process.env.SUPABASE_URL ||
-            "https://wlxknhgaoopycrlxygsd.supabase.co"),
-        publishableFormat: /^sb_publishable_[A-Za-z0-9_-]+$/.test(key),
-        publishableAfterTrim: /^sb_publishable_[A-Za-z0-9_-]+$/.test(
-          key.trim(),
-        ),
-        anon,
-      }),
-    );
-  }
-
   if (req.method !== "GET")
     return json(res, 405, { error: "Método não permitido." });
-  // Preview must explicitly select a non-production Auth project.
-  const url = process.env.OHC_CUSTOMER_SUPABASE_URL || backendUrl();
-  const key = process.env.OHC_CUSTOMER_PUBLISHABLE_KEY || publicKey();
-  if (
-    process.env.VERCEL_ENV === "preview" &&
-    (!process.env.OHC_CUSTOMER_SUPABASE_URL || url === backendUrl())
-  )
-    throw problem("Área de conta indisponível neste ambiente.", 503);
+  const unavailable = (code) =>
+    json(res, 503, {
+      error: "Área de conta indisponível neste ambiente.",
+      code,
+    });
+  const preview = process.env.VERCEL_ENV === "preview";
+  const selectedUrl = (process.env.OHC_CUSTOMER_SUPABASE_URL || "").trim();
+  const selectedKey = (process.env.OHC_CUSTOMER_PUBLISHABLE_KEY || "").trim();
+  // Preview must explicitly select both values from a non-production Auth project.
+  if (preview && !selectedUrl) return unavailable("customer_url_missing");
+  if (preview && !selectedKey) return unavailable("customer_key_missing");
+  const url = selectedUrl || backendUrl().trim();
+  const key = selectedKey || publicKey().trim();
   let parsed;
   try {
     parsed = new URL(url);
   } catch {
-    throw problem("Autenticação indisponível.", 503);
+    return unavailable("customer_url_invalid");
   }
   if (
     parsed.protocol !== "https:" ||
@@ -74,7 +32,17 @@ export default secureEndpoint(async (req, res) => {
     parsed.username ||
     parsed.password
   )
-    throw problem("Autenticação indisponível.", 503);
+    return unavailable("customer_url_invalid");
+  if (preview) {
+    const productionOrigins = new Set([
+      "https://wlxknhgaoopycrlxygsd.supabase.co",
+    ]);
+    try {
+      productionOrigins.add(new URL(backendUrl().trim()).origin);
+    } catch {}
+    if (productionOrigins.has(parsed.origin))
+      return unavailable("customer_preview_project_required");
+  }
   let publicOnly = /^sb_publishable_[A-Za-z0-9_-]+$/.test(key);
   if (!publicOnly) {
     try {
@@ -85,6 +53,6 @@ export default secureEndpoint(async (req, res) => {
       /* fail closed */
     }
   }
-  if (!publicOnly) throw problem("Autenticação indisponível.", 503);
+  if (!publicOnly) return unavailable("customer_key_invalid");
   return json(res, 200, { url: parsed.origin, publishableKey: key });
 });
