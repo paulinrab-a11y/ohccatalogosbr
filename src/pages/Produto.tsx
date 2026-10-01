@@ -4,7 +4,13 @@ import AmbientLighting from "../components/AmbientLighting";
 import Footer from "../components/Footer";
 import { Link, useRoute } from "../lib/router";
 import { useProducts, brl, small, waLink } from "../lib/products";
-import { applySeo, productDescription, productSchema, productTitle, productUrl } from "../lib/seo";
+import {
+  applySeo,
+  productDescription,
+  productSchema,
+  productTitle,
+  productUrl,
+} from "../lib/seo";
 export default function Produto() {
   const products = useProducts();
   const { route } = useRoute();
@@ -27,9 +33,24 @@ export default function Produto() {
         breadcrumb: {
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Catálogo", item: "https://www.ohcmotorsbr.com.br/catalogo" },
-            { "@type": "ListItem", position: 2, name: p.brand, item: `https://www.ohcmotorsbr.com.br/catalogo?marca=${encodeURIComponent(p.brand)}` },
-            { "@type": "ListItem", position: 3, name: p.name, item: productUrl(p) },
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Catálogo",
+              item: "https://www.ohcmotorsbr.com.br/catalogo",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: p.brand,
+              item: `https://www.ohcmotorsbr.com.br/catalogo?marca=${encodeURIComponent(p.brand)}`,
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: p.name,
+              item: productUrl(p),
+            },
           ],
         },
       },
