@@ -10,7 +10,8 @@ function clean(value: string) {
 function productType(product: Product) {
   if (product.category === "Volantes") return "volante esportivo";
   if (product.category === "Grades") return "grade automotiva";
-  if (product.category === "Faróis & Lanternas") return "farol ou lanterna automotiva";
+  if (product.category === "Faróis & Lanternas")
+    return "farol ou lanterna automotiva";
   return "acessório automotivo";
 }
 
@@ -52,7 +53,9 @@ function setMeta(attribute: "name" | "property", key: string, content: string) {
 }
 
 function setCanonical(url: string) {
-  let node = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  let node = document.head.querySelector<HTMLLinkElement>(
+    'link[rel="canonical"]',
+  );
   if (!node) {
     node = document.createElement("link");
     node.rel = "canonical";
