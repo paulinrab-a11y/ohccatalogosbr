@@ -40,7 +40,8 @@ export default function Compatibilidade() {
   useEffect(() => {
     applySeo({
       title: "Consultar compatibilidade do volante | OHC Motors",
-      description: "Descubra se um volante OHC Motors é compatível com seu carro. Informe marca, modelo, ano e versão e envie fotos para uma análise segura.",
+      description:
+        "Descubra se um volante OHC Motors é compatível com seu carro. Informe marca, modelo, ano e versão e envie fotos para uma análise segura.",
       path: "/compatibilidade",
     });
   }, []);
