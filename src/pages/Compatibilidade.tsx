@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Nav from "../components/Nav";
 import AmbientLighting from "../components/AmbientLighting";
 import Footer, { FloatingWA } from "../components/Footer";
 import { useRoute } from "../lib/router";
 import { useProducts, waLink } from "../lib/products";
+import { applySeo } from "../lib/seo";
 
 const STEPS = [
   ["Informe o carro", "Marca, modelo, ano e, se souber, geração/chassi."],
@@ -36,6 +37,13 @@ export default function Compatibilidade() {
   const { route } = useRoute();
   const products = useProducts();
   const pre = route.search.get("sku") || "";
+  useEffect(() => {
+    applySeo({
+      title: "Consultar compatibilidade do volante | OHC Motors",
+      description: "Descubra se um volante OHC Motors é compatível com seu carro. Informe marca, modelo, ano e versão e envie fotos para uma análise segura.",
+      path: "/compatibilidade",
+    });
+  }, []);
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
