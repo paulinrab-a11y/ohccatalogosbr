@@ -96,7 +96,7 @@ export default function Nav({
           </nav>
           <Link
             href={accountHref}
-            className="hidden lg:inline-flex items-center gap-2 text-sm font-semibold whitespace-nowrap min-h-11"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold whitespace-nowrap min-h-11"
           >
             <svg
               aria-hidden="true"
