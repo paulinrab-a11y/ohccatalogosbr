@@ -30,6 +30,7 @@ export function authError(error: unknown) {
 
 export function verificationCode(value: string) {
   const code = value.replace(/\D/g, "").slice(0, 6);
-  if (!/^\d{6}$/.test(code)) throw new Error("Informe o código de 6 dígitos recebido por e-mail.");
+  if (!/^\d{6}$/.test(code))
+    throw new Error("Informe o código de 6 dígitos recebido por e-mail.");
   return code;
 }
