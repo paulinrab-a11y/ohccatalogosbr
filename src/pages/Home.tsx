@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import Loader from "../components/Loader";
 import Nav from "../components/Nav";
 import LogoLoop from "../components/LogoLoop";
@@ -11,6 +11,7 @@ import FAQ from "../components/FAQ";
 import Footer, { FinalCTA, FloatingWA } from "../components/Footer";
 import SteeringExperience from "../components/SteeringExperience";
 import { useProducts, brands } from "../lib/products";
+import { applySeo, organizationSchema, websiteSchema } from "../lib/seo";
 import { Link } from "../lib/router";
 const LightRays = lazy(() => import("../components/LightRays"));
 import AmbientLighting from "../components/AmbientLighting";
@@ -48,6 +49,18 @@ const HOTS = [
 ];
 export default function Home() {
   const products = useProducts();
+  useEffect(() => {
+    applySeo({
+      title: "OHC Motors | Volantes esportivos e acessórios automotivos",
+      description:
+        "Volantes esportivos OHC Motors em couro, carbono e Alcântara, grades Mercedes com LED e acessórios automotivos. Consulte compatibilidade e atendimento pelo WhatsApp.",
+      path: "/",
+      schema: {
+        "@context": "https://schema.org",
+        "@graph": [organizationSchema, websiteSchema],
+      },
+    });
+  }, []);
   const [ready, setReady] = useState(false);
   const [hot, setHot] = useState(0);
   const wheels = products.filter((p) => p.category === "Volantes"),

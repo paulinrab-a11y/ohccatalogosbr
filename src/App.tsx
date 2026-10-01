@@ -62,7 +62,7 @@ function Pages() {
     );
   if (route.path === "/catalogo")
     return <Catalogo key={route.search.toString()} />;
-  if (route.path === "/produto")
+  if (route.path === "/produto" || route.path.startsWith("/produto/"))
     return <Produto key={route.search.toString()} />;
   if (route.path === "/compatibilidade") return <Compatibilidade />;
   if (route.path === "/") return <Home />;

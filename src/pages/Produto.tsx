@@ -1,14 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import AmbientLighting from "../components/AmbientLighting";
 import Footer from "../components/Footer";
 import { Link, useRoute } from "../lib/router";
 import { useProducts, brl, small, waLink } from "../lib/products";
+import {
+  applySeo,
+  productDescription,
+  productSchema,
+  productTitle,
+  productUrl,
+} from "../lib/seo";
 export default function Produto() {
   const products = useProducts();
   const { route } = useRoute();
-  const p = products.find((x) => x.sku === route.search.get("sku"));
-  const [img, setImg] = useState(p?.image || "");
+  const slug = route.path.startsWith("/produto/")
+    ? decodeURIComponent(route.path.slice("/produto/".length))
+    : "";
+  const p = products.find(
+    (x) => x.slug === slug || x.sku === route.search.get("sku"),
+  );
+  const [img, setImg] = useState("");
+  useEffect(() => {
+    setImg(p?.image || "");
+    if (!p) return;
+    applySeo({
+      title: productTitle(p),
+      description: productDescription(p),
+      path: `/produto/${encodeURIComponent(p.slug)}`,
+      schema: {
+        ...productSchema(p),
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Catálogo",
+              item: "https://www.ohcmotorsbr.com.br/catalogo",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: p.brand,
+              item: `https://www.ohcmotorsbr.com.br/catalogo?marca=${encodeURIComponent(p.brand)}`,
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: p.name,
+              item: productUrl(p),
+            },
+          ],
+        },
+      },
+    });
+  }, [p]);
   if (!p)
     return (
       <>
@@ -22,7 +69,6 @@ export default function Produto() {
         <Footer />
       </>
     );
-  document.title = `${p.name} | OHC Motors`;
   return (
     <>
       <AmbientLighting />
@@ -167,6 +213,20 @@ export default function Produto() {
               atendimento.
             </dd>
           </dl>
+          <section
+            className="mt-8 border-t border-ohc-line pt-6"
+            aria-labelledby="descricao-produto"
+          >
+            <h2
+              id="descricao-produto"
+              className="font-display text-2xl tracking-wide"
+            >
+              Sobre este produto
+            </h2>
+            <p className="mt-3 text-[15px] leading-7 text-ohc-steel">
+              {productDescription(p)}
+            </p>
+          </section>
           {p.notes && (
             <div className="mt-6 rounded-r-md border-l-[3px] border-ohc-glow bg-ohc-bg2 px-4 py-4 text-sm">
               {p.notes}
