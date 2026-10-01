@@ -53,10 +53,11 @@ test('signup confirmation accepts six-digit email code and supports resend',asyn
  await page.route(origin+'/auth/v1/resend',r=>{resent++;return r.fulfill({json:{}});});
  await page.goto('/conta/confirmar');
  await page.getByLabel('E-mail do cadastro').fill(user.email);
+ await page.getByRole('button',{name:'REENVIAR CÓDIGO'}).click();
+ await expect(page.getByRole('status')).toContainText('novo código');expect(resent).toBe(1);
  await page.getByLabel('Código de ativação').fill('123456');
  await page.getByRole('button',{name:'CONFIRMAR E-MAIL'}).click();
  await expect(page).toHaveURL(/\/minha-conta$/);expect(verified).toBe(1);
- await page.goto('/conta/confirmar');await page.getByLabel('E-mail do cadastro').fill(user.email);await page.getByRole('button',{name:'REENVIAR CÓDIGO'}).click();await expect(page.getByRole('status')).toContainText('novo código');expect(resent).toBe(1);
 });
 test('recovery callback permits password update; missing and expired links fail safely',async({page})=>{
  await page.goto('/conta/redefinir');await expect(page.getByRole('alert')).toContainText('Abra o link');await expect(page.getByLabel('Nova senha',{exact:true})).toHaveCount(0);
