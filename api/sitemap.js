@@ -48,7 +48,7 @@ export default async function handler(req, res) {
         `    <loc>${escapeXml(url.loc)}</loc>`,
         `    <changefreq>${url.changefreq}</changefreq>`,
         `    <priority>${url.priority}</priority>`,
-        url.image && /^https?:\\/\\//i.test(url.image)
+        url.image && /^https?:\/\//i.test(url.image)
           ? `    <image:image><image:loc>${escapeXml(url.image)}</image:loc></image:image>`
           : "",
         "  </url>",
