@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import AmbientLighting from "../components/AmbientLighting";
 import Footer from "../components/Footer";
 import { Link, useRoute } from "../lib/router";
 import { useProducts, brl, small, waLink } from "../lib/products";
+import { applySeo, productDescription, productSchema, productTitle, productUrl } from "../lib/seo";
 export default function Produto() {
   const products = useProducts();
   const { route } = useRoute();
@@ -167,12 +168,7 @@ export default function Produto() {
               atendimento.
             </dd>
           </dl>
-          {p.notes && (
-            <div className="mt-6 rounded-r-md border-l-[3px] border-ohc-glow bg-ohc-bg2 px-4 py-4 text-sm">
-              {p.notes}
-            </div>
-          )}
-        </div>
+          <section className="mt-8 border-t border-ohc-line pt-6" aria-labelledby="descricao-produto">\n            <h2 id="descricao-produto" className="font-display text-2xl tracking-wide">\n              Sobre este produto\n            </h2>\n            <p className="mt-3 text-[15px] leading-7 text-ohc-steel">\n              {productDescription(p)}\n            </p>\n          </section>\n          {p.notes && (\n            <div className="mt-6 rounded-r-md border-l-[3px] border-ohc-glow bg-ohc-bg2 px-4 py-4 text-sm">\n              {p.notes}\n            </div>\n          )}        </div>
       </div>
       <Footer />
     </>
