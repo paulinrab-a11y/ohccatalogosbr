@@ -1,6 +1,6 @@
 # Conta de cliente sem nova contratação
 
-Ref #4. Pesquisa e situação verificadas em 29/09/2026. O usuário recusou a branch paga; não criar branches pagas, upgrades ou serviços cobrados.
+Ref #4. Pesquisa e situação verificadas em 01/10/2026. O usuário recusou a branch paga; não criar branches pagas, upgrades ou serviços cobrados.
 
 ## Decisão
 
@@ -13,7 +13,7 @@ O projeto existente pode atender clientes e administradores com a separação de
 | Opção | Custo e uso | Situação |
 | --- | --- | --- |
 | Supabase local + Mailpit no GitHub Actions | Runner padrão gratuito em repositório público; sem projeto Supabase cloud ou conta SMTP externa | Workflow `auth-local.yml` aprovado; execução 36605142890 no commit `8b217d3` |
-| Novo projeto Supabase Free | Consulta do plugin retornou US$ 0/mês | Criação recusada: administrador já atingiu o limite global de dois projetos gratuitos. Nenhum projeto criado |
+| Novo projeto Supabase Free | Consulta do plugin retornou US$ 0/mês | Projeto `teste` criado no plano Free para o Preview isolado; id `tayvnfaxbbkjryhnxznc`, região `us-east-1`, status saudável |
 | Supabase existente + SMTP Mailjet | Sem nova contratação, respeitando os limites das contas | Configurado no projeto existente; acesso administrativo validado no deployment de produção. Fluxo de cliente ainda aguarda Preview Auth separado e destinatário de teste. |
 | Mailjet Free | 6.000 e-mails/mês, máximo 200/dia | Primeira opção por já ser usada pelo usuário; não foi inspecionada a conta Mailjet |
 | Brevo Free | 300 e-mails/dia | Alternativa SMTP se necessária |
@@ -35,6 +35,8 @@ Cobre: cadastro, bloqueio de login sem confirmação, confirmação PKCE por e-m
 - [CI geral](https://github.com/paulinrab-a11y/ohccatalogosbr/actions/runs/36605142789): aprovado no mesmo commit, incluindo check, auditoria de dependências e E2E.
 - Preview desse commit: READY na Vercel. A disponibilidade do build não comprova configuração de Auth hospedado ou entrega externa.
 - Produção continua no commit `4f907a677dc7452d51ba2b0f33542fb1e9402e9e`; variáveis seguras e SMTP foram configurados pelo proprietário. Nenhum merge foi realizado.
+- O Preview deve usar `OHC_CUSTOMER_SUPABASE_URL=https://tayvnfaxbbkjryhnxznc.supabase.co` e `OHC_CUSTOMER_PUBLISHABLE_KEY` com a chave publishable do projeto `teste`. Depois de alterar variáveis no Vercel, é necessário criar um novo deployment; deployments anteriores não recebem mudanças retroativamente.
+- A chave publishable é apropriada para uso no navegador; nunca usar chave `service_role`, secret key ou credencial SMTP no frontend.
 
 ## Configuração Mailjet a conferir no painel, sem expor segredos
 
