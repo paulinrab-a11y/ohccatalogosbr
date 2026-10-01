@@ -88,3 +88,13 @@ test('public catalog projects allowed fields and never exposes private price or 
  t.mock.method(globalThis,'fetch',async(url:string,init:any)=>{assert.ok(url.startsWith('https://backend.example.invalid'));assert.ok(!init.headers.Authorization);return Response.json([{sku:'TEST',ativo:true,responsavel:'private-person',price:999,service_role:'private-token'},{sku:'HIDDEN',ativo:false}]);});
  const result=await publicCatalog();assert.equal(result.length,1);assert.equal(result[0].price,null);assert.ok(!JSON.stringify(result).includes('private-'));
 });
+test('customer token and forged metadata are rejected by every protected admin gateway',async(t)=>{
+ network(t,{role:'authenticated'});
+ for(const handler of [manage,action,me,login]){
+  const q=req(handler===login?{access_token:jwt(),refresh_token:'synthetic-refresh'}:{action:'admins_list'},jwt());
+  if(handler===me)q.method='GET';
+  const r=res();await handler(q,r);assert.equal(r.statusCode,401);
+ }
+ // A customer SDK session never sets administrative cookies.
+ const r=res();await me({...req(),method:'GET',headers:{...req().headers,authorization:`Bearer ${jwt()}`}},r);assert.equal(r.statusCode,401);
+});

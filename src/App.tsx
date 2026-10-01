@@ -7,6 +7,7 @@ import Compatibilidade from "./pages/Compatibilidade";
 import { reduced } from "./lib/motion";
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const Conta = lazy(() => import("./pages/Conta"));
 function Pages() {
   const { route } = useRoute();
   useEffect(() => {
@@ -40,6 +41,23 @@ function Pages() {
         fallback={<main className="wrap py-16">Carregando painel…</main>}
       >
         <Admin />
+      </Suspense>
+    );
+  if (
+    [
+      "/conta",
+      "/conta/criar",
+      "/conta/recuperar",
+      "/conta/redefinir",
+      "/conta/confirmar",
+      "/minha-conta",
+    ].includes(route.path)
+  )
+    return (
+      <Suspense
+        fallback={<main className="wrap py-16">Carregando conta…</main>}
+      >
+        <Conta key={route.path} />
       </Suspense>
     );
   if (route.path === "/catalogo")

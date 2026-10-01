@@ -102,3 +102,23 @@ body.menu-open { overflow: hidden; }
   .admin-topbar > :last-child { width: 100%; }
   .admin-topbar .btn { flex: 1; }
 }
+
+/* Customer account, using the public site's existing tokens. */
+.customer-shell { @apply grid gap-9 py-12 lg:grid-cols-2 lg:items-start lg:gap-16 lg:py-24; min-height: calc(100svh - 68px); }
+.customer-intro h1 { @apply mt-4 text-[clamp(44px,8vw,82px)]; max-width: 10ch; }
+.customer-intro > p:not(.eyebrow) { @apply mt-6 text-ohc-steel leading-relaxed; max-width: 35ch; }
+.customer-back { @apply inline-block mt-6 text-sm text-ohc-steel hover:text-white; }
+.customer-card { @apply w-full rounded-xl border border-ohc-line bg-ohc-bg2 p-6 sm:p-8; max-width: 520px; }
+.customer-card-top { @apply flex flex-wrap items-center justify-between gap-4 border-b border-ohc-line pb-6 mb-7; }
+.customer-card-top span { @apply text-[10px] tracking-[.18em] text-ohc-steel; }
+.customer-form { @apply grid gap-5; }
+.customer-form input { font-size: 16px; }
+.customer-form button:disabled, .customer-profile button:disabled { opacity: .6; cursor: wait; }
+.customer-links { @apply grid gap-5 mt-7 text-sm leading-relaxed; }
+.customer-links a { @apply text-[#AFC8FF] underline underline-offset-4; }
+.customer-error { @apply mt-5 rounded-lg border border-ohc-red/35 bg-ohc-red/10 p-4 text-sm text-[#FFD0D2]; }
+.customer-notice { @apply mt-5 rounded-lg border border-ohc-blue/40 bg-ohc-blue/10 p-4 text-sm text-[#C9D9FF] leading-relaxed; }
+.customer-profile h2 { @apply text-3xl mb-6; }
+.customer-profile dl { @apply grid gap-2 mb-7; }
+.customer-profile dt { @apply text-xs text-ohc-steel uppercase tracking-wider mt-3; }
+.customer-profile dd { overflow-wrap: anywhere; }

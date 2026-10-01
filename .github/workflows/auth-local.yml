@@ -1,0 +1,41 @@
+name: Auth real sem cloud
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'package*.json'
+      - 'e2e-real/**'
+      - 'playwright.auth-real.config.ts'
+      - 'tests/auth-local/**'
+      - '.github/workflows/auth-local.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: auth-local-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  auth-real:
+    # Standard runner in this public repository: no paid runner or Supabase cloud project.
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Start isolated local Auth and Mailpit
+        run: npx --yes supabase@2.118.0 start --workdir tests/auth-local -x realtime,storage-api,imgproxy,postgres-meta,studio,edge-runtime,logflare,vector,supavisor
+      - name: Read local config without printing keys
+        run: npx --yes supabase@2.118.0 status --workdir tests/auth-local -o json > "$RUNNER_TEMP/ohc-auth-local.json"
+      - name: Exercise browser, real Auth and SMTP capture
+        run: npx playwright test --config=playwright.auth-real.config.ts
+        env:
+          OHC_LOCAL_AUTH_STATUS: ${{ runner.temp }}/ohc-auth-local.json
+      - name: Stop disposable local stack
+        if: always()
+        run: npx --yes supabase@2.118.0 stop --workdir tests/auth-local --no-backup
