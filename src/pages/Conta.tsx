@@ -157,7 +157,9 @@ export default function Conta() {
         email: confirmEmail,
       });
       if (result.error) throw result.error;
-      setNotice("Se o cadastro estiver pendente, um novo código foi enviado. Aguarde alguns segundos antes de tentar novamente.");
+      setNotice(
+        "Se o cadastro estiver pendente, um novo código foi enviado. Aguarde alguns segundos antes de tentar novamente.",
+      );
     } catch (e) {
       setError(authError(e));
     } finally {
@@ -245,51 +247,71 @@ export default function Conta() {
                 </Link>
               </p>
             )}
-          {!auth.loading && !auth.unavailable && !linkError && mode === "confirm" && !done && (
-            <>
-              <form onSubmit={submit} className="customer-form" aria-busy={busy}>
-                <div className="ub-field">
-                  <label htmlFor="customer-confirm-email">E-mail do cadastro</label>
-                  <input
-                    id="customer-confirm-email"
-                    name="email"
-                    type="email"
-                    value={confirmEmail}
-                    onChange={(event) => setConfirmEmail(event.target.value)}
-                    autoComplete="email"
-                    autoCapitalize="none"
-                    spellCheck={false}
-                    maxLength={254}
-                    required
+          {!auth.loading &&
+            !auth.unavailable &&
+            !linkError &&
+            mode === "confirm" &&
+            !done && (
+              <>
+                <form
+                  onSubmit={submit}
+                  className="customer-form"
+                  aria-busy={busy}
+                >
+                  <div className="ub-field">
+                    <label htmlFor="customer-confirm-email">
+                      E-mail do cadastro
+                    </label>
+                    <input
+                      id="customer-confirm-email"
+                      name="email"
+                      type="email"
+                      value={confirmEmail}
+                      onChange={(event) => setConfirmEmail(event.target.value)}
+                      autoComplete="email"
+                      autoCapitalize="none"
+                      spellCheck={false}
+                      maxLength={254}
+                      required
+                      disabled={busy}
+                    />
+                  </div>
+                  <div className="ub-field">
+                    <label htmlFor="customer-code">Código de ativação</label>
+                    <input
+                      id="customer-code"
+                      name="code"
+                      inputMode="numeric"
+                      pattern="[0-9]{6}"
+                      autoComplete="one-time-code"
+                      maxLength={6}
+                      required
+                      disabled={busy}
+                      aria-describedby="customer-code-help"
+                    />
+                  </div>
+                  <p id="customer-code-help" className="text-sm text-ohc-steel">
+                    Digite o código de 6 dígitos enviado para seu e-mail. Ele
+                    substitui o link de ativação.
+                  </p>
+                  <button
+                    type="submit"
+                    className="btn btn-blue"
                     disabled={busy}
-                  />
-                </div>
-                <div className="ub-field">
-                  <label htmlFor="customer-code">Código de ativação</label>
-                  <input
-                    id="customer-code"
-                    name="code"
-                    inputMode="numeric"
-                    pattern="[0-9]{6}"
-                    autoComplete="one-time-code"
-                    maxLength={6}
-                    required
-                    disabled={busy}
-                    aria-describedby="customer-code-help"
-                  />
-                </div>
-                <p id="customer-code-help" className="text-sm text-ohc-steel">
-                  Digite o código de 6 dígitos enviado para seu e-mail. Ele substitui o link de ativação.
-                </p>
-                <button type="submit" className="btn btn-blue" disabled={busy}>
-                  {busy ? "VALIDANDO…" : "CONFIRMAR E-MAIL"}
+                  >
+                    {busy ? "VALIDANDO…" : "CONFIRMAR E-MAIL"}
+                  </button>
+                </form>
+                <button
+                  type="button"
+                  className="btn btn-ghost mt-5"
+                  onClick={resendConfirmation}
+                  disabled={resendBusy || !confirmEmail}
+                >
+                  {resendBusy ? "ENVIANDO…" : "REENVIAR CÓDIGO"}
                 </button>
-              </form>
-              <button type="button" className="btn btn-ghost mt-5" onClick={resendConfirmation} disabled={resendBusy || !confirmEmail}>
-                {resendBusy ? "ENVIANDO…" : "REENVIAR CÓDIGO"}
-              </button>
-            </>
-          )}
+              </>
+            )}
           {showForm && (
             <form onSubmit={submit} className="customer-form" aria-busy={busy}>
               {mode === "signup" && (
