@@ -27,3 +27,9 @@ export function authError(error: unknown) {
     return "Escolha uma senha diferente da atual.";
   return "Não foi possível concluir. Tente novamente em alguns instantes.";
 }
+
+export function verificationCode(value: string) {
+  const code = value.replace(/\D/g, "").slice(0, 6);
+  if (!/^\d{6}$/.test(code)) throw new Error("Informe o código de 6 dígitos recebido por e-mail.");
+  return code;
+}
