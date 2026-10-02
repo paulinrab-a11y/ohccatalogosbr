@@ -39,6 +39,9 @@ double_confirm_changes = true
 enable_confirmations = true
 secure_password_change = true
 max_frequency = "1s"
+[auth.email.template.confirmation]
+subject = "Seu código de ativação | OHC Motors"
+content_path = "./supabase/templates/confirmation.html"
 [edge_runtime]
 enabled = false
 [analytics]

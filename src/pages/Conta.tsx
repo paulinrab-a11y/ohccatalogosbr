@@ -7,6 +7,7 @@ import {
   authError,
   emailValue,
   passwordError,
+  verificationCode,
   RECOVERY_MESSAGE,
 } from "../lib/customerValidation";
 
@@ -30,6 +31,18 @@ export default function Conta() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [done, setDone] = useState(false);
+  const [confirmEmail, setConfirmEmail] = useState(() =>
+    typeof sessionStorage === "undefined"
+      ? ""
+      : sessionStorage.getItem("ohc-customer-confirm-email") || "",
+  );
+  const [resendBusy, setResendBusy] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+  useEffect(() => {
+    if (!cooldown) return;
+    const timer = window.setTimeout(() => setCooldown(cooldown - 1), 1000);
+    return () => window.clearTimeout(timer);
+  }, [cooldown]);
   useEffect(() => {
     document.title = "Minha conta | OHC Motors";
     if (auth.loading || auth.unavailable || linkError) return;
@@ -48,10 +61,14 @@ export default function Conta() {
     const password = String(form.get("password") || "");
     let email = "";
     let name = "";
+    let code = "";
     setError("");
     setNotice("");
     try {
-      if (mode !== "reset") email = emailValue(String(form.get("email") || ""));
+      if (mode !== "reset")
+        email = emailValue(String(form.get("email") || confirmEmail));
+      if (mode === "confirm")
+        code = verificationCode(String(form.get("code") || ""));
       if (mode === "signup") {
         name = String(form.get("name") || "")
           .trim()
@@ -74,7 +91,16 @@ export default function Conta() {
     setBusy(true);
     try {
       const client = await customerClient();
-      if (mode === "login") {
+      if (mode === "confirm") {
+        const result = await client.auth.verifyOtp({
+          email,
+          token: code,
+          type: "email",
+        });
+        if (result.error) throw result.error;
+        sessionStorage.removeItem("ohc-customer-confirm-email");
+        go("/minha-conta");
+      } else if (mode === "login") {
         const result = await client.auth.signInWithPassword({
           email,
           password,
@@ -93,10 +119,9 @@ export default function Conta() {
         if (result.error) throw result.error;
         if (result.data.session) go("/minha-conta");
         else {
-          setDone(true);
-          setNotice(
-            "Confira seu e-mail para confirmar o cadastro. Abra o link neste mesmo navegador e dispositivo. Se você já tem uma conta, entre ou recupere sua senha.",
-          );
+          sessionStorage.setItem("ohc-customer-confirm-email", email);
+          setConfirmEmail(email);
+          go("/conta/confirmar");
         }
       } else if (mode === "recovery") {
         const result = await client.auth.resetPasswordForEmail(email, {
@@ -125,6 +150,38 @@ export default function Conta() {
     } finally {
       lock.current = false;
       setBusy(false);
+    }
+  }
+  async function resendConfirmation() {
+    if (lock.current || cooldown || !confirmEmail) return;
+    lock.current = true;
+    setBusy(true);
+    setResendBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const result = await (await customerClient()).auth.resend({
+        type: "signup",
+        email: emailValue(confirmEmail),
+        options: { emailRedirectTo: `${location.origin}/conta/confirmar` },
+      });
+      if (
+        result.error &&
+        (result.error.status === 429 ||
+          !result.error.status ||
+          result.error.status >= 500)
+      )
+        throw result.error;
+      setCooldown(60);
+      setNotice(
+        "Se o cadastro estiver pendente, um novo código foi enviado. Aguarde alguns segundos antes de tentar novamente.",
+      );
+    } catch (e) {
+      setError(authError(e));
+    } finally {
+      lock.current = false;
+      setBusy(false);
+      setResendBusy(false);
     }
   }
   async function logout() {
@@ -207,6 +264,76 @@ export default function Conta() {
                   Solicitar novo link
                 </Link>
               </p>
+            )}
+          {!auth.loading &&
+            !auth.unavailable &&
+            !linkError &&
+            mode === "confirm" &&
+            !done && (
+              <>
+                <form
+                  onSubmit={submit}
+                  className="customer-form"
+                  aria-busy={busy}
+                >
+                  <div className="ub-field">
+                    <label htmlFor="customer-confirm-email">
+                      E-mail do cadastro
+                    </label>
+                    <input
+                      id="customer-confirm-email"
+                      name="email"
+                      type="email"
+                      value={confirmEmail}
+                      onChange={(event) => setConfirmEmail(event.target.value)}
+                      autoComplete="email"
+                      autoCapitalize="none"
+                      spellCheck={false}
+                      maxLength={254}
+                      required
+                      disabled={busy}
+                    />
+                  </div>
+                  <div className="ub-field">
+                    <label htmlFor="customer-code">Código de ativação</label>
+                    <input
+                      id="customer-code"
+                      name="code"
+                      inputMode="numeric"
+                      pattern="[0-9]{6}"
+                      autoComplete="one-time-code"
+                      maxLength={6}
+                      required
+                      disabled={busy}
+                      aria-describedby="customer-code-help"
+                    />
+                  </div>
+                  <p id="customer-code-help" className="text-sm text-ohc-steel">
+                    Digite o código de 6 dígitos recebido por e-mail. Confira
+                    também o spam. Se a mensagem trouxer um link, abra-o no
+                    navegador em que iniciou o cadastro.
+                  </p>
+                  <button
+                    type="submit"
+                    className="btn btn-blue"
+                    disabled={busy}
+                  >
+                    {busy ? "VALIDANDO…" : "CONFIRMAR E-MAIL"}
+                  </button>
+                </form>
+                <button
+                  type="button"
+                  className="btn btn-ghost mt-5"
+                  onClick={resendConfirmation}
+                  disabled={busy || cooldown > 0 || !confirmEmail}
+                >
+                  {resendBusy
+                    ? "ENVIANDO…"
+                    : cooldown > 0
+                      ? `Reenviar em ${cooldown}s`
+                      : "REENVIAR CÓDIGO"}
+                </button>
+              </>
             )}
           {showForm && (
             <form onSubmit={submit} className="customer-form" aria-busy={busy}>
@@ -346,6 +473,7 @@ export default function Conta() {
           {mode === "login" && (
             <div className="customer-links">
               <Link href="/conta/recuperar">Esqueci minha senha</Link>
+              <Link href="/conta/confirmar">Confirmar meu e-mail</Link>
               <p>
                 Ainda não tem conta?{" "}
                 <Link href="/conta/criar">Criar conta</Link>
