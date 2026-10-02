@@ -95,6 +95,12 @@ export default function Footer() {
           </ul>
         </div>
       </div>
+      <div className="border-t border-ohc-line">
+        <p className="wrap py-6 pr-24 text-sm text-ohc-steel md:pr-48">
+          Desenvolvido por{" "}
+          <span className="font-semibold text-ohc-text">Whynot Visuals</span>
+        </p>
+      </div>
     </footer>
   );
 }
