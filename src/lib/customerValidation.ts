@@ -20,6 +20,8 @@ export function authError(error: unknown) {
     return "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
   if (e?.code === "email_not_confirmed")
     return "Confirme seu e-mail antes de entrar. Verifique também a pasta de spam.";
+  if (e?.code === "otp_expired" || e?.code === "otp_disabled")
+    return "Código inválido, expirado ou já utilizado. Solicite um novo código.";
   if (e?.code === "invalid_credentials") return "E-mail ou senha inválidos.";
   if (e?.code === "weak_password")
     return "Escolha uma senha mais forte, com letras, números e símbolos.";
@@ -29,7 +31,7 @@ export function authError(error: unknown) {
 }
 
 export function verificationCode(value: string) {
-  const code = value.replace(/\D/g, "").slice(0, 6);
+  const code = value.trim();
   if (!/^\d{6}$/.test(code))
     throw new Error("Informe o código de 6 dígitos recebido por e-mail.");
   return code;

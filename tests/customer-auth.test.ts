@@ -41,7 +41,9 @@ test('public configuration whitelists values, rejects secrets and blocks product
 
 test('email confirmation codes are six numeric digits',()=>{
  assert.equal(verificationCode(' 123456 '),'123456');
- assert.equal(verificationCode('12-34-56'),'123456');
+ assert.throws(()=>verificationCode('12-34-56'));
+ assert.throws(()=>verificationCode('1234567'));
+ assert.throws(()=>verificationCode('abc123456'));
  assert.throws(()=>verificationCode('12345'));
  assert.throws(()=>verificationCode('abcdef'));
 });

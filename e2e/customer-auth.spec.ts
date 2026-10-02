@@ -43,7 +43,7 @@ test('recovery keeps account existence neutral and has fixed redirect',async({pa
 test('PKCE confirmation exchanges once, removes code and ignores external next',async({page})=>{
  let calls=0;await page.route(origin+'/auth/v1/token**',r=>{calls++;expect(r.request().postDataJSON().auth_code).toBe('synthetic-code');return r.fulfill({json:session()});});
  await page.goto('/conta/criar');
- await page.getByLabel('Nome completo').fill('Cliente Teste');await page.getByLabel('E-mail',{exact:true}).fill(user.email);await page.getByLabel('Senha',{exact:true}).fill('Uma frase longa 123!');await page.getByLabel('Confirmar senha').fill('Uma frase longa 123!');await page.getByRole('button',{name:'CRIAR CONTA'}).click();await expect(page.getByRole('status')).toContainText('Confira seu e-mail');
+ await page.getByLabel('Nome completo').fill('Cliente Teste');await page.getByLabel('E-mail',{exact:true}).fill(user.email);await page.getByLabel('Senha',{exact:true}).fill('Uma frase longa 123!');await page.getByLabel('Confirmar senha').fill('Uma frase longa 123!');await page.getByRole('button',{name:'CRIAR CONTA'}).click();await expect(page).toHaveURL(/\/conta\/confirmar$/);
  await page.goto('/conta/confirmar?code=synthetic-code&next=https://evil.invalid');await expect(page).toHaveURL(/\/minha-conta$/);await expect(page.getByText(user.email,{exact:true})).toBeVisible();expect(calls).toBe(1);
 });
 

@@ -1,5 +1,14 @@
 # Conta de cliente OHC Motors
 
+## Estado verificado em 02/10/2026
+
+A área de clientes já está na main (174b460). Projeto Free de Preview: teste (tayvnfaxbbkjryhnxznc). No PR #9, cadastro passa a confirmar por código de seis dígitos, com reenvio limitado na interface por 60s e limites reais do Auth mantidos. Recuperação e links legados continuam PKCE. Nenhuma alteração em APIs, permissões ou storage administrativo.
+
+O proprietário confirmou recebimento externo de código no endereço autorizado via SMTP do projeto teste em 02/10. Isso comprova recebimento, não a conclusão da confirmação hospedada. O teste local usa Auth/Mailpit reais com template OTP, confirmação em contexto de navegador novo, rejeição de reutilização, login, persistência, recuperação e logout. Os E2E gerais usam HTTP simulado. Configuração do template Confirm signup em produção ainda precisa ser conferida no painel; não foi alterada por esta implementação.
+
+As seções abaixo preservam registros históricos; suas pendências de criação do projeto e de publicação inicial foram superadas.
+
+
 Issue #4. Baseline: `4f907a677dc7452d51ba2b0f33542fb1e9402e9e`.
 
 ## Arquitetura

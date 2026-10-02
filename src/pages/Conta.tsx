@@ -37,6 +37,12 @@ export default function Conta() {
       : sessionStorage.getItem("ohc-customer-confirm-email") || "",
   );
   const [resendBusy, setResendBusy] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+  useEffect(() => {
+    if (!cooldown) return;
+    const timer = window.setTimeout(() => setCooldown(cooldown - 1), 1000);
+    return () => window.clearTimeout(timer);
+  }, [cooldown]);
   useEffect(() => {
     document.title = "Minha conta | OHC Motors";
     if (auth.loading || auth.unavailable || linkError) return;
@@ -147,22 +153,34 @@ export default function Conta() {
     }
   }
   async function resendConfirmation() {
-    if (resendBusy || !confirmEmail) return;
+    if (lock.current || cooldown || !confirmEmail) return;
+    lock.current = true;
+    setBusy(true);
     setResendBusy(true);
     setError("");
     setNotice("");
     try {
       const result = await (await customerClient()).auth.resend({
         type: "signup",
-        email: confirmEmail,
+        email: emailValue(confirmEmail),
+        options: { emailRedirectTo: `${location.origin}/conta/confirmar` },
       });
-      if (result.error) throw result.error;
+      if (
+        result.error &&
+        (result.error.status === 429 ||
+          !result.error.status ||
+          result.error.status >= 500)
+      )
+        throw result.error;
+      setCooldown(60);
       setNotice(
         "Se o cadastro estiver pendente, um novo código foi enviado. Aguarde alguns segundos antes de tentar novamente.",
       );
     } catch (e) {
       setError(authError(e));
     } finally {
+      lock.current = false;
+      setBusy(false);
       setResendBusy(false);
     }
   }
@@ -291,8 +309,9 @@ export default function Conta() {
                     />
                   </div>
                   <p id="customer-code-help" className="text-sm text-ohc-steel">
-                    Digite o código de 6 dígitos enviado para seu e-mail. Ele
-                    substitui o link de ativação.
+                    Digite o código de 6 dígitos recebido por e-mail. Confira
+                    também o spam. Se a mensagem trouxer um link, abra-o no
+                    navegador em que iniciou o cadastro.
                   </p>
                   <button
                     type="submit"
@@ -306,9 +325,13 @@ export default function Conta() {
                   type="button"
                   className="btn btn-ghost mt-5"
                   onClick={resendConfirmation}
-                  disabled={resendBusy || !confirmEmail}
+                  disabled={busy || cooldown > 0 || !confirmEmail}
                 >
-                  {resendBusy ? "ENVIANDO…" : "REENVIAR CÓDIGO"}
+                  {resendBusy
+                    ? "ENVIANDO…"
+                    : cooldown > 0
+                      ? `Reenviar em ${cooldown}s`
+                      : "REENVIAR CÓDIGO"}
                 </button>
               </>
             )}
@@ -450,6 +473,7 @@ export default function Conta() {
           {mode === "login" && (
             <div className="customer-links">
               <Link href="/conta/recuperar">Esqueci minha senha</Link>
+              <Link href="/conta/confirmar">Confirmar meu e-mail</Link>
               <p>
                 Ainda não tem conta?{" "}
                 <Link href="/conta/criar">Criar conta</Link>
