@@ -16,7 +16,9 @@ img { max-width: 100%; display: block; }
 body.menu-open { overflow: hidden; }
 
 /* --- Uiverse-style micro elements (HTML/CSS, adapted to the OHC palette; source patterns: uiverse-io/galaxy, MIT) --- */
+@layer components {
 .ub-wa { position: relative; isolation: isolate; overflow: hidden; @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-bold text-[#0B2416] min-h-[44px]; background: #25D366; }
+}
 .ub-wa::before { content: ""; position: absolute; inset: -40%; background: conic-gradient(from 0deg, transparent 0 62%, rgba(255,255,255,.7) 80%, transparent 100%); animation: ub-spin 2.8s linear infinite; z-index: -2; }
 .ub-wa::after { content: ""; position: absolute; inset: 2px; border-radius: 4px; background: #25D366; z-index: -1; transition: background .2s; }
 .ub-wa:hover::after, .ub-wa:active::after { background: #3FE27C; }
@@ -122,3 +124,7 @@ body.menu-open { overflow: hidden; }
 .customer-profile dl { @apply grid gap-2 mb-7; }
 .customer-profile dt { @apply text-xs text-ohc-steel uppercase tracking-wider mt-3; }
 .customer-profile dd { overflow-wrap: anywhere; }
+
+/* Keep customer form tracks within narrow screens. */
+.customer-shell > *, .customer-form, .ub-field { min-width: 0; }
+.customer-error, .customer-notice { overflow-wrap: anywhere; }

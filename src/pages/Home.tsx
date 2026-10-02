@@ -241,7 +241,7 @@ export default function Home() {
             <p className="eyebrow">Grades</p>
             <SplitText
               text="Panamericana com LED"
-              className="mt-3 text-[clamp(40px,8vw,96px)] max-w-[9ch]"
+              className="mt-3 text-[clamp(32px,6vw,64px)] md:text-[clamp(30px,3.8vw,48px)] max-w-full"
             />
             <p className="mt-5 max-w-[46ch] text-ohc-steel">
               Grades para Mercedes-Benz com LED apenas no contorno lateral; anel
