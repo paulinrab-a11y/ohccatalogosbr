@@ -73,11 +73,11 @@ export default function Home() {
           <LightRays />
         </Suspense>
       </div>
-      <div className="relative z-[1]">
+      <div className="relative z-1">
         <Nav transparent />
         {/* Herói: experiência 3D do volante (GLB real), controlada pelo scroll */}
         <SteeringExperience onReady={() => setReady(true)} />
-        <div className="border-y border-ohc-line bg-ohc-bg/60 py-4 backdrop-blur">
+        <div className="border-y border-ohc-line bg-ohc-bg/60 py-4 backdrop-blur-sm">
           <LogoLoop items={brands(products)} />
         </div>
 
@@ -93,7 +93,7 @@ export default function Home() {
               src="/img/p/3.02.B02.00002.webp"
               alt="Volante OHC Motors BMW M3 em Alcântara e fibra de carbono com shift light"
               loading="lazy"
-              className="relative h-full w-full object-contain [filter:drop-shadow(0_40px_60px_rgba(0,0,0,.6))]"
+              className="relative h-full w-full object-contain filter-[drop-shadow(0_40px_60px_rgba(0,0,0,.6))]"
             />
             {HOTS.map(([t, , x, y], i) => (
               <button
@@ -149,7 +149,7 @@ export default function Home() {
         </section>
 
         {/* Confiança */}
-        <section className="border-y border-ohc-line bg-ohc-bg2/40 backdrop-blur-sm">
+        <section className="border-y border-ohc-line bg-ohc-bg2/40 backdrop-blur-xs">
           <div className="wrap grid gap-6 py-10 sm:grid-cols-2 lg:grid-cols-4">
             {TRUST.map(([b, s], i) => (
               <div
@@ -192,7 +192,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="mt-10 snap-row md:grid md:grid-cols-3 lg:grid-cols-4 md:gap-4 md:overflow-visible md:p-0 md:m-0 md:[&>*]:max-w-none md:[&>*]:flex-auto">
+          <div className="mt-10 snap-row md:grid md:grid-cols-3 lg:grid-cols-4 md:gap-4 md:overflow-visible md:p-0 md:m-0 md:*:max-w-none md:*:flex-auto">
             {featured.map((p) => (
               <ProductCard key={p!.sku} p={p!} />
             ))}
@@ -234,14 +234,14 @@ export default function Home() {
               src="/img/grade.webp"
               alt="Grade Panamericana OHC Motors para Mercedes-Benz"
               loading="lazy"
-              className="relative w-full [filter:drop-shadow(0_30px_50px_rgba(0,0,0,.7))]"
+              className="relative w-full filter-[drop-shadow(0_30px_50px_rgba(0,0,0,.7))]"
             />
           </div>
           <div>
             <p className="eyebrow">Grades</p>
             <SplitText
               text="Panamericana com LED"
-              className="mt-3 text-[clamp(40px,8vw,96px)] max-w-[9ch]"
+              className="mt-3 text-[clamp(32px,6vw,64px)] md:text-[clamp(30px,3.8vw,48px)] max-w-full"
             />
             <p className="mt-5 max-w-[46ch] text-ohc-steel">
               Grades para Mercedes-Benz com LED apenas no contorno lateral; anel

@@ -33,7 +33,7 @@ export default function Produto() {
             <img
               src={img}
               alt={p.name}
-              className="aspect-square w-full object-contain p-[6%] [filter:drop-shadow(0_30px_40px_rgba(0,0,0,.6))]"
+              className="aspect-square w-full object-contain p-[6%] filter-[drop-shadow(0_30px_40px_rgba(0,0,0,.6))]"
             />
           ) : (
             <div className="grid aspect-square place-items-center font-display text-3xl text-[#3A4350]">
