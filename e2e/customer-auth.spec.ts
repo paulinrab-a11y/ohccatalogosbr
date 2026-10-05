@@ -50,7 +50,7 @@ test('PKCE confirmation exchanges once, removes code and ignores external next',
 test('signup confirmation accepts six-digit email code and supports resend',async({page})=>{
  let verified=0;let resent=0;
  await page.route(origin+'/auth/v1/verify**',r=>{verified++;expect(r.request().postDataJSON()).toMatchObject({type:'email',token:'123456'});return r.fulfill({json:session()});});
- await page.route(origin+'/auth/v1/resend',r=>{resent++;return r.fulfill({json:{}});});
+ await page.route(origin+'/auth/v1/resend**',r=>{resent++;return r.fulfill({json:{}});});
  await page.goto('/conta/confirmar');
  await page.getByLabel('E-mail do cadastro').fill(user.email);
  await page.getByRole('button',{name:'REENVIAR CÓDIGO'}).click();
