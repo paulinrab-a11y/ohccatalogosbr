@@ -46,7 +46,7 @@ export default function SteeringOverlay({
     return () => cancelAnimationFrame(raf);
   }, [staticMode]);
   return (
-    <div className="pointer-events-none absolute inset-0 z-[3]">
+    <div className="pointer-events-none absolute inset-0 z-3">
       {/* Abertura (0 a 10%): título do herói sobre o 3D; em modo estático fica fixo */}
       <div
         ref={intro}

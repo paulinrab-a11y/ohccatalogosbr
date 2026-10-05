@@ -1,73 +1,382 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root { color-scheme: dark; }
-body { @apply bg-ohc-bg text-ohc-text font-body antialiased; overflow-x: hidden; }
-h1, h2, h3, .display { @apply font-display font-normal tracking-wide leading-[0.92]; }
-img { max-width: 100%; display: block; }
-:focus-visible { outline: 2px solid #3B7BFF; outline-offset: 3px; }
-.wrap { @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-12; }
-.eyebrow { @apply font-display text-[13px] sm:text-sm tracking-[0.32em] text-ohc-glow uppercase; }
-.btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-6 py-3.5 text-sm font-bold min-h-[44px]; transition: transform .15s, background-color .15s, border-color .15s; }
-.btn:active { transform: translateY(1px); }
-.btn-blue { @apply bg-ohc-blue text-white; } .btn-blue:hover { background: #2A63C9; }
-.btn-ghost { @apply border border-ohc-line text-ohc-text; } .btn-ghost:hover { border-color: #9AA6B8; }
-body.menu-open { overflow: hidden; }
+@theme {
+  --color-ohc-blue: #214fa1;
+  --color-ohc-blueDeep: #153a7a;
+  --color-ohc-glow: #3b7bff;
+  --color-ohc-red: #ed1c24;
+  --color-ohc-bg: #0b0d11;
+  --color-ohc-bg2: #12151b;
+  --color-ohc-line: #262b33;
+  --color-ohc-steel: #9aa6b8;
+  --color-ohc-text: #eef1f4;
 
-/* --- Uiverse-style micro elements (HTML/CSS, adapted to the OHC palette; source patterns: uiverse-io/galaxy, MIT) --- */
-.ub-wa { position: relative; isolation: isolate; overflow: hidden; @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-bold text-[#0B2416] min-h-[44px]; background: #25D366; }
-.ub-wa::before { content: ""; position: absolute; inset: -40%; background: conic-gradient(from 0deg, transparent 0 62%, rgba(255,255,255,.7) 80%, transparent 100%); animation: ub-spin 2.8s linear infinite; z-index: -2; }
-.ub-wa::after { content: ""; position: absolute; inset: 2px; border-radius: 4px; background: #25D366; z-index: -1; transition: background .2s; }
-.ub-wa:hover::after, .ub-wa:active::after { background: #3FE27C; }
-@keyframes ub-spin { to { transform: rotate(360deg); } }
-.ub-dots { display: inline-flex; gap: 8px; }
-.ub-dots i { width: 8px; height: 8px; border-radius: 50%; background: #3B7BFF; animation: ub-dot 1s ease-in-out infinite; }
-.ub-dots i:nth-child(2) { animation-delay: .15s; } .ub-dots i:nth-child(3) { animation-delay: .3s; }
-@keyframes ub-dot { 0%, 100% { transform: translateY(0); opacity: .5 } 50% { transform: translateY(-7px); opacity: 1 } }
-.ub-field { position: relative; display: grid; gap: 6px; }
-.ub-field label { @apply text-[11px] tracking-[0.24em] uppercase text-ohc-steel; }
-.ub-field input, .ub-field select { @apply w-full rounded-md bg-ohc-bg2 border border-ohc-line px-4 text-[15px] text-ohc-text min-h-[48px]; appearance: none; transition: border-color .2s, box-shadow .2s; }
-.ub-field input:focus, .ub-field select:focus { outline: none; border-color: #3B7BFF; box-shadow: 0 0 0 3px rgba(59,123,255,.18), 0 0 24px rgba(59,123,255,.25); }
-.ub-field select { background-image: linear-gradient(45deg, transparent 50%, #9AA6B8 50%), linear-gradient(135deg, #9AA6B8 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 40px; }
-/* Accordion: 21st.dev FAQ block pattern (shadcn style), no Radix dependency */
-.faq-item { @apply border-t border-ohc-line; }
-.faq-item:last-child { @apply border-b; }
-.faq-q { @apply flex w-full items-center justify-between gap-6 py-5 text-left text-[17px] font-semibold min-h-[56px]; }
-.faq-q svg { @apply shrink-0 text-ohc-glow; transition: transform .3s; }
-.faq-item[data-open="true"] .faq-q svg { transform: rotate(45deg); }
-.faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s cubic-bezier(.2,.8,.2,1); }
-.faq-item[data-open="true"] .faq-a { grid-template-rows: 1fr; }
-.faq-a > div { overflow: hidden; @apply text-ohc-steel text-[15px] leading-relaxed; }
-.faq-item[data-open="true"] .faq-a > div { @apply pb-5; }
-.grain { pointer-events: none; opacity: .12; mix-blend-mode: soft-light; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E"); }
-@media (prefers-reduced-motion: reduce) { .ub-wa::before, .ub-dots i { animation: none !important; } }
+  --font-display: 'Bebas Neue', Impact, sans-serif;
+  --font-body: Montserrat, system-ui, sans-serif;
+}
 
-/* --- luz ambiente azul/vermelha da página --- */
-.dg { position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%; filter: blur(40px); will-change: transform; }
-.dg-blue { left: -22vmax; top: -26vmax; background: radial-gradient(closest-side, rgba(33,79,161,.7), rgba(33,79,161,.24) 45%, transparent 70%); animation: dg-a 18s ease-in-out infinite alternate; }
-.dg-red { right: -24vmax; bottom: -28vmax; background: radial-gradient(closest-side, rgba(237,28,36,.55), rgba(237,28,36,.16) 45%, transparent 70%); animation: dg-b 22s ease-in-out infinite alternate; }
-@keyframes dg-a { to { transform: translate(8vmax, 6vmax) scale(1.08); } }
-@keyframes dg-b { to { transform: translate(-8vmax, -5vmax) scale(1.06); } }
-@media (prefers-reduced-motion: reduce) { .dg { animation: none !important; } }
-/* divisória de seção com as duas cores */
-.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(59,123,255,.7) 25%, rgba(237,28,36,.7) 75%, transparent); opacity: .7; }
-/* cartões: fundo de estúdio com recorte azul/vermelho */
-.studio-bg { background: radial-gradient(70% 60% at 15% 20%, rgba(33,79,161,.30), transparent 60%), radial-gradient(70% 60% at 88% 85%, rgba(237,28,36,.22), transparent 60%), radial-gradient(60% 60% at 50% 45%, #171C26 0%, #0D0F12 100%); }
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
 
-/* feixes de luz diagonais (split lighting da página) */
-.beam { position: absolute; top: -20vh; height: 140vh; width: 34vw; filter: blur(60px); opacity: .55; mix-blend-mode: screen; will-change: transform; }
-.beam-blue { left: -8vw; transform: rotate(18deg); background: linear-gradient(180deg, rgba(59,123,255,.55), rgba(59,123,255,.12) 60%, transparent); animation: beam-a 16s ease-in-out infinite alternate; }
-.beam-red { right: -10vw; transform: rotate(-18deg); background: linear-gradient(0deg, rgba(237,28,36,.5), rgba(237,28,36,.1) 60%, transparent); animation: beam-b 20s ease-in-out infinite alternate; }
-@keyframes beam-a { to { transform: rotate(22deg) translateX(4vw); opacity: .7; } }
-@keyframes beam-b { to { transform: rotate(-22deg) translateX(-4vw); opacity: .7; } }
-@media (max-width: 860px) { .beam { width: 60vw; opacity: .4; } }
-@media (prefers-reduced-motion: reduce) { .beam { animation: none !important; } }
-/* carrossel mobile da home (em @layer components para os utilitários md: sobrescreverem) */
-@layer components {
-  .snap-row { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 20px 12px; margin: 0 -20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .snap-row::-webkit-scrollbar { display: none; }
-  .snap-row > * { flex: 0 0 72vw; max-width: 300px; scroll-snap-align: start; }
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility snap-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 4px 20px 12px;
+  margin: 0 -20px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  & > * {
+    flex: 0 0 72vw;
+    max-width: 300px;
+    scroll-snap-align: start;
+  }
+}
+
+@layer utilities {
+  :root {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-ohc-bg text-ohc-text font-body antialiased;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3,
+  .display {
+    @apply font-display font-normal tracking-wide leading-[0.92];
+  }
+  img {
+    max-width: 100%;
+    display: block;
+  }
+  :focus-visible {
+    outline: 2px solid #3b7bff;
+    outline-offset: 3px;
+  }
+  .wrap {
+    @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-12;
+  }
+  .eyebrow {
+    @apply font-display text-[13px] sm:text-sm tracking-[0.32em] text-ohc-glow uppercase;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-6 py-3.5 text-sm font-bold min-h-[44px];
+    transition:
+      transform 0.15s,
+      background-color 0.15s,
+      border-color 0.15s;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-blue {
+    @apply bg-ohc-blue text-white;
+  }
+  .btn-blue:hover {
+    background: #2a63c9;
+  }
+  .btn-ghost {
+    @apply border border-ohc-line text-ohc-text;
+  }
+  .btn-ghost:hover {
+    border-color: #9aa6b8;
+  }
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* --- Uiverse-style micro elements (HTML/CSS, adapted to the OHC palette; source patterns: uiverse-io/galaxy, MIT) --- */
+  .ub-wa::before {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0 62%,
+      rgba(255, 255, 255, 0.7) 80%,
+      transparent 100%
+    );
+    animation: ub-spin 2.8s linear infinite;
+    z-index: -2;
+  }
+  .ub-wa::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 4px;
+    background: #25d366;
+    z-index: -1;
+    transition: background 0.2s;
+  }
+  .ub-wa:hover::after,
+  .ub-wa:active::after {
+    background: #3fe27c;
+  }
+  @keyframes ub-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .ub-dots {
+    display: inline-flex;
+    gap: 8px;
+  }
+  .ub-dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3b7bff;
+    animation: ub-dot 1s ease-in-out infinite;
+  }
+  .ub-dots i:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .ub-dots i:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  @keyframes ub-dot {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    50% {
+      transform: translateY(-7px);
+      opacity: 1;
+    }
+  }
+  .ub-field {
+    position: relative;
+    display: grid;
+    gap: 6px;
+  }
+  .ub-field label {
+    @apply text-[11px] tracking-[0.24em] uppercase text-ohc-steel;
+  }
+  .ub-field input,
+  .ub-field select {
+    @apply w-full rounded-md bg-ohc-bg2 border border-ohc-line px-4 text-[15px] text-ohc-text min-h-[48px];
+    appearance: none;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .ub-field input:focus,
+  .ub-field select:focus {
+    outline: none;
+    border-color: #3b7bff;
+    box-shadow:
+      0 0 0 3px rgba(59, 123, 255, 0.18),
+      0 0 24px rgba(59, 123, 255, 0.25);
+  }
+  .ub-field select {
+    background-image:
+      linear-gradient(45deg, transparent 50%, #9aa6b8 50%),
+      linear-gradient(135deg, #9aa6b8 50%, transparent 50%);
+    background-position:
+      calc(100% - 20px) 50%,
+      calc(100% - 14px) 50%;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 40px;
+  }
+  /* Accordion: 21st.dev FAQ block pattern (shadcn style), no Radix dependency */
+  .faq-item {
+    @apply border-t border-ohc-line;
+  }
+  .faq-item:last-child {
+    @apply border-b;
+  }
+  .faq-q {
+    @apply flex w-full items-center justify-between gap-6 py-5 text-left text-[17px] font-semibold min-h-[56px];
+  }
+  .faq-q svg {
+    @apply shrink-0 text-ohc-glow;
+    transition: transform 0.3s;
+  }
+  .faq-item[data-open='true'] .faq-q svg {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .faq-item[data-open='true'] .faq-a {
+    grid-template-rows: 1fr;
+  }
+  .faq-a > div {
+    overflow: hidden;
+    @apply text-ohc-steel text-[15px] leading-relaxed;
+  }
+  .faq-item[data-open='true'] .faq-a > div {
+    @apply pb-5;
+  }
+  .grain {
+    pointer-events: none;
+    opacity: 0.12;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ub-wa::before,
+    .ub-dots i {
+      animation: none !important;
+    }
+  }
+
+  /* --- luz ambiente azul/vermelha da página --- */
+  .dg {
+    position: absolute;
+    width: 70vmax;
+    height: 70vmax;
+    border-radius: 50%;
+    filter: blur(40px);
+    will-change: transform;
+  }
+  .dg-blue {
+    left: -22vmax;
+    top: -26vmax;
+    background: radial-gradient(
+      closest-side,
+      rgba(33, 79, 161, 0.7),
+      rgba(33, 79, 161, 0.24) 45%,
+      transparent 70%
+    );
+    animation: dg-a 18s ease-in-out infinite alternate;
+  }
+  .dg-red {
+    right: -24vmax;
+    bottom: -28vmax;
+    background: radial-gradient(
+      closest-side,
+      rgba(237, 28, 36, 0.55),
+      rgba(237, 28, 36, 0.16) 45%,
+      transparent 70%
+    );
+    animation: dg-b 22s ease-in-out infinite alternate;
+  }
+  @keyframes dg-a {
+    to {
+      transform: translate(8vmax, 6vmax) scale(1.08);
+    }
+  }
+  @keyframes dg-b {
+    to {
+      transform: translate(-8vmax, -5vmax) scale(1.06);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dg {
+      animation: none !important;
+    }
+  }
+  /* divisória de seção com as duas cores */
+  .divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(59, 123, 255, 0.7) 25%,
+      rgba(237, 28, 36, 0.7) 75%,
+      transparent
+    );
+    opacity: 0.7;
+  }
+  /* cartões: fundo de estúdio com recorte azul/vermelho */
+  .studio-bg {
+    background:
+      radial-gradient(
+        70% 60% at 15% 20%,
+        rgba(33, 79, 161, 0.3),
+        transparent 60%
+      ),
+      radial-gradient(
+        70% 60% at 88% 85%,
+        rgba(237, 28, 36, 0.22),
+        transparent 60%
+      ),
+      radial-gradient(60% 60% at 50% 45%, #171c26 0%, #0d0f12 100%);
+  }
+
+  /* feixes de luz diagonais (split lighting da página) */
+  .beam {
+    position: absolute;
+    top: -20vh;
+    height: 140vh;
+    width: 34vw;
+    filter: blur(60px);
+    opacity: 0.55;
+    mix-blend-mode: screen;
+    will-change: transform;
+  }
+  .beam-blue {
+    left: -8vw;
+    transform: rotate(18deg);
+    background: linear-gradient(
+      180deg,
+      rgba(59, 123, 255, 0.55),
+      rgba(59, 123, 255, 0.12) 60%,
+      transparent
+    );
+    animation: beam-a 16s ease-in-out infinite alternate;
+  }
+  .beam-red {
+    right: -10vw;
+    transform: rotate(-18deg);
+    background: linear-gradient(
+      0deg,
+      rgba(237, 28, 36, 0.5),
+      rgba(237, 28, 36, 0.1) 60%,
+      transparent
+    );
+    animation: beam-b 20s ease-in-out infinite alternate;
+  }
+  @keyframes beam-a {
+    to {
+      transform: rotate(22deg) translateX(4vw);
+      opacity: 0.7;
+    }
+  }
+  @keyframes beam-b {
+    to {
+      transform: rotate(-22deg) translateX(-4vw);
+      opacity: 0.7;
+    }
+  }
+  @media (max-width: 860px) {
+    .beam {
+      width: 60vw;
+      opacity: 0.4;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .beam {
+      animation: none !important;
+    }
+  }
+  /* carrossel mobile da home (em @layer components para os utilitários md: sobrescreverem) */
 }
 
 /* Existing administrative interface */
@@ -122,3 +431,15 @@ body.menu-open { overflow: hidden; }
 .customer-profile dl { @apply grid gap-2 mb-7; }
 .customer-profile dt { @apply text-xs text-ohc-steel uppercase tracking-wider mt-3; }
 .customer-profile dd { overflow-wrap: anywhere; }
+
+@layer components {
+  .ub-wa {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-bold text-[#0B2416] min-h-[44px];
+    background: #25d366;
+  }
+}
+.customer-shell > *, .customer-form, .ub-field { min-width: 0; }
+.customer-error, .customer-notice { overflow-wrap: anywhere; }

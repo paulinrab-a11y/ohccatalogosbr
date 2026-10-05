@@ -112,7 +112,7 @@ function SetupNotice() {
         Gestão avançada aguardando variável segura do servidor
       </b>
       Produtos completos, mídia, administradores e auditoria usam{" "}
-      <code className="rounded bg-black/30 px-1.5 py-0.5 text-xs">
+      <code className="rounded-sm bg-black/30 px-1.5 py-0.5 text-xs">
         SUPABASE_SERVICE_ROLE_KEY
       </code>{" "}
       somente na função server-side da Vercel. A chave nunca é enviada ao
@@ -231,7 +231,7 @@ export function ProductManagementView({
           {notice}
         </div>
       )}
-      <div className="mb-4 rounded-xl border border-ohc-blue/25 bg-ohc-blue/[.05] p-4 text-xs leading-relaxed text-ohc-steel">
+      <div className="mb-4 rounded-xl border border-ohc-blue/25 bg-ohc-blue/5 p-4 text-xs leading-relaxed text-ohc-steel">
         <b className="text-ohc-text">Banco atual:</b> o catálogo possui o campo{" "}
         <code>ativo</code>, mas não possui um campo separado{" "}
         <code>publicado</code>. Por isso o painel não cria um status fictício;
@@ -261,7 +261,7 @@ export function ProductManagementView({
             <option value="inactive">Inativos</option>
           </select>
           <button
-            className="btn btn-blue !min-h-11 !px-4 !py-2 text-xs"
+            className="btn btn-blue min-h-11! px-4! py-2! text-xs"
             onClick={() => {
               setEditing(null);
               setCreating(true);
@@ -270,7 +270,7 @@ export function ProductManagementView({
             Novo produto
           </button>
         </div>
-        <div className="hidden grid-cols-[88px_1fr_150px_110px_150px] gap-4 border-b border-ohc-line bg-white/[.015] px-4 py-3 text-[10px] font-bold uppercase tracking-[.14em] text-ohc-steel lg:grid">
+        <div className="hidden grid-cols-[88px_1fr_150px_110px_150px] gap-4 border-b border-ohc-line bg-white/1.5 px-4 py-3 text-[10px] font-bold uppercase tracking-[.14em] text-ohc-steel lg:grid">
           <span>SKU</span>
           <span>Produto</span>
           <span>Marca</span>
@@ -419,7 +419,7 @@ function ProductEditor({
   };
   return (
     <div
-      className="fixed inset-0 z-[120] bg-black/75 backdrop-blur-sm"
+      className="fixed inset-0 z-120 bg-black/75 backdrop-blur-xs"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -588,7 +588,7 @@ function ProductEditor({
               />
             </Field>
           </div>
-          <div className="mt-5 flex flex-wrap gap-5 rounded-lg border border-ohc-line bg-white/[.02] p-4 text-xs">
+          <div className="mt-5 flex flex-wrap gap-5 rounded-lg border border-ohc-line bg-white/2 p-4 text-xs">
             <Check
               label="Produto ativo"
               checked={form.ativo}
@@ -715,7 +715,7 @@ export function MediaManagementView() {
             </p>
           </div>
           <label
-            className={`btn btn-blue cursor-pointer !py-2 text-xs ${uploading ? "pointer-events-none opacity-50" : ""}`}
+            className={`btn btn-blue cursor-pointer py-2! text-xs ${uploading ? "pointer-events-none opacity-50" : ""}`}
           >
             {uploading ? "Enviando…" : "Enviar arquivo"}
             <input
@@ -736,7 +736,7 @@ export function MediaManagementView() {
                 href={asset.public_url}
                 target="_blank"
                 rel="noreferrer"
-                className="grid aspect-video place-items-center bg-white/[.025] p-3"
+                className="grid aspect-video place-items-center bg-white/2.5 p-3"
               >
                 <img
                   src={asset.public_url}
@@ -866,7 +866,7 @@ export function AdminsManagementView({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <button className="btn btn-blue !py-2 text-xs" onClick={grant}>
+          <button className="btn btn-blue py-2! text-xs" onClick={grant}>
             Conceder acesso
           </button>
         </div>
@@ -1042,11 +1042,11 @@ export function RulesManagementView() {
             </option>
             <option value="incompativel">Não compatível</option>
           </select>
-          <button className="btn btn-ghost !py-2 text-xs" onClick={load}>
+          <button className="btn btn-ghost py-2! text-xs" onClick={load}>
             Atualizar
           </button>
         </div>
-        <div className="border-b border-ohc-line bg-white/[.015] px-4 py-3 text-xs text-ohc-steel">
+        <div className="border-b border-ohc-line bg-white/1.5 px-4 py-3 text-xs text-ohc-steel">
           <b className="text-ohc-text">{shown.length}</b> regra(s) exibida(s) ·
           novas regras devem ser criadas pela decisão de uma consulta para
           preservar evidência, conflito e auditoria.
@@ -1181,7 +1181,7 @@ export function AuditView() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button className="btn btn-ghost !py-2 text-xs" onClick={load}>
+          <button className="btn btn-ghost py-2! text-xs" onClick={load}>
             Atualizar
           </button>
         </div>
@@ -1351,7 +1351,7 @@ function Check({
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="accent-[#3B7BFF]"
+        className="accent-ohc-glow"
       />
       <span>{label}</span>
     </label>
@@ -1369,7 +1369,7 @@ function Setting({ label, value }: { label: string; value: string }) {
 }
 function Metric({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-lg border border-ohc-line bg-white/[.02] p-3">
+    <div className="rounded-lg border border-ohc-line bg-white/2 p-3">
       <div className="font-display text-3xl">{value}</div>
       <div className="mt-1 text-[10px] font-bold uppercase tracking-[.12em] text-ohc-steel">
         {label}

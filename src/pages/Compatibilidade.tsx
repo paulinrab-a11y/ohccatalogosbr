@@ -330,13 +330,13 @@ export default function Compatibilidade() {
             )}
           </div>
 
-          <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-ohc-line bg-white/[.02] p-4 text-xs leading-relaxed text-ohc-steel">
+          <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-ohc-line bg-white/2 p-4 text-xs leading-relaxed text-ohc-steel">
             <input
               name="consent"
               value="yes"
               type="checkbox"
               required
-              className="mt-0.5 accent-[#3B7BFF]"
+              className="mt-0.5 accent-ohc-glow"
             />
             <span>
               Autorizo o uso dos dados técnicos e imagens enviados para análise
