@@ -30,7 +30,7 @@ test('signup validates confirmation, prevents duplicate submit and sends only di
  let count=0;
  await page.route(origin+'/auth/v1/signup**',async r=>{count++;const data=r.request().postDataJSON();expect(data.data).toEqual({full_name:'Cliente Teste'});expect(new URL(r.request().url()).searchParams.get('redirect_to')).toBe('http://127.0.0.1:4173/conta/confirmar');await new Promise(resolve=>setTimeout(resolve,250));await r.fulfill({json:user});});
  await page.goto('/conta/criar');await page.getByLabel('Nome completo').fill('  Cliente   Teste  ');await page.getByLabel('E-mail',{exact:true}).fill(user.email);await page.getByLabel('Senha',{exact:true}).fill('Uma frase longa 123!');await page.getByLabel('Confirmar senha').fill('Outra frase longa');await page.getByRole('button',{name:'CRIAR CONTA'}).click();await expect(page.getByRole('alert')).toHaveText('As senhas não coincidem.');expect(count).toBe(0);
- await page.getByLabel('Confirmar senha').fill('Uma frase longa 123!');await page.getByRole('button',{name:'CRIAR CONTA'}).click();await expect(page.getByRole('button',{name:'Aguarde…'})).toBeDisabled();await expect(page.getByRole('status')).toContainText('Confira seu e-mail');expect(count).toBe(1);
+ await page.getByLabel('Confirmar senha').fill('Uma frase longa 123!');await page.getByRole('button',{name:'CRIAR CONTA'}).click();await expect(page).toHaveURL(/\/conta\/confirmar$/);await expect(page.getByLabel('Código de ativação')).toBeVisible();expect(count).toBe(1);
 });
 test('invalid login has friendly error and does not expose raw provider detail',async({page})=>{
  await page.route(origin+'/auth/v1/token**',r=>r.fulfill({status:400,headers:{'x-supabase-api-version':'2024-01-01','access-control-expose-headers':'X-Supabase-Api-Version'},json:{code:'invalid_credentials',msg:'private backend detail'}}));
@@ -43,8 +43,21 @@ test('recovery keeps account existence neutral and has fixed redirect',async({pa
 test('PKCE confirmation exchanges once, removes code and ignores external next',async({page})=>{
  let calls=0;await page.route(origin+'/auth/v1/token**',r=>{calls++;expect(r.request().postDataJSON().auth_code).toBe('synthetic-code');return r.fulfill({json:session()});});
  await page.goto('/conta/criar');
- await page.getByLabel('Nome completo').fill('Cliente Teste');await page.getByLabel('E-mail',{exact:true}).fill(user.email);await page.getByLabel('Senha',{exact:true}).fill('Uma frase longa 123!');await page.getByLabel('Confirmar senha').fill('Uma frase longa 123!');await page.getByRole('button',{name:'CRIAR CONTA'}).click();await expect(page.getByRole('status')).toContainText('Confira seu e-mail');
+ await page.getByLabel('Nome completo').fill('Cliente Teste');await page.getByLabel('E-mail',{exact:true}).fill(user.email);await page.getByLabel('Senha',{exact:true}).fill('Uma frase longa 123!');await page.getByLabel('Confirmar senha').fill('Uma frase longa 123!');await page.getByRole('button',{name:'CRIAR CONTA'}).click();await expect(page).toHaveURL(/\/conta\/confirmar$/);
  await page.goto('/conta/confirmar?code=synthetic-code&next=https://evil.invalid');await expect(page).toHaveURL(/\/minha-conta$/);await expect(page.getByText(user.email,{exact:true})).toBeVisible();expect(calls).toBe(1);
+});
+
+test('signup confirmation accepts six-digit email code and supports resend',async({page})=>{
+ let verified=0;let resent=0;
+ await page.route(origin+'/auth/v1/verify**',r=>{verified++;expect(r.request().postDataJSON()).toMatchObject({type:'email',token:'123456'});return r.fulfill({json:session()});});
+ await page.route(origin+'/auth/v1/resend**',r=>{resent++;return r.fulfill({json:{}});});
+ await page.goto('/conta/confirmar');
+ await page.getByLabel('E-mail do cadastro').fill(user.email);
+ await page.getByRole('button',{name:'REENVIAR CÓDIGO'}).click();
+ await expect(page.getByRole('status')).toContainText('novo código');expect(resent).toBe(1);
+ await page.getByLabel('Código de ativação').fill('123456');
+ await page.getByRole('button',{name:'CONFIRMAR E-MAIL'}).click();
+ await expect(page).toHaveURL(/\/minha-conta$/);expect(verified).toBe(1);
 });
 test('recovery callback permits password update; missing and expired links fail safely',async({page})=>{
  await page.goto('/conta/redefinir');await expect(page.getByRole('alert')).toContainText('Abra o link');await expect(page.getByLabel('Nova senha',{exact:true})).toHaveCount(0);

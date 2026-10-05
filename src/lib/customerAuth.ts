@@ -99,9 +99,6 @@ async function initialize() {
           publish({ linkError: true });
           return;
         }
-      } else if (location.pathname === "/conta/confirmar") {
-        publish({ linkError: true });
-        return;
       }
       const { data, error } = await client.auth.getSession();
       if (error) throw error;
