@@ -52,7 +52,7 @@ export default function ProductCard({
                   ))}
               </div>
             )}
-            <div className="mt-3 flex items-center justify-between text-xs text-ohc-steel">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs text-ohc-steel">
               <span>{p.sku}</span>
               <span className="text-sm font-bold text-ohc-text">
                 {p.price ? brl(p.price) : "Consultar"}
@@ -63,7 +63,7 @@ export default function ProductCard({
         {!compact && (
           <div className="mt-auto p-4 pt-3">
             <a
-              className="ub-wa w-full"
+              className="ub-wa w-full text-center"
               href={waLink(
                 `Olá! Tenho interesse no ${p.name} (SKU ${p.sku}). Meu carro é: `,
               )}
