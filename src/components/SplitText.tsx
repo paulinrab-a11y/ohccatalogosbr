@@ -62,7 +62,7 @@ export default function SplitText({
         <span
           key={i}
           data-split
-          className="inline-block will-change-transform"
+          className="inline-block max-w-full [overflow-wrap:anywhere] will-change-transform"
           aria-hidden="true"
         >
           {p}

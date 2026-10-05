@@ -1,10 +1,12 @@
 # Conta de cliente OHC Motors
 
-## Estado verificado em 02/10/2026
+## Estado verificado em 05/10/2026
 
 A área de clientes já está na main (174b460). Projeto Free de Preview: teste (tayvnfaxbbkjryhnxznc). No PR #9, cadastro passa a confirmar por código de seis dígitos, com reenvio limitado na interface por 60s e limites reais do Auth mantidos. Recuperação e links legados continuam PKCE. Nenhuma alteração em APIs, permissões ou storage administrativo.
 
 O proprietário confirmou recebimento externo de código no endereço autorizado via SMTP do projeto teste em 02/10. Isso comprova recebimento, não a conclusão da confirmação hospedada. O teste local usa Auth/Mailpit reais com template OTP, confirmação em contexto de navegador novo, rejeição de reutilização, login, persistência, recuperação e logout. Os E2E gerais usam HTTP simulado. Configuração do template Confirm signup em produção ainda precisa ser conferida no painel; não foi alterada por esta implementação.
+
+Em 05/10, 46 E2E com serviços simulados passaram na versão combinada com o layout responsivo e Tailwind 4; `npm run check` passou. O workflow Auth real sem cloud do commit fdb128a passou com Supabase local e Mailpit. O teste de reenvio passou a reconhecer o parâmetro redirect_to na URL. Nenhuma configuração SMTP ou template hospedado foi modificada.
 
 As seções abaixo preservam registros históricos; suas pendências de criação do projeto e de publicação inicial foram superadas.
 

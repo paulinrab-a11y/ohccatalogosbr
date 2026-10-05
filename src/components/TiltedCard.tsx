@@ -31,7 +31,7 @@ export default function TiltedCard({
   return (
     <motion.div
       ref={ref}
-      className={`[perspective:900px] ${className}`}
+      className={`perspective-[900px] ${className}`}
       onMouseMove={onMove}
       onMouseEnter={() => !still && scale.set(scaleOnHover)}
       onMouseLeave={() => {

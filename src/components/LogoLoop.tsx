@@ -47,7 +47,7 @@ export default function LogoLoop({
   const list = [...items, ...items];
   return (
     <div
-      className={`overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)] ${className}`}
+      className={`overflow-hidden mask-[linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)] ${className}`}
       onMouseEnter={() => (paused.current = true)}
       onMouseLeave={() => (paused.current = false)}
       aria-label={`Marcas atendidas: ${items.join(", ")}`}
