@@ -34,3 +34,12 @@ test('deployment headers protect content without swallowing backend or model pat
   assert.match(headers['Content-Security-Policy'],/frame-ancestors 'none'/);assert.match(headers['Content-Security-Policy'],/script-src 'self';/);assert.equal(headers['X-Content-Type-Options'],'nosniff');
   assert.ok(!c.rewrites.some((r:{source:string})=>r.source==='/(.*)' || r.source==='/:path*'));
 });
+test('CSP lets GLTFLoader read the textures embedded in the GLB without opening eval', () => {
+  const c=JSON.parse(readFileSync('vercel.json','utf8'));
+  const csp=c.headers[0].headers.find((h:{key:string})=>h.key==='Content-Security-Policy').value as string;
+  const directive=(name:string)=>csp.split(';').map(s=>s.trim()).find(s=>s.startsWith(name+' '))?.split(/\s+/).slice(1) ?? [];
+  const glb=readFileSync('public/models/steering-wheel-original.glb'), gltf=JSON.parse(glb.subarray(20,20+glb.readUInt32LE(12)).toString());
+  if((gltf.images??[]).some((i:{bufferView?:number})=>i.bufferView!==undefined)) assert.ok(directive('connect-src').includes('blob:'),'embedded GLB textures load through blob: URLs');
+  assert.ok(directive('img-src').includes('blob:'));
+  assert.ok(!/unsafe-eval/.test(csp));
+});
