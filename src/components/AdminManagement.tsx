@@ -661,11 +661,13 @@ export function MediaManagementView() {
         throw new Error("Envie uma imagem WebP.");
       if (file.size > 2.5 * 1024 * 1024)
         throw new Error("Arquivo maior que 2,5 MB para upload pelo painel.");
-      const data = await fileToDataUrl(file);
+      // The server expects raw base64, without the "data:image/webp;base64," prefix.
+      const data = (await fileToDataUrl(file)).split(",")[1] || "";
       await adminManage({
         action: "media_upload",
         name: file.name,
         content_type: file.type,
+        size: file.size,
         data,
       });
       setNotice("Arquivo enviado para site-assets.");

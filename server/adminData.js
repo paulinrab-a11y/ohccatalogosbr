@@ -321,7 +321,12 @@ export async function uploadMediaAdmin(input) {
     error.status = 400;
     throw error;
   }
-  const bytes = await sanitizeImage(input, { webpOnly: true });
+  // Panels loaded before the fix still send a data URL; accept only the WebP one.
+  const data = String(input.data || "").replace(
+    /^data:image\/webp;base64,/,
+    "",
+  );
+  const bytes = await sanitizeImage({ ...input, data }, { webpOnly: true });
   const path = safeObjectName(input.name, extension);
   await request(
     `/storage/v1/object/${SITE_ASSETS_BUCKET}/${path.split("/").map(encodeURIComponent).join("/")}`,

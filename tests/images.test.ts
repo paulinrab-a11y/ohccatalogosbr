@@ -28,6 +28,13 @@ test('server never hands SVG or other non-raster input to libvips loaders (GHSA-
  assert.equal((await sharp(await sanitizeImage({content_type:'image/webp',data:webp.toString('base64')},{webpOnly:true})).metadata()).format,'webp');
  assert.equal((await sharp(await sanitizeImage({content_type:'image/jpeg',data:jpeg.toString('base64')})).metadata()).format,'webp');
 });
+test('a textured 1600px photo, as the site sends it, is accepted even when lossless would pass the limit', async () => {
+ let seed=7;const noise=Buffer.alloc(1600*1200*3);for(let i=0;i<noise.length;i++){seed=(seed*1103515245+12345)&0x7fffffff;noise[i]=(seed>>16)&255;}
+ const photo=await sharp(noise,{raw:{width:1600,height:1200,channels:3}}).blur(1.2).webp({quality:82}).toBuffer();
+ assert.ok((await sharp(photo).webp({lossless:true}).toBuffer()).length>2621440,'fixture must exceed the limit when lossless');
+ const output=await sanitizeImage({content_type:'image/webp',size:photo.length,data:photo.toString('base64')});
+ const info=await sharp(output).metadata();assert.equal(info.format,'webp');assert.equal(info.width,1600);assert.ok(output.length<=2621440);
+});
 
 import { publicInput } from '../server/publicInput.js';
 test('public input requires consent and strict types and discards administrative fields', () => {
