@@ -1,12 +1,20 @@
 export type AdminUser = { email: string; role?: string | null };
 
 async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const response = await fetch(path, {
-    ...init,
-    headers: { "Content-Type": "application/json", ...(init.headers || {}) },
-    credentials: "same-origin",
-    signal: AbortSignal.timeout(20000),
-  });
+  let response: Response;
+  try {
+    response = await fetch(path, {
+      ...init,
+      headers: { "Content-Type": "application/json", ...(init.headers || {}) },
+      credentials: "same-origin",
+      signal: AbortSignal.timeout(20000),
+    });
+  } catch {
+    // Network failures and timeouts carry English browser messages; show ours.
+    throw new Error(
+      "Sem resposta do servidor. Confira a conexão e tente novamente.",
+    );
+  }
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
     const error = new Error(

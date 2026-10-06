@@ -142,6 +142,9 @@ function PanelLoading({
   );
 }
 
+const PARTIAL_LIST_HINT =
+  "Lista resumida: recarregue a lista completa antes de editar.";
+
 export function ProductManagementView({
   fallbackProducts,
 }: {
@@ -155,6 +158,9 @@ export function ProductManagementView({
   const [status, setStatus] = useState<"all" | "active" | "inactive">("all");
   const [editing, setEditing] = useState<AdminProduct | null>(null);
   const [creating, setCreating] = useState(false);
+  // True when only the summary rows from the dashboard are shown. They lack
+  // most fields, so saving one from the editor would erase the missing data.
+  const [partial, setPartial] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -164,9 +170,12 @@ export function ProductManagementView({
         action: "products_list",
       });
       setProducts(data.products || []);
+      setPartial(false);
     } catch (e: any) {
-      if (e?.status === 503)
+      if (e?.status === 503) {
         setProducts(fallbackProducts.map((p) => ({ ...p, ativo: true })));
+        setPartial(true);
+      }
       setError(
         e?.message || "Não foi possível carregar os produtos completos.",
       );
@@ -318,7 +327,9 @@ export function ProductManagementView({
               </div>
               <div className="flex gap-2">
                 <button
-                  className="text-xs font-bold text-ohc-glow hover:text-white"
+                  className="text-xs font-bold text-ohc-glow hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                  disabled={partial}
+                  title={partial ? PARTIAL_LIST_HINT : undefined}
                   onClick={() => {
                     setCreating(false);
                     setEditing(p);
@@ -327,7 +338,9 @@ export function ProductManagementView({
                   Editar
                 </button>
                 <button
-                  className="text-xs font-bold text-ohc-steel hover:text-white"
+                  className="text-xs font-bold text-ohc-steel hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                  disabled={partial}
+                  title={partial ? PARTIAL_LIST_HINT : undefined}
                   onClick={() => toggle(p)}
                 >
                   {p.ativo ? "Desativar" : "Ativar"}
