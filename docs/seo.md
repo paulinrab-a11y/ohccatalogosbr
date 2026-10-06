@@ -5,7 +5,7 @@ Atualizado em 01/10/2026. A implementação prioriza páginas de produto rastre�
 ## O que foi aplicado
 
 - URL canônica por produto em `/produto/<slug>`.
-- Título e descrição únicos por produto, usando nome, marca, aplicação, acabamento, observações e compatibilidades confirmadas.
+- Título e descrição únicos por produto, usando nome, marca, aplicação, acabamento e observações. A descrição não lista carros compatíveis, não diz quem fabrica e não chama o volante de esportivo; ela sempre termina com "Confirme a compatibilidade com o seu carro antes da compra." (garantido por `tests/seo.test.ts`).
 - Texto visível “Sobre este produto” na página individual.
 - JSON-LD `Product` e `BreadcrumbList` nos produtos.
 - JSON-LD `Organization` e `WebSite` na página inicial.
@@ -16,7 +16,7 @@ Atualizado em 01/10/2026. A implementação prioriza páginas de produto rastre�
 
 ## Regras de conteúdo
 
-O site só publica como fato o que existe nos dados do produto. Quando a compatibilidade não está confirmada, o texto orienta o cliente a consultar a OHC. Produtos sem preço não recebem oferta de preço no schema. Não foram adicionadas avaliações fictícias, garantia de disponibilidade ou palavras-chave ocultas.
+O site só publica como fato o que existe nos dados do produto. Compatibilidade nunca é prometida na descrição: o texto sempre orienta o cliente a confirmar com a OHC pelo WhatsApp. Produtos sem preço não recebem oferta de preço no schema. Não foram adicionadas avaliações fictícias, garantia de disponibilidade ou palavras-chave ocultas.
 
 ## Manutenção
 

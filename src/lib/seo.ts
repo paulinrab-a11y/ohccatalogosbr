@@ -8,7 +8,7 @@ function clean(value: string) {
 }
 
 function productType(product: Product) {
-  if (product.category === "Volantes") return "volante esportivo";
+  if (product.category === "Volantes") return "volante";
   if (product.category === "Grades") return "grade automotiva";
   if (product.category === "Faróis & Lanternas")
     return "farol ou lanterna automotiva";
@@ -23,13 +23,20 @@ export function productDescription(product: Product) {
   const application = product.application
     ? ` para aplicação ${product.application}`
     : "";
-  const notes = product.notes ? ` ${clean(product.notes)}` : "";
-  const compatibility = product.compat?.length
-    ? ` Compatível com ${product.compat.slice(0, 5).join(", ")}.`
-    : " Confirme a compatibilidade com o seu carro antes da compra.";
-  return clean(
-    `${product.name}: ${type}${finish}${application} fabricado pela OHC Motors. Consulte preço, prazo e instalação pelo WhatsApp.${compatibility}${notes}`,
-  ).slice(0, 300);
+  // Compatibility is confirmed by the team on WhatsApp, never promised here.
+  // This sentence must survive the 300-character limit, so only the lead is
+  // shortened and notes are added only when they fit whole.
+  const required =
+    "Consulte preço, prazo e instalação pelo WhatsApp. Confirme a compatibilidade com o seu carro antes da compra.";
+  const lead = clean(`${product.name}: ${type}${finish}${application}.`);
+  const max = 300 - required.length - 1;
+  const head =
+    lead.length > max ? `${lead.slice(0, max - 1).trimEnd()}…` : lead;
+  const text = `${head} ${required}`;
+  const notes = product.notes ? clean(product.notes) : "";
+  return notes && text.length + notes.length + 1 <= 300
+    ? `${text} ${notes}`
+    : text;
 }
 
 export function productTitle(product: Product) {
