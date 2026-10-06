@@ -23,13 +23,25 @@ async function emailLink(email: string, type: string) {
   }
   throw new Error(`Local SMTP capture did not receive the ${type} email.`);
 }
+async function emailCode(email: string) {
+  for (let attempt = 0; attempt < 40; attempt++) {
+    const r = await fetch(`${inbox}/view/latest.html?query=${encodeURIComponent(`to:${email}`)}`);
+    if (r.ok) {
+      const html = await r.text();
+      const match = html.match(/id="activation-code">\s*(\d{6,8})\s*</);
+      if (match) return match[1];
+    }
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+  throw new Error('Local SMTP capture did not receive the signup code.');
+}
 test.beforeEach(async ({ page }) => {
   // Only the public config and unrelated catalog are fixtures. Auth HTTP and SMTP are real.
   await page.route('**/api/customer-config', r => r.fulfill({json:{url:apiUrl,publishableKey:publicKey}}));
   await page.route('**/api/catalog', r => r.fulfill({json:{products:[]}}));
   await page.route('https://*.supabase.co/**', r => r.abort());
 });
-test('real Auth and local SMTP complete signup, PKCE, login, recovery, reset and logout', async ({page}) => {
+test('real Auth and local SMTP complete signup, OTP, login, recovery, reset and logout', async ({page}) => {
   const email = `customer-${randomUUID()}@example.test`;
   const password = 'Frase local original 123!';
   const nextPassword = 'Frase local renovada 456!';
@@ -39,13 +51,33 @@ test('real Auth and local SMTP complete signup, PKCE, login, recovery, reset and
   await page.getByLabel('Senha',{exact:true}).fill(password);
   await page.getByLabel('Confirmar senha').fill(password);
   await page.getByRole('button',{name:'CRIAR CONTA',exact:true}).click();
-  await expect(page.getByRole('status')).toContainText('Confira seu e-mail');
+  await expect(page).toHaveURL(/\/conta\/confirmar$/);
   await page.goto('/conta');
   await page.getByLabel('E-mail',{exact:true}).fill(email);
   await page.getByLabel('Senha',{exact:true}).fill(password);
   await page.getByRole('button',{name:'ENTRAR',exact:true}).click();
   await expect(page.getByRole('alert')).toContainText('Confirme');
-  await page.goto(await emailLink(email, 'signup'));
+  const code = await emailCode(email);
+  // A fresh browser context has no signup PKCE verifier or pending email storage.
+  const fresh = await page.context().browser()!.newContext();
+  const confirmation = await fresh.newPage();
+  await confirmation.route('**/api/customer-config', r => r.fulfill({json:{url:apiUrl,publishableKey:publicKey}}));
+  await confirmation.route('**/api/catalog', r => r.fulfill({json:{products:[]}}));
+  await confirmation.goto('http://127.0.0.1:4173/conta/confirmar');
+  await confirmation.getByLabel('E-mail do cadastro').fill(email);
+  await confirmation.getByLabel('Código de ativação').fill(code);
+  await confirmation.getByRole('button',{name:'CONFIRMAR E-MAIL'}).click();
+  await expect(confirmation).toHaveURL(/\/minha-conta$/);
+  await fresh.close();
+  await page.goto('/conta/confirmar');
+  await page.getByLabel('E-mail do cadastro').fill(email);
+  await page.getByLabel('Código de ativação').fill(code);
+  await page.getByRole('button',{name:'CONFIRMAR E-MAIL'}).click();
+  await expect(page.getByRole('alert')).toContainText('Código inválido');
+  await page.goto('/conta');
+  await page.getByLabel('E-mail',{exact:true}).fill(email);
+  await page.getByLabel('Senha',{exact:true}).fill(password);
+  await page.getByRole('button',{name:'ENTRAR',exact:true}).click();
   await expect(page).toHaveURL(/\/minha-conta$/);
   await expect(page.getByText(email,{exact:true})).toBeVisible();
   await page.reload();

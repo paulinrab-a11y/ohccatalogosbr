@@ -67,7 +67,7 @@ export default function Catalogo() {
     <>
       <AmbientLighting />
       <Nav />
-      <div className="wrap grid gap-8 py-10 md:grid-cols-[240px_1fr] md:gap-10 md:py-14">
+      <div className="wrap grid gap-8 py-10 md:grid-cols-[200px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)] md:gap-10 md:py-14">
         <aside className="md:sticky md:top-24 md:self-start">
           <div className="ub-field">
             <label htmlFor="q">Buscar</label>
@@ -117,7 +117,7 @@ export default function Catalogo() {
             ))}
           </div>
         </aside>
-        <main>
+        <main className="min-w-0">
           <h1 className="text-[clamp(44px,7vw,72px)]">Catálogo</h1>
           <p className="mb-6 text-sm text-ohc-steel">
             Mostrando <b className="text-ohc-text">{list.length}</b>{" "}
@@ -127,7 +127,7 @@ export default function Catalogo() {
             </b>
           </p>
           {!list.length && (
-            <div className="rounded-lg border border-dashed border-ohc-line p-14 text-center text-ohc-steel">
+            <div className="rounded-lg border border-dashed border-ohc-line p-6 sm:p-10 text-center text-ohc-steel">
               Nenhum produto com esses filtros. Limpe a busca ou pergunte à
               equipe no WhatsApp.
             </div>
@@ -142,7 +142,7 @@ export default function Catalogo() {
                     {groups[b].length}
                   </span>
                 </h2>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {groups[b].map((p) => (
                     <ProductCard key={p.sku} p={p} />
                   ))}

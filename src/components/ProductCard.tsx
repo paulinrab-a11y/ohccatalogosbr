@@ -23,7 +23,7 @@ export default function ProductCard({
                 decoding="async"
                 width={560}
                 height={560}
-                className="h-full w-full object-contain p-[8%] [filter:drop-shadow(0_18px_24px_rgba(0,0,0,.55))]"
+                className="h-full w-full object-contain p-[8%] filter-[drop-shadow(0_18px_24px_rgba(0,0,0,.55))]"
               />
             ) : (
               <div className="grid h-full place-items-center font-display text-xl tracking-widest text-[#3A4350]">
@@ -42,14 +42,14 @@ export default function ProductCard({
                   .map((f, i) => (
                     <span
                       key={i}
-                      className={`rounded px-2 py-0.5 text-[11px] font-semibold ${i === 0 ? "bg-ohc-blueDeep text-white" : "border border-ohc-line text-[#C9D0D8]"}`}
+                      className={`rounded-sm px-2 py-0.5 text-[11px] font-semibold ${i === 0 ? "bg-ohc-blueDeep text-white" : "border border-ohc-line text-[#C9D0D8]"}`}
                     >
                       {f}
                     </span>
                   ))}
               </div>
             )}
-            <div className="mt-3 flex items-center justify-between text-xs text-ohc-steel">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs text-ohc-steel">
               <span>{p.sku}</span>
               <span className="text-sm font-bold text-ohc-text">
                 {p.price ? brl(p.price) : "Consultar"}
@@ -60,7 +60,7 @@ export default function ProductCard({
         {!compact && (
           <div className="mt-auto p-4 pt-3">
             <a
-              className="ub-wa w-full"
+              className="ub-wa w-full text-center"
               href={waLink(
                 `Olá! Tenho interesse no ${p.name} (SKU ${p.sku}). Meu carro é: `,
               )}

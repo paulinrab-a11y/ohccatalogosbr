@@ -68,10 +68,10 @@ export default function Nav({
       <header
         className={`sticky top-0 z-40 transition-colors duration-500 ${solid ? "bg-ohc-bg/85 backdrop-blur-md border-b border-ohc-line" : "bg-transparent"}`}
       >
-        <div className="wrap flex h-[68px] items-center justify-between gap-6">
+        <div className="wrap flex h-[68px] items-center justify-between gap-3 xl:gap-6">
           <Link
             href="/"
-            className="flex items-center"
+            className="flex shrink-0 items-center"
             aria-label="OHC Motors, início"
           >
             <img
@@ -81,7 +81,7 @@ export default function Nav({
             />
           </Link>
           <nav
-            className="hidden lg:flex gap-5 text-[13px] font-semibold"
+            className="hidden xl:flex gap-5 text-[13px] font-semibold"
             aria-label="Navegação"
           >
             {LINKS.map(([h, l]) => (
@@ -96,10 +96,11 @@ export default function Nav({
           </nav>
           <Link
             href={accountHref}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold whitespace-nowrap min-h-11"
+            className="ml-auto inline-flex min-w-0 items-center justify-center gap-2 text-xs sm:text-sm font-semibold min-h-11 xl:ml-0"
           >
             <svg
               aria-hidden="true"
+              className="shrink-0"
               width="20"
               height="20"
               viewBox="0 0 24 24"
@@ -110,10 +111,10 @@ export default function Nav({
               <circle cx="12" cy="8" r="4" />
               <path d="M4 22v-3a8 8 0 0 1 16 0v3" />
             </svg>
-            {accountLabel}
+            <span>{accountLabel}</span>
           </Link>
           <a
-            className="ub-wa hidden lg:inline-flex"
+            className="ub-wa hidden shrink-0 xl:inline-flex"
             href={waLink(
               "Olá! Vim pelo site da OHC Motors e quero mais informações.",
             )}
@@ -128,11 +129,20 @@ export default function Nav({
             onClick={() => setOpen(true)}
             aria-label="Abrir menu"
             aria-expanded={open}
-            className="lg:hidden grid h-11 w-11 place-items-center rounded-lg border border-ohc-line bg-ohc-bg/60"
+            className="xl:hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-ohc-line bg-ohc-bg/60"
           >
-            <span className="block h-0.5 w-[18px] bg-white mb-[5px]" />
-            <span className="block h-0.5 w-[18px] bg-white mb-[5px]" />
-            <span className="block h-0.5 w-[18px] bg-white" />
+            <svg
+              aria-hidden="true"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
           </button>
         </div>
       </header>
@@ -141,7 +151,7 @@ export default function Nav({
         role="dialog"
         aria-modal={open || undefined}
         aria-label="Menu de navegação"
-        className={`fixed inset-0 z-[70] flex flex-col overflow-y-auto bg-ohc-bg px-5 pb-8 pt-4 transition-[opacity,transform] duration-300 ${open ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 -translate-y-2"}`}
+        className={`fixed inset-0 z-70 flex flex-col overflow-y-auto bg-ohc-bg px-5 pb-8 pt-4 transition-[opacity,transform] duration-300 ${open ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 -translate-y-2"}`}
         aria-hidden={!open}
         {...(!open ? { inert: "" } : {})}
       >
@@ -163,7 +173,7 @@ export default function Nav({
               key={h}
               href={h}
               onClick={() => setOpen(false)}
-              className="flex min-h-[64px] items-center gap-4 border-t border-ohc-line font-display text-[clamp(38px,11vw,54px)] tracking-wide last:border-b"
+              className="flex min-h-[64px] items-center gap-3 py-3 border-t border-ohc-line font-display text-[clamp(26px,7.5vw,48px)] tracking-wide last:border-b"
             >
               <span className="font-body text-[13px] tracking-[0.2em] text-ohc-glow">
                 0{i + 1}
@@ -173,7 +183,7 @@ export default function Nav({
           ))}
         </nav>
         <a
-          className="ub-wa mt-auto"
+          className="ub-wa mt-8 shrink-0"
           href={waLink(
             "Olá! Vim pelo site da OHC Motors e quero mais informações.",
           )}

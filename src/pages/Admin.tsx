@@ -155,7 +155,7 @@ function StatusBadge({ status }: { status: Status }) {
   const meta = STATUS_META[status] || STATUS_META.analise_necessaria;
   return (
     <span
-      className={`inline-flex rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[.1em] ${meta.cls}`}
+      className={`inline-flex rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest ${meta.cls}`}
     >
       {meta.label}
     </span>
@@ -388,13 +388,13 @@ export default function Admin() {
           </div>
           <div className="flex gap-2">
             <button
-              className="btn btn-ghost !min-h-10 !px-4 !py-2 text-xs"
+              className="btn btn-ghost min-h-10! px-4! py-2! text-xs"
               onClick={() => loadDashboard()}
             >
               Atualizar
             </button>
             <a
-              className="btn btn-ghost !min-h-10 !px-4 !py-2 text-xs"
+              className="btn btn-ghost min-h-10! px-4! py-2! text-xs"
               href="/"
               target="_blank"
               rel="noreferrer"
@@ -527,7 +527,7 @@ function DashboardView({
                 key={r.id}
                 type="button"
                 onClick={() => openRequest(r.id)}
-                className="grid w-full grid-cols-[1fr_auto] items-center gap-4 p-4 text-left hover:bg-white/[.025]"
+                className="grid w-full grid-cols-[1fr_auto] items-center gap-4 p-4 text-left hover:bg-white/2.5"
               >
                 <div className="min-w-0">
                   <div className="truncate text-sm font-bold">
@@ -609,7 +609,7 @@ function RequestsView({
           <option value="incompativel">Não compatível</option>
         </select>
       </div>
-      <div className="hidden grid-cols-[1.1fr_1.8fr_.8fr_1fr_.7fr] gap-3 border-b border-ohc-line bg-white/[.015] px-4 py-3 text-[10px] font-bold uppercase tracking-[.15em] text-ohc-steel lg:grid">
+      <div className="hidden grid-cols-[1.1fr_1.8fr_.8fr_1fr_.7fr] gap-3 border-b border-ohc-line bg-white/1.5 px-4 py-3 text-[10px] font-bold uppercase tracking-[.15em] text-ohc-steel lg:grid">
         <span>Protocolo</span>
         <span>Veículo</span>
         <span>Data</span>
@@ -622,7 +622,7 @@ function RequestsView({
             type="button"
             key={r.id}
             onClick={() => openRequest(r.id)}
-            className="grid w-full gap-3 px-4 py-4 text-left hover:bg-white/[.025] lg:grid-cols-[1.1fr_1.8fr_.8fr_1fr_.7fr] lg:items-center"
+            className="grid w-full gap-3 px-4 py-4 text-left hover:bg-white/2.5 lg:grid-cols-[1.1fr_1.8fr_.8fr_1fr_.7fr] lg:items-center"
           >
             <div>
               <span className="text-xs font-bold">{r.protocol}</span>
@@ -676,7 +676,7 @@ function RuleCard({
 }) {
   return (
     <article
-      className={`rounded-xl border p-4 ${rule.active ? "border-ohc-line bg-[#0D1016]" : "border-ohc-line/50 bg-[#0B0D11] opacity-60"}`}
+      className={`rounded-xl border p-4 ${rule.active ? "border-ohc-line bg-[#0D1016]" : "border-ohc-line/50 bg-ohc-bg opacity-60"}`}
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
@@ -708,7 +708,7 @@ function RuleCard({
         </div>
       </div>
       {rule.installation_conditions && (
-        <p className="mt-3 rounded-lg bg-white/[.025] p-3 text-xs leading-relaxed text-ohc-steel">
+        <p className="mt-3 rounded-lg bg-white/2.5 p-3 text-xs leading-relaxed text-ohc-steel">
           <b className="text-ohc-text">Condições:</b>{" "}
           {rule.installation_conditions}
         </p>
@@ -742,7 +742,7 @@ function RequestDrawer({
 }) {
   return (
     <div
-      className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 z-100 bg-black/70 backdrop-blur-xs"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -940,7 +940,7 @@ function RequestDetail({
                 href={photo.signed_url || "#"}
                 target="_blank"
                 rel="noreferrer"
-                className="aspect-square overflow-hidden rounded-lg border border-ohc-line bg-white/[.02]"
+                className="aspect-square overflow-hidden rounded-lg border border-ohc-line bg-white/2"
               >
                 {photo.signed_url ? (
                   <img
@@ -1009,7 +1009,7 @@ function RequestDetail({
                 {(data.similar_cases || []).slice(0, 6).map((c: any) => (
                   <div
                     key={c.id}
-                    className="rounded-lg bg-white/[.025] p-3 text-xs"
+                    className="rounded-lg bg-white/2.5 p-3 text-xs"
                   >
                     <div className="flex justify-between gap-3">
                       <b>
@@ -1059,13 +1059,13 @@ function RequestDetail({
                   {visibleProducts.map((p) => (
                     <label
                       key={p.id}
-                      className="flex cursor-pointer gap-3 border-b border-ohc-line p-3 last:border-0 hover:bg-white/[.025]"
+                      className="flex cursor-pointer gap-3 border-b border-ohc-line p-3 last:border-0 hover:bg-white/2.5"
                     >
                       <input
                         type="checkbox"
                         checked={productIds.includes(p.id)}
                         onChange={() => toggleProduct(p.id)}
-                        className="mt-1 accent-[#3B7BFF]"
+                        className="mt-1 accent-ohc-glow"
                       />
                       <span className="min-w-0">
                         <b className="block text-xs">
@@ -1110,13 +1110,13 @@ function RequestDetail({
                 />
               </Field>
             )}
-            <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-ohc-line bg-white/[.02] p-4">
+            <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-ohc-line bg-white/2 p-4">
               <input
                 type="checkbox"
                 checked={saveRule}
                 onChange={(e) => setSaveRule(e.target.checked)}
                 disabled={status === "analise_necessaria"}
-                className="mt-1 accent-[#3B7BFF]"
+                className="mt-1 accent-ohc-glow"
               />
               <span>
                 <b className="block text-sm">
@@ -1130,7 +1130,7 @@ function RequestDetail({
             </label>
 
             {saveRule && status !== "analise_necessaria" && (
-              <div className="grid gap-4 rounded-xl border border-ohc-blue/25 bg-ohc-blue/[.06] p-4">
+              <div className="grid gap-4 rounded-xl border border-ohc-blue/25 bg-ohc-blue/6 p-4">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Escopo da regra">
                     <select
@@ -1186,7 +1186,7 @@ function RequestDetail({
                   </div>
                 )}
                 {broadScope && (
-                  <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-[#D6A545]/30 bg-[#D6A545]/[.06] p-3">
+                  <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-[#D6A545]/30 bg-[#D6A545]/6 p-3">
                     <input
                       type="checkbox"
                       checked={scopeApproved}
