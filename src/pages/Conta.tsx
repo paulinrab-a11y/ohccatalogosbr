@@ -300,18 +300,18 @@ export default function Conta() {
                       id="customer-code"
                       name="code"
                       inputMode="numeric"
-                      pattern="[0-9]{6}"
+                      pattern="[0-9]{6,8}"
                       autoComplete="one-time-code"
-                      maxLength={6}
+                      maxLength={8}
                       required
                       disabled={busy}
                       aria-describedby="customer-code-help"
                     />
                   </div>
                   <p id="customer-code-help" className="text-sm text-ohc-steel">
-                    Digite o código de 6 dígitos recebido por e-mail. Confira
-                    também o spam. Se a mensagem trouxer um link, abra-o no
-                    navegador em que iniciou o cadastro.
+                    Digite o código de 6 a 8 dígitos recebido por e-mail.
+                    Confira também o spam. Se a mensagem trouxer um link, abra-o
+                    no navegador em que iniciou o cadastro.
                   </p>
                   <button
                     type="submit"

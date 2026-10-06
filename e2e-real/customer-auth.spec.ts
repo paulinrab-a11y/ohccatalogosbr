@@ -28,7 +28,7 @@ async function emailCode(email: string) {
     const r = await fetch(`${inbox}/view/latest.html?query=${encodeURIComponent(`to:${email}`)}`);
     if (r.ok) {
       const html = await r.text();
-      const match = html.match(/id="activation-code">\s*(\d{6})\s*</);
+      const match = html.match(/id="activation-code">\s*(\d{6,8})\s*</);
       if (match) return match[1];
     }
     await new Promise(resolve => setTimeout(resolve, 500));

@@ -2,7 +2,7 @@
 
 ## Estado verificado em 05/10/2026
 
-A área de clientes já está na main (174b460). Projeto Free de Preview: teste (tayvnfaxbbkjryhnxznc). No PR #9, cadastro passa a confirmar por código de seis dígitos, com reenvio limitado na interface por 60s e limites reais do Auth mantidos. Recuperação e links legados continuam PKCE. Nenhuma alteração em APIs, permissões ou storage administrativo.
+A área de clientes já está na main (174b460). Projeto Free de Preview: teste (tayvnfaxbbkjryhnxznc). No PR #9, cadastro passa a confirmar por código de 6 a 8 dígitos, com reenvio limitado na interface por 60s e limites reais do Auth mantidos. Recuperação e links legados continuam PKCE. Nenhuma alteração em APIs, permissões ou storage administrativo.
 
 O proprietário confirmou recebimento externo de código no endereço autorizado via SMTP do projeto teste em 02/10. Isso comprova recebimento, não a conclusão da confirmação hospedada. O teste local usa Auth/Mailpit reais com template OTP, confirmação em contexto de navegador novo, rejeição de reutilização, login, persistência, recuperação e logout. Os E2E gerais usam HTTP simulado. Configuração do template Confirm signup em produção ainda precisa ser conferida no painel; não foi alterada por esta implementação.
 
@@ -15,7 +15,7 @@ Issue #4. Baseline: `4f907a677dc7452d51ba2b0f33542fb1e9402e9e`.
 
 ## Arquitetura
 
-Vite + React e roteador existente. `/conta`, `/conta/criar`, `/conta/recuperar`, `/conta/confirmar`, `/conta/redefinir` e `/minha-conta` são carregados sob demanda. Um cliente Supabase com storageKey exclusivo `ohc-customer-<host>` gerencia persistência, refresh e eventos. Uma única subscription por aplicação, com cleanup no HMR; assinantes React removidos no unmount. `detectSessionInUrl=false` impede capturar links do admin. Callbacks de cliente usam PKCE, removem parâmetros da URL e fazem uma única troca por carregamento, inclusive sob StrictMode. O cadastro por senha agora envia um código numérico de 6 dígitos: o cliente informa o e-mail e o código em `/conta/confirmar`, e o app chama `verifyOtp({ email, token, type: "email" })`. O código não é colocado na URL e a página oferece reenvio sujeito ao rate limit do Supabase. Links antigos continuam sendo tratados somente como compatibilidade; recuperação de senha continua usando link próprio.
+Vite + React e roteador existente. `/conta`, `/conta/criar`, `/conta/recuperar`, `/conta/confirmar`, `/conta/redefinir` e `/minha-conta` são carregados sob demanda. Um cliente Supabase com storageKey exclusivo `ohc-customer-<host>` gerencia persistência, refresh e eventos. Uma única subscription por aplicação, com cleanup no HMR; assinantes React removidos no unmount. `detectSessionInUrl=false` impede capturar links do admin. Callbacks de cliente usam PKCE, removem parâmetros da URL e fazem uma única troca por carregamento, inclusive sob StrictMode. O cadastro por senha agora envia um código numérico de 6 a 8 dígitos: o cliente informa o e-mail e o código em `/conta/confirmar`, e o app chama `verifyOtp({ email, token, type: "email" })`. O código não é colocado na URL e a página oferece reenvio sujeito ao rate limit do Supabase. Links antigos continuam sendo tratados somente como compatibilidade; recuperação de senha continua usando link próprio.
 
 O e-mail do cadastro pendente fica apenas no `sessionStorage` da aba para facilitar a confirmação após o redirecionamento; o usuário pode digitá-lo novamente em outro navegador/dispositivo.
 

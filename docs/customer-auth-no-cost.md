@@ -69,4 +69,4 @@ Antes de alterar Auth no projeto existente, ler e preservar os redirects/templat
 
 ## Código de ativação sem link
 
-O cadastro continua sendo por e-mail e senha, mas o template Confirm signup do Supabase deve enviar `{{ .Token }}` (código de 6 dígitos). O frontend verifica com `verifyOtp({ email, token, type: 'email' })` e oferece reenvio via `resend({ type: 'signup', email })`. Não há serviço adicional, tabela ou migration. O Mailjet continua sendo apenas o transporte SMTP. A mudança do template deve ser conferida separadamente no projeto Preview e no projeto de produção, sem alterar Reset password nem os mecanismos administrativos.
+O cadastro continua sendo por e-mail e senha, mas o template Confirm signup do Supabase deve enviar `{{ .Token }}` (código de 6 a 8 dígitos). O frontend verifica com `verifyOtp({ email, token, type: 'email' })` e oferece reenvio via `resend({ type: 'signup', email })`. Não há serviço adicional, tabela ou migration. O Mailjet continua sendo apenas o transporte SMTP. A mudança do template deve ser conferida separadamente no projeto Preview e no projeto de produção, sem alterar Reset password nem os mecanismos administrativos.

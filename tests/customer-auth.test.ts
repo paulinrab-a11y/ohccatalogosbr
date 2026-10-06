@@ -39,10 +39,11 @@ test('public configuration whitelists values, rejects secrets and blocks product
  r=response();await config({method:'DELETE'},r);assert.equal(r.statusCode,405);
 });
 
-test('email confirmation codes are six numeric digits',()=>{
+test('email confirmation codes accept six to eight numeric digits',()=>{
  assert.equal(verificationCode(' 123456 '),'123456');
+ assert.equal(verificationCode('12345678'),'12345678');
  assert.throws(()=>verificationCode('12-34-56'));
- assert.throws(()=>verificationCode('1234567'));
+ assert.throws(()=>verificationCode('123456789'));
  assert.throws(()=>verificationCode('abc123456'));
  assert.throws(()=>verificationCode('12345'));
  assert.throws(()=>verificationCode('abcdef'));
