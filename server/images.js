@@ -1,6 +1,18 @@
 import sharp from "sharp";
 import { problem } from "./runtime.js";
 
+// sharp sniffs the format from the bytes, so a declared PNG can still reach
+// the SVG loader (librsvg, GHSA-wq5f-xc86-pv6w). Allow only the raster
+// loaders this module accepts, before any input is read.
+sharp.block({ operation: ["VipsForeignLoad"] });
+sharp.unblock({
+  operation: [
+    "VipsForeignLoadJpegBuffer",
+    "VipsForeignLoadPngBuffer",
+    "VipsForeignLoadWebpBuffer",
+  ],
+});
+
 // Fully decode and encode trusted raster formats; metadata is not copied.
 export async function sanitizeImage(
   file,
