@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   adminAction,
   adminAuth,
@@ -199,6 +199,9 @@ export default function Admin() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<DetailData | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
+  const [detailError, setDetailError] = useState("");
+  // Only the latest admin_detail response may fill the drawer.
+  const detailSeq = useRef(0);
 
   useEffect(() => {
     setTab(tabFromPath());
@@ -254,17 +257,25 @@ export default function Admin() {
   }, [go]);
 
   const openRequest = async (id: string) => {
+    const seq = ++detailSeq.current;
+    // Reloading the open request keeps it on screen, so its notice stays visible.
+    if (id !== selectedId) setDetail(null);
     setSelectedId(id);
-    setDetail(null);
+    setDetailError("");
     setDetailLoading(true);
     setError("");
     try {
-      setDetail(await adminAction<DetailData>({ action: "admin_detail", id }));
+      const next = await adminAction<DetailData>({
+        action: "admin_detail",
+        id,
+      });
+      if (seq === detailSeq.current) setDetail(next);
     } catch (e: any) {
+      if (seq !== detailSeq.current) return;
       if (e.status === 401) go("/admin/login");
-      else setError(e.message || "Falha ao abrir consulta.");
+      else setDetailError(e.message || "Falha ao abrir consulta.");
     } finally {
-      setDetailLoading(false);
+      if (seq === detailSeq.current) setDetailLoading(false);
     }
   };
 
@@ -294,6 +305,8 @@ export default function Admin() {
   const logout = async () => {
     try {
       await adminAuth.logout();
+    } catch {
+      // The server clears the cookies even when revocation fails; leave anyway.
     } finally {
       go("/admin/login");
     }
@@ -449,9 +462,12 @@ export default function Admin() {
           data={detail}
           products={dashboard?.products || []}
           loading={detailLoading}
+          error={detailError}
           onClose={() => {
+            detailSeq.current++;
             setSelectedId(null);
             setDetail(null);
+            setDetailError("");
           }}
           onReload={async () => {
             await openRequest(selectedId);
@@ -730,6 +746,7 @@ function RequestDrawer({
   data,
   products,
   loading,
+  error,
   onClose,
   onReload,
 }: {
@@ -737,6 +754,7 @@ function RequestDrawer({
   data: DetailData | null;
   products: Product[];
   loading: boolean;
+  error: string;
   onClose: () => void;
   onReload: () => Promise<void>;
 }) {
@@ -764,7 +782,11 @@ function RequestDrawer({
             ×
           </button>
         </div>
-        {loading || !data ? (
+        {error && !loading ? (
+          <div className="m-5 rounded-lg border border-[#ED1C24]/40 bg-[#ED1C24]/10 p-4 text-sm text-[#FFB4B7]">
+            {error}
+          </div>
+        ) : !data || String(data.request.id) !== String(id) ? (
           <div className="grid min-h-[60vh] place-items-center">
             <div className="ub-dots">
               <i />
@@ -773,7 +795,12 @@ function RequestDrawer({
             </div>
           </div>
         ) : (
-          <RequestDetail data={data} products={products} onReload={onReload} />
+          <RequestDetail
+            key={String(data.request.id)}
+            data={data}
+            products={products}
+            onReload={onReload}
+          />
         )}
       </section>
     </div>
