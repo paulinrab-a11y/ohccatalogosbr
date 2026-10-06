@@ -61,3 +61,7 @@ Antes de promover um Preview:
 6. manter o deployment atual disponível para rollback.
 
 Não há declaração de “100% seguro”. A auditoria reduz riscos no escopo efetivamente testado.
+
+## Continuidade no Claude
+
+Leia o [CLAUDE.md](./CLAUDE.md) antes de qualquer alteração. Ele resume o estado atual de produção, as regras de autenticação cliente/admin, os testes, as pendências e o fluxo obrigatório de issue, branch e PR. O `AGENTS.md` contém o mesmo guia para outros agentes.
