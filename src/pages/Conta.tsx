@@ -309,9 +309,9 @@ export default function Conta() {
                     />
                   </div>
                   <p id="customer-code-help" className="text-sm text-ohc-steel">
-                    Digite o código de 6 a 8 dígitos recebido por e-mail. Confira
-                    também o spam. Se a mensagem trouxer um link, abra-o no
-                    navegador em que iniciou o cadastro.
+                    Digite o código de 6 a 8 dígitos recebido por e-mail.
+                    Confira também o spam. Se a mensagem trouxer um link, abra-o
+                    no navegador em que iniciou o cadastro.
                   </p>
                   <button
                     type="submit"
