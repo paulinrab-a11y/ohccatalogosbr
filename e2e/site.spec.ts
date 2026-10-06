@@ -9,10 +9,13 @@ test.beforeEach(async ({page}) => {
 test('catalog, original product image, detail and compatibility selection',async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/catalogo');await expect(page.getByRole('heading',{name:/catálogo/i}).first()).toBeVisible();
- const first=page.locator('a[href^="/produto?sku="]').first();await expect(first).toBeVisible();await first.click();
- await expect(page).toHaveURL(/\/produto\?sku=/);await expect(page.locator('h1')).toBeVisible();
+ const first=page.locator('a[href^="/produto/"]').first();await expect(first).toBeVisible();await first.click();
+ await expect(page).toHaveURL(/\/produto\/[^/?]+$/);await expect(page.locator('h1')).toBeVisible();
  await page.getByRole('link',{name:/compatibilidade/i}).last().click();await expect(page).toHaveURL(/\/compatibilidade/);
  expect(errors).toEqual([]);
+});
+test('legacy product links with ?sku= still open the product page',async({page})=>{
+ await page.goto(`/produto?sku=${encodeURIComponent(products[0].sku)}`);await expect(page.locator('h1')).toContainText(products[0].name);
 });
 test('synthetic photo submission creates protocol and WhatsApp link without sending a message',async({page})=>{
  await page.route('**/api/requests', async route=>{
