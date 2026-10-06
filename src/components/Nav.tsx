@@ -23,6 +23,8 @@ export default function Nav({
   const [open, setOpen] = useState(false);
   const [solid, setSolid] = useState(!transparent);
   const { route } = useRoute();
+  const query = route.search.toString();
+  const current = route.path + (query ? `?${query}` : "");
   useEffect(() => {
     if (!transparent) return;
     const on = () => setSolid(scrollY > innerHeight * 0.6);
@@ -88,7 +90,8 @@ export default function Nav({
               <Link
                 key={h}
                 href={h}
-                className={`py-1.5 border-b-2 ${route.path + route.search.toString() === h ? "border-ohc-glow" : "border-transparent hover:text-white"}`}
+                aria-current={current === h ? "page" : undefined}
+                className={`py-1.5 border-b-2 ${current === h ? "border-ohc-glow" : "border-transparent hover:text-white"}`}
               >
                 {l}
               </Link>

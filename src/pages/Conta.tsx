@@ -12,6 +12,24 @@ import {
 } from "../lib/customerValidation";
 
 type Mode = "login" | "signup" | "recovery" | "reset" | "confirm" | "profile";
+const CONFIRM_EMAIL_KEY = "ohc-customer-confirm-email";
+// sessionStorage throws when the browser blocks site data. The e-mail is only a
+// convenience for the confirmation form, so failures fall back to typing it.
+function readConfirmEmail() {
+  try {
+    return sessionStorage.getItem(CONFIRM_EMAIL_KEY) || "";
+  } catch {
+    return "";
+  }
+}
+function writeConfirmEmail(email: string | null) {
+  try {
+    if (email) sessionStorage.setItem(CONFIRM_EMAIL_KEY, email);
+    else sessionStorage.removeItem(CONFIRM_EMAIL_KEY);
+  } catch {
+    /* storage blocked */
+  }
+}
 export default function Conta() {
   const { route, go } = useRoute();
   const auth = useCustomerAuth();
@@ -31,11 +49,7 @@ export default function Conta() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [done, setDone] = useState(false);
-  const [confirmEmail, setConfirmEmail] = useState(() =>
-    typeof sessionStorage === "undefined"
-      ? ""
-      : sessionStorage.getItem("ohc-customer-confirm-email") || "",
-  );
+  const [confirmEmail, setConfirmEmail] = useState(readConfirmEmail);
   const [resendBusy, setResendBusy] = useState(false);
   const [cooldown, setCooldown] = useState(0);
   useEffect(() => {
@@ -98,7 +112,7 @@ export default function Conta() {
           type: "email",
         });
         if (result.error) throw result.error;
-        sessionStorage.removeItem("ohc-customer-confirm-email");
+        writeConfirmEmail(null);
         go("/minha-conta");
       } else if (mode === "login") {
         const result = await client.auth.signInWithPassword({
@@ -119,7 +133,7 @@ export default function Conta() {
         if (result.error) throw result.error;
         if (result.data.session) go("/minha-conta");
         else {
-          sessionStorage.setItem("ohc-customer-confirm-email", email);
+          writeConfirmEmail(email);
           setConfirmEmail(email);
           go("/conta/confirmar");
         }
