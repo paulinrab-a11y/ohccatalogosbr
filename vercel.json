@@ -5,6 +5,14 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/produto/:path*",
+      "destination": "/index.html"
+    },
+    {
       "source": "/catalogo",
       "destination": "/index.html"
     },

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /conta
+Disallow: /minha-conta
+
+Sitemap: https://www.ohcmotorsbr.com.br/sitemap.xml
