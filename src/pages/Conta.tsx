@@ -300,9 +300,15 @@ export default function Conta() {
                       id="customer-code"
                       name="code"
                       inputMode="numeric"
-                      pattern="[0-9]{6,8}"
                       autoComplete="one-time-code"
-                      maxLength={8}
+                      maxLength={16}
+                      onInput={(e) => {
+                        // Keep only digits so a pasted "123 456" still fits.
+                        const input = e.currentTarget;
+                        input.value = input.value
+                          .replace(/\D/g, "")
+                          .slice(0, 8);
+                      }}
                       required
                       disabled={busy}
                       aria-describedby="customer-code-help"

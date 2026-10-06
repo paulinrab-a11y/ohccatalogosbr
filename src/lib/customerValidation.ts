@@ -31,7 +31,8 @@ export function authError(error: unknown) {
 }
 
 export function verificationCode(value: string) {
-  const code = value.trim();
+  // Codes pasted from e-mail may come grouped with spaces ("123 456").
+  const code = value.replace(/\s/g, "");
   if (!/^\d{6,8}$/.test(code))
     throw new Error("Informe o código de 6 a 8 dígitos recebido por e-mail.");
   return code;

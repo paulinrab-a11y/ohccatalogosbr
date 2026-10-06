@@ -58,7 +58,7 @@ export default function AdminLogin() {
       await adminAuth.requestAccess(email);
       setPhase("sent");
       setMessage(
-        "Se o e-mail estiver autorizado, você receberá um link de acesso. Se a mensagem trouxer um código de 6 dígitos, você também pode digitá-lo abaixo.",
+        "Se o e-mail estiver autorizado, você receberá um link de acesso. Se a mensagem trouxer um código de 6 a 8 dígitos, você também pode digitá-lo abaixo.",
       );
     } catch (e: any) {
       setPhase("email");
@@ -145,9 +145,11 @@ export default function AdminLogin() {
                   id="admin-code"
                   inputMode="numeric"
                   autoComplete="one-time-code"
-                  maxLength={8}
+                  maxLength={16}
                   value={token}
-                  onChange={(e) => setToken(e.target.value.replace(/\D/g, ""))}
+                  onChange={(e) =>
+                    setToken(e.target.value.replace(/\D/g, "").slice(0, 8))
+                  }
                   placeholder="000000"
                 />
               </div>
