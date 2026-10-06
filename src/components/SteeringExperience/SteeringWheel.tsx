@@ -19,7 +19,9 @@ export default function SteeringWheel({
   mouse,
   onReady,
 }: Props) {
-  const gltf = useGLTF(GLB_URL);
+  // O GLB não usa Draco nem Meshopt; desligar evita baixar decodificadores WASM
+  // que a CSP (script-src 'self') bloqueia.
+  const gltf = useGLTF(GLB_URL, false, false);
   const outer = useRef<THREE.Group>(null);
   const keys = mobile ? KEYS_MOBILE : KEYS_DESKTOP;
   /* pega o nó real do volante (sem o pai "Web_sun" girado, sem câmera/luzes do arquivo) */
@@ -123,4 +125,4 @@ export default function SteeringWheel({
     </group>
   );
 }
-useGLTF.preload(GLB_URL);
+useGLTF.preload(GLB_URL, false, false);
