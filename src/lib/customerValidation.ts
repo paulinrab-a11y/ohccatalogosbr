@@ -32,7 +32,7 @@ export function authError(error: unknown) {
 
 export function verificationCode(value: string) {
   const code = value.trim();
-  if (!/^\d{6}$/.test(code))
-    throw new Error("Informe o código de 6 dígitos recebido por e-mail.");
+  if (!/^\d{6,8}$/.test(code))
+    throw new Error("Informe o código de 6 a 8 dígitos recebido por e-mail.");
   return code;
 }
