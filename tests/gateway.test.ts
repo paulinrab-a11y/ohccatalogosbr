@@ -84,6 +84,18 @@ test('media blocks executable types, forged WebP, oversized encoded data and tra
  await assert.rejects(data.uploadMediaAdmin({content_type:'image/webp',data:'A'.repeat(3500001)}),{status:400});
  for(const path of ['admin/../logo.webp','admin/%2e%2e/logo.webp','logo.webp'])await assert.rejects(data.deleteMediaAdmin(path),{status:400});
 });
+test('media upload stores a real WebP sent as raw base64 or as the panel data URL',async(t)=>{
+ const sharp=(await import('sharp')).default;
+ const webp=await sharp({create:{width:8,height:8,channels:3,background:'#214FA1'}}).webp().toBuffer();
+ const stored:string[]=[];
+ t.mock.method(globalThis,'fetch',async(url:string,init:any={})=>{assert.ok(String(url).startsWith('https://backend.example.invalid/storage/v1/object/'));assert.equal(init.method,'POST');stored.push(String(url));return new Response('{}',{status:200,headers:{'content-type':'application/json'}});});
+ for(const value of [webp.toString('base64'),`data:image/webp;base64,${webp.toString('base64')}`]){
+  const result=await data.uploadMediaAdmin({name:'Foto Teste.webp',content_type:'image/webp',size:webp.length,data:value});
+  assert.match(result.path,/^admin\/[0-9a-f-]{36}-foto-teste\.webp$/);
+ }
+ assert.equal(stored.length,2);
+ await assert.rejects(data.uploadMediaAdmin({content_type:'image/webp',data:`data:image/svg+xml;base64,${webp.toString('base64')}`}),{status:400});
+});
 test('public catalog projects allowed fields and never exposes private price or admin metadata',async(t)=>{
  t.mock.method(globalThis,'fetch',async(url:string,init:any)=>{assert.ok(url.startsWith('https://backend.example.invalid'));assert.ok(!init.headers.Authorization);return Response.json([{sku:'TEST',ativo:true,responsavel:'private-person',price:999,service_role:'private-token'},{sku:'HIDDEN',ativo:false}]);});
  const result=await publicCatalog();assert.equal(result.length,1);assert.equal(result[0].price,null);assert.ok(!JSON.stringify(result).includes('private-'));

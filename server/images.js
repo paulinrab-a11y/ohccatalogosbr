@@ -52,11 +52,19 @@ export async function sanitizeImage(
     const meta = await pipeline.metadata();
     if (meta.format !== formats[file.content_type] || (meta.pages || 1) !== 1)
       throw new Error("unsupported image");
-    const output = await pipeline
-      .rotate()
-      .webp({ lossless: true })
-      .timeout({ seconds: 5 })
-      .toBuffer();
+    const encode = (options) =>
+      pipeline
+        .clone()
+        .rotate()
+        .webp(options)
+        .timeout({ seconds: 5 })
+        .toBuffer();
+    // Lossless keeps the original pixels, but a textured phone photo can grow
+    // 4x and pass the limit (or the timeout); then re-encode lossy instead of
+    // refusing it.
+    let output = await encode({ lossless: true }).catch(() => null);
+    if (!output || output.length > maxBytes)
+      output = await encode({ quality: 90 });
     if (output.length > maxBytes) throw new Error("oversized output");
     return output;
   } catch {
