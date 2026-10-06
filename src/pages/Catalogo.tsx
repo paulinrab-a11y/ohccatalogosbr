@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { catalogSeoContext } from "../lib/seo";
 import Nav from "../components/Nav";
 import AmbientLighting from "../components/AmbientLighting";
 import Footer, { FloatingWA } from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 import { useRoute } from "../lib/router";
 import { CATS, useProducts, brands, matches } from "../lib/products";
-import { applySeo, catalogSeoContext, websiteSchema } from "../lib/seo";
+import { applySeo, websiteSchema } from "../lib/seo";
 export default function Catalogo() {
   const products = useProducts();
   const { route } = useRoute();
