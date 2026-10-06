@@ -18,6 +18,16 @@ test('server rejects signature-only files, mismatched MIME, forged size and exce
  const big=await sharp({create:{width:4001,height:4000,channels:3,background:'white'}}).png().toBuffer();
  await assert.rejects(sanitizeImage({content_type:'image/png',data:big.toString('base64')}),{status:400});
 });
+test('server never hands SVG or other non-raster input to libvips loaders (GHSA-wq5f-xc86-pv6w)', async () => {
+ const svg=Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><rect width="4" height="4"/></svg>');
+ await assert.rejects(sharp(svg).metadata(),/unsupported image format|blocked/);
+ await assert.rejects(sanitizeImage({content_type:'image/png',data:svg.toString('base64')}),{status:400});
+ const tiff=await sharp({create:{width:4,height:4,channels:3,background:'white'}}).tiff().toBuffer();
+ await assert.rejects(sharp(tiff).metadata(),/unsupported image format|blocked/);
+ const webp=await sharp({create:{width:4,height:4,channels:3,background:'white'}}).webp().toBuffer(), jpeg=await sharp({create:{width:4,height:4,channels:3,background:'white'}}).jpeg().toBuffer();
+ assert.equal((await sharp(await sanitizeImage({content_type:'image/webp',data:webp.toString('base64')},{webpOnly:true})).metadata()).format,'webp');
+ assert.equal((await sharp(await sanitizeImage({content_type:'image/jpeg',data:jpeg.toString('base64')})).metadata()).format,'webp');
+});
 
 import { publicInput } from '../server/publicInput.js';
 test('public input requires consent and strict types and discards administrative fields', () => {
