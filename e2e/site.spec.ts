@@ -17,6 +17,26 @@ test('catalog, original product image, detail and compatibility selection',async
 test('legacy product links with ?sku= still open the product page',async({page})=>{
  await page.goto(`/produto?sku=${encodeURIComponent(products[0].sku)}`);await expect(page.locator('h1')).toContainText(products[0].name);
 });
+test('product page waits for a slow catalog instead of flashing not found; missing product is noindex',async({page})=>{
+ await page.route('**/api/catalog',async route=>{await new Promise(r=>setTimeout(r,1500));await route.fallback();});
+ await page.goto(`/produto/${products[0].slug}`);
+ await expect(page.getByText('Carregando produto…')).toBeVisible();await expect(page.getByText(/não encontrado/i)).toHaveCount(0);
+ await expect(page.locator('h1')).toContainText(products[0].name);
+ await page.goto('/produto/produto-sintetico-inexistente');await expect(page.getByText(/Produto não encontrado/)).toBeVisible();
+ await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content',/noindex/);
+});
+test('catalog falls back to the bundled products when /api/catalog fails',async({page})=>{
+ await page.route('**/api/catalog',route=>route.fulfill({status:503,json:{error:'indisponível'}}));
+ await page.goto('/catalogo');await expect(page.locator('a[href^="/produto/"]').first()).toBeVisible();
+ await expect(page.getByText(/Nenhum produto/)).toHaveCount(0);
+});
+test('product cards navigate inside the app and ?sku= preselects the product after the catalog loads',async({page})=>{
+ await page.goto('/catalogo');await page.evaluate(()=>{(window as unknown as {__spa:boolean}).__spa=true;});
+ await page.locator('a[href^="/produto/"]').first().click();await expect(page).toHaveURL(/\/produto\/[^/?]+$/);
+ expect(await page.evaluate(()=>(window as unknown as {__spa?:boolean}).__spa)).toBe(true);
+ await page.route('**/api/catalog',async route=>{await new Promise(r=>setTimeout(r,1000));await route.fallback();});
+ await page.goto(`/compatibilidade?sku=${encodeURIComponent(products[0].sku)}`);await expect(page.locator('#sku')).toHaveValue(products[0].sku);
+});
 test('synthetic photo submission creates protocol and WhatsApp link without sending a message',async({page})=>{
  await page.route('**/api/requests', async route=>{
   const data=route.request().postDataJSON();expect(data.consent_data_images).toBe(true);expect(data.files).toHaveLength(1);

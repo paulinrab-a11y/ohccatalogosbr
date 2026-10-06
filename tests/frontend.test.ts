@@ -9,6 +9,10 @@ test('navigation rejects external, protocol-relative, control and unregistered d
   for (const path of ['https://evil.invalid', '//evil.invalid', '/\\evil.invalid', '/admin/inexistente', '/api/admin', '/%2e%2e/admin', '/catalogo\n']) assert.equal(internalDestination(path, 'https://ohc.invalid'), null);
   assert.equal(internalDestination('/produto?sku=test#foto', 'https://ohc.invalid'), '/produto?sku=test#foto');
 });
+test('product slugs from the catalog navigate inside the app; odd product paths do not', () => {
+  for (const p of PRODUCTS) assert.equal(internalDestination(`/produto/${encodeURIComponent(p.slug)}`, 'https://ohc.invalid'), `/produto/${p.slug}`, p.sku);
+  for (const path of ['/produto/a/b', '/produto/A-B', '/produto/-x', '/produto/x..y']) assert.equal(internalDestination(path, 'https://ohc.invalid'), null, path);
+});
 test('compatibility keeps the actual catalog SKU and business message', () => {
   const text = compatibilityMessage({marca:'Marca fictícia',modelo:'Teste',ano:'2025',acc:'Não',sku:PRODUCTS[0].sku},2026);
   assert.match(text, /confirmar a compatibilidade/); assert.ok(text.includes(PRODUCTS[0].sku)); assert.match(text,/3 fotos/);

@@ -36,7 +36,7 @@ type SubmitResult = {
 export default function Compatibilidade() {
   const { route } = useRoute();
   const products = useProducts();
-  const pre = route.search.get("sku") || "";
+  const [interest, setInterest] = useState(route.search.get("sku") || "");
   useEffect(() => {
     applySeo({
       title: "Consultar compatibilidade do volante | OHC Motors",
@@ -283,11 +283,18 @@ export default function Compatibilidade() {
             </Field>
           </div>
           <Field id="sku" label="Produto de interesse">
-            <select id="sku" name="sku" defaultValue={pre}>
+            {/* Controlled: the options arrive after the catalog loads, so a
+                defaultValue from ?sku= would be lost on a fresh page load. */}
+            <select
+              id="sku"
+              name="sku"
+              value={interest}
+              onChange={(e) => setInterest(e.target.value)}
+            >
               <option value="">Ainda não escolhi</option>
               {products.map((p) => (
                 <option key={p.sku} value={p.sku}>
-                  {p.name} — {p.sku}
+                  {p.name} (SKU {p.sku})
                 </option>
               ))}
             </select>

@@ -37,12 +37,15 @@ export default async function handler(req, res) {
         changefreq: "weekly",
         priority: "0.8",
       },
-      ...products.map((product) => ({
-        loc: `${ORIGIN}/produto/${encodeURIComponent(slugFor(product))}`,
-        changefreq: "weekly",
-        priority: "0.8",
-        image: product.imagem_principal,
-      })),
+      // The site only opens products that have a SKU (src/lib/products.ts).
+      ...products
+        .filter((product) => product.sku)
+        .map((product) => ({
+          loc: `${ORIGIN}/produto/${encodeURIComponent(slugFor(product))}`,
+          changefreq: "weekly",
+          priority: "0.8",
+          image: product.imagem_principal,
+        })),
     ];
     const body = [
       '<?xml version="1.0" encoding="UTF-8"?>',

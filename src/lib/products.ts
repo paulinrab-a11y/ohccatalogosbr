@@ -69,7 +69,6 @@ type DbProduct = {
 };
 
 let cachedLive: Product[] | null = null;
-let inflight: Promise<Product[]> | null = null;
 
 function splitText(value?: string | null) {
   if (!value) return [];
@@ -134,7 +133,10 @@ function dbToProduct(row: DbProduct): Product {
   };
 }
 
-async function loadLiveProducts() {
+let inflight: Promise<Product[] | null> | null = null;
+
+/** Resolves to the live catalog, or null when /api/catalog fails. */
+function loadLiveProducts(): Promise<Product[] | null> {
   if (!inflight)
     inflight = fetch("/api/catalog", {
       credentials: "same-origin",
@@ -146,33 +148,47 @@ async function loadLiveProducts() {
         const data = await response.json();
         if (!Array.isArray(data?.products))
           throw new Error("Catálogo dinâmico inválido.");
-        const next = data.products
-          .filter((row: DbProduct) => row.ativo === true)
-          .map(dbToProduct)
-          .filter((p: Product) => p.sku);
+        // Rows without SKU have no product page; skip them before mapping.
+        const next: Product[] = data.products
+          .filter((row: DbProduct) => row.ativo === true && row.sku)
+          .map(dbToProduct);
         cachedLive = next;
         return next;
       })
-      .catch(() => {
-        cachedLive = null;
-        return [];
-      })
+      .catch(() => null)
       .finally(() => {
         inflight = null;
       });
   return inflight;
 }
 
-export function useProducts() {
-  const [products, setProducts] = useState<Product[]>(cachedLive || []);
+/**
+ * Live catalog with a loading flag. While the first request is pending the list
+ * is empty and `loading` is true, so pages can avoid showing "not found". If the
+ * API fails, the last live list is kept, or the bundled catalog is used.
+ */
+export function useCatalog() {
+  const [state, setState] = useState<{
+    products: Product[];
+    loading: boolean;
+  }>(() =>
+    cachedLive
+      ? { products: cachedLive, loading: false }
+      : { products: [], loading: true },
+  );
   useEffect(() => {
     let live = true;
     loadLiveProducts().then((next) => {
-      if (live) setProducts(next);
+      if (live)
+        setState({ products: next ?? cachedLive ?? PRODUCTS, loading: false });
     });
     return () => {
       live = false;
     };
   }, []);
-  return products;
+  return state;
+}
+
+export function useProducts() {
+  return useCatalog().products;
 }

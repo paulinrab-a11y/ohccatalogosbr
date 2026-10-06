@@ -32,9 +32,10 @@ export function internalDestination(
     return null;
   try {
     const url = new URL(value, origin);
+    const path = url.pathname.replace(/\/+$/, "") || "/";
     if (
       url.origin !== origin ||
-      !ROUTES.has(url.pathname.replace(/\/+$/, "") || "/")
+      !(ROUTES.has(path) || /^\/produto\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(path))
     )
       return null;
     return url.pathname + url.search + url.hash;
