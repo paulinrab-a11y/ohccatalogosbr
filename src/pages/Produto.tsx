@@ -3,7 +3,7 @@ import Nav from "../components/Nav";
 import AmbientLighting from "../components/AmbientLighting";
 import Footer from "../components/Footer";
 import { Link, useRoute } from "../lib/router";
-import { useProducts, brl, small, waLink } from "../lib/products";
+import { useCatalog, brl, small, waLink } from "../lib/products";
 import {
   applySeo,
   productDescription,
@@ -11,19 +11,34 @@ import {
   productTitle,
   productUrl,
 } from "../lib/seo";
+function productSlug(path: string) {
+  if (!path.startsWith("/produto/")) return "";
+  try {
+    return decodeURIComponent(path.slice("/produto/".length));
+  } catch {
+    return "";
+  }
+}
 export default function Produto() {
-  const products = useProducts();
+  const { products, loading } = useCatalog();
   const { route } = useRoute();
-  const slug = route.path.startsWith("/produto/")
-    ? decodeURIComponent(route.path.slice("/produto/".length))
-    : "";
+  const slug = productSlug(route.path);
   const p = products.find(
     (x) => x.slug === slug || x.sku === route.search.get("sku"),
   );
   const [img, setImg] = useState("");
   useEffect(() => {
     setImg(p?.image || "");
-    if (!p) return;
+    if (!p) {
+      if (!loading)
+        applySeo({
+          title: "Produto não encontrado | OHC Motors",
+          description: "Este produto não está no catálogo da OHC Motors.",
+          path: route.path,
+          noindex: true,
+        });
+      return;
+    }
     applySeo({
       title: productTitle(p),
       description: productDescription(p),
@@ -55,16 +70,25 @@ export default function Produto() {
         },
       },
     });
-  }, [p]);
+  }, [p, loading, route.path]);
   if (!p)
     return (
       <>
         <Nav />
-        <div className="wrap py-24 text-center text-ohc-steel">
-          Produto não encontrado.{" "}
-          <Link href="/catalogo" className="text-ohc-glow">
-            Voltar ao catálogo
-          </Link>
+        <div
+          className="wrap py-24 text-center text-ohc-steel"
+          aria-live="polite"
+        >
+          {loading ? (
+            "Carregando produto…"
+          ) : (
+            <>
+              Produto não encontrado.{" "}
+              <Link href="/catalogo" className="text-ohc-glow">
+                Voltar ao catálogo
+              </Link>
+            </>
+          )}
         </div>
         <Footer />
       </>

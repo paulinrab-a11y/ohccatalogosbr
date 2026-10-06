@@ -4,10 +4,10 @@ import AmbientLighting from "../components/AmbientLighting";
 import Footer, { FloatingWA } from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 import { useRoute } from "../lib/router";
-import { CATS, useProducts, brands, matches } from "../lib/products";
+import { CATS, useCatalog, brands, matches } from "../lib/products";
 import { applySeo, websiteSchema } from "../lib/seo";
 export default function Catalogo() {
-  const products = useProducts();
+  const { products, loading } = useCatalog();
   const { route } = useRoute();
   useEffect(() => {
     const category = route.search.get("categoria");
@@ -127,9 +127,13 @@ export default function Catalogo() {
             </b>
           </p>
           {!list.length && (
-            <div className="rounded-lg border border-dashed border-ohc-line p-6 sm:p-10 text-center text-ohc-steel">
-              Nenhum produto com esses filtros. Limpe a busca ou pergunte à
-              equipe no WhatsApp.
+            <div
+              className="rounded-lg border border-dashed border-ohc-line p-6 sm:p-10 text-center text-ohc-steel"
+              aria-live="polite"
+            >
+              {loading
+                ? "Carregando catálogo…"
+                : "Nenhum produto com esses filtros. Limpe a busca ou pergunte à equipe no WhatsApp."}
             </div>
           )}
           {Object.keys(groups)
