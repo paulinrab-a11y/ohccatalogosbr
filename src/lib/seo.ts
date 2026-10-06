@@ -1,7 +1,22 @@
-import type { Product } from "./products";
+import { brands, CATS, PRODUCTS, type Product } from "./products";
 
 const SITE_ORIGIN = "https://www.ohcmotorsbr.com.br";
 const SITE_NAME = "OHC Motors";
+
+/**
+ * Catalog filters that may shape the title and canonical URL. Tracking
+ * parameters (utm_*, fbclid), the search box and unknown values are ignored,
+ * so they never create indexable duplicates.
+ */
+export function catalogSeoContext(search: URLSearchParams) {
+  const category = CATS.find((c) => c === search.get("categoria"));
+  const brand = brands(PRODUCTS).find((b) => b === search.get("marca"));
+  const params = new URLSearchParams();
+  if (category) params.set("categoria", category);
+  if (brand) params.set("marca", brand);
+  const context = [category, brand].filter(Boolean).join(" · ");
+  return { context, path: context ? `/catalogo?${params}` : "/catalogo" };
+}
 
 function clean(value: string) {
   return value.replace(/\s+/g, " ").trim();
@@ -109,7 +124,9 @@ export function applySeo({
   setMeta("name", "twitter:card", "summary_large_image");
   setMeta("name", "twitter:title", title);
   setMeta("name", "twitter:description", description);
+  // A page without schema must not keep the previous page's (e.g. a Product).
   if (schema) setJsonLd("page", schema);
+  else document.head.querySelector('script[data-ohc-schema="page"]')?.remove();
 }
 
 export function productSchema(product: Product) {

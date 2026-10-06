@@ -60,3 +60,10 @@ test('unknown product and unknown route fail safely',async({page})=>{
 test('direct admin navigation redirects unauthenticated visitor to login',async({page})=>{
  await page.goto('/admin');await expect(page).toHaveURL(/\/admin\/login/);await expect(page.getByLabel('E-mail autorizado')).toBeVisible();
 });
+test('leaving a product page drops its Product JSON-LD and canonical',async({page})=>{
+ await page.goto(`/produto?sku=${encodeURIComponent(products[0].sku)}`);await expect(page.locator('h1')).toContainText(products[0].name);
+ await expect.poll(()=>page.locator('script[type="application/ld+json"]').allTextContents()).toEqual(expect.arrayContaining([expect.stringContaining('"Product"')]));
+ await page.getByRole('link',{name:/compatibilidade/i}).last().click();await expect(page).toHaveURL(/\/compatibilidade/);
+ expect((await page.locator('script[type="application/ld+json"]').allTextContents()).join('')).not.toContain('"Product"');
+ await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://www.ohcmotorsbr.com.br/compatibilidade');
+});

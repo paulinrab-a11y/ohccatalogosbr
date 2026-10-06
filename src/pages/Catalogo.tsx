@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { catalogSeoContext } from "../lib/seo";
 import Nav from "../components/Nav";
 import AmbientLighting from "../components/AmbientLighting";
 import Footer, { FloatingWA } from "../components/Footer";
@@ -10,9 +11,7 @@ export default function Catalogo() {
   const { products, loading } = useCatalog();
   const { route } = useRoute();
   useEffect(() => {
-    const category = route.search.get("categoria");
-    const brand = route.search.get("marca");
-    const context = [category, brand].filter(Boolean).join(" · ");
+    const { context, path } = catalogSeoContext(route.search);
     applySeo({
       title: context
         ? `${context} | Catálogo OHC Motors`
@@ -20,7 +19,7 @@ export default function Catalogo() {
       description: context
         ? `Encontre produtos OHC Motors para ${context}. Veja fotos, materiais, aplicações, preço e confirme a compatibilidade antes da compra.`
         : "Catálogo OHC Motors de volantes esportivos, grades Mercedes, faróis e acessórios automotivos. Filtre por marca, categoria ou veículo.",
-      path: context ? `/catalogo?${route.search.toString()}` : "/catalogo",
+      path,
       schema: websiteSchema,
     });
   }, [route.search.toString()]);
