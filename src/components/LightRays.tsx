@@ -51,7 +51,10 @@ export default function LightRays({
         const { Renderer, Program, Triangle, Mesh } = await import("ogl");
         if (!alive) return;
         const renderer = new Renderer({
-          dpr: Math.min(devicePixelRatio, 1.5),
+          // Full-screen shader: 1x on touch screens keeps phones cool.
+          dpr: matchMedia("(pointer: coarse)").matches
+            ? 1
+            : Math.min(devicePixelRatio, 1.5),
           alpha: true,
         });
         const gl = renderer.gl;
@@ -101,6 +104,7 @@ export default function LightRays({
         addEventListener("resize", resize);
         resize();
         let raf = 0,
+          last = 0,
           visible = true;
         const io = new IntersectionObserver((es) =>
           es.forEach((e) => (visible = e.isIntersecting)),
@@ -109,6 +113,9 @@ export default function LightRays({
         const loop = (t: number) => {
           raf = requestAnimationFrame(loop);
           if (!visible || document.hidden) return;
+          // A slow ambient effect does not need 60 fps; 30 halves the GPU work.
+          if (t - last < 33) return;
+          last = t;
           uniforms.iTime.value = t * 0.001;
           smooth.x += (mouse.x - smooth.x) * 0.06;
           smooth.y += (mouse.y - smooth.y) * 0.06;
@@ -134,9 +141,13 @@ export default function LightRays({
         io.disconnect();
       }
     });
-    io.observe(el);
+    // Decorative: wait for the page load so it does not compete with content.
+    const observe = () => io.observe(el);
+    if (document.readyState === "complete") observe();
+    else addEventListener("load", observe, { once: true });
     return () => {
       alive = false;
+      removeEventListener("load", observe);
       io.disconnect();
       cleanup();
     };

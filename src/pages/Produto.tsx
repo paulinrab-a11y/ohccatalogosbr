@@ -26,9 +26,12 @@ export default function Produto() {
   const p = products.find(
     (x) => x.slug === slug || x.sku === route.search.get("sku"),
   );
-  const [img, setImg] = useState("");
+  // The main photo is derived on the first render so its request starts with the
+  // page; a thumbnail click only overrides it.
+  const [picked, setImg] = useState("");
+  const img = picked || p?.image || "";
   useEffect(() => {
-    setImg(p?.image || "");
+    setImg("");
     if (!p) {
       if (!loading)
         applySeo({
@@ -103,6 +106,9 @@ export default function Produto() {
             <img
               src={img}
               alt={p.name}
+              width={1000}
+              height={1000}
+              fetchPriority="high"
               className="aspect-square w-full object-contain p-[6%] filter-[drop-shadow(0_30px_40px_rgba(0,0,0,.6))]"
             />
           ) : (
