@@ -306,7 +306,7 @@ export default function Compatibilidade() {
               maxLength={750}
               rows={3}
               placeholder="Paddle shift, ACC, comandos, alterações já feitas no carro…"
-              className="w-full rounded-md border border-ohc-line bg-ohc-bg2 px-4 py-3 text-[15px]"
+              className="w-full rounded-md border border-ohc-line bg-ohc-bg2 px-4 py-3 text-base"
             />
           </Field>
 

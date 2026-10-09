@@ -106,6 +106,8 @@ export default function Home() {
               src="/img/p/3.02.B02.00002.webp"
               alt="Volante OHC Motors BMW M3 em Alcântara e fibra de carbono com shift light"
               loading="lazy"
+              width={1000}
+              height={1000}
               className="relative h-full w-full object-contain filter-[drop-shadow(0_40px_60px_rgba(0,0,0,.6))]"
             />
             {HOTS.map(([t, , x, y], i) => (
@@ -113,12 +115,13 @@ export default function Home() {
                 key={t}
                 type="button"
                 aria-label={t}
+                aria-pressed={hot === i}
                 onClick={() => setHot(i)}
                 className="absolute -ml-3.5 -mt-3.5 h-7 w-7"
                 style={{ left: x, top: y }}
               >
                 <span
-                  className={`absolute inset-0 rounded-full border border-ohc-glow/70 ${hot === i ? "animate-ping" : "opacity-0"}`}
+                  className={`absolute inset-0 rounded-full border border-ohc-glow/70 ${hot === i ? "animate-ping motion-reduce:animate-none" : "opacity-0"}`}
                 />
                 <span
                   className={`absolute inset-2 rounded-full bg-ohc-glow shadow-[0_0_14px_#3B7BFF] transition-transform ${hot === i ? "scale-125" : ""}`}
@@ -136,19 +139,26 @@ export default function Home() {
               {HOTS.map(([t, d], i) => (
                 <li
                   key={t}
-                  className={`border-t border-ohc-line py-3 last:border-b cursor-pointer transition-colors ${hot === i ? "text-ohc-text" : "text-[#5B6572]"}`}
-                  onClick={() => setHot(i)}
+                  className={`border-t border-ohc-line last:border-b transition-colors ${hot === i ? "text-ohc-text" : "text-[#5B6572]"}`}
                 >
-                  <b
-                    className={`block font-display text-[26px] md:text-[34px] font-normal tracking-wide transition-transform ${hot === i ? "translate-x-2.5" : ""}`}
+                  {/* A real button: keyboard users can pick a detail too. */}
+                  <button
+                    type="button"
+                    aria-pressed={hot === i}
+                    onClick={() => setHot(i)}
+                    className="block w-full py-3 text-left"
                   >
-                    {t}
-                  </b>
-                  <span
-                    className={`block text-[13px] ${hot === i ? "text-ohc-steel" : "text-[#4A5461]"}`}
-                  >
-                    {d}
-                  </span>
+                    <b
+                      className={`block font-display text-[26px] md:text-[34px] font-normal tracking-wide transition-transform ${hot === i ? "translate-x-2.5" : ""}`}
+                    >
+                      {t}
+                    </b>
+                    <span
+                      className={`block text-[13px] ${hot === i ? "text-ohc-steel" : "text-[#4A5461]"}`}
+                    >
+                      {d}
+                    </span>
+                  </button>
                 </li>
               ))}
             </ol>
@@ -247,7 +257,9 @@ export default function Home() {
               src="/img/grade.webp"
               alt="Grade Panamericana OHC Motors para Mercedes-Benz"
               loading="lazy"
-              className="relative w-full filter-[drop-shadow(0_30px_50px_rgba(0,0,0,.7))]"
+              width={1540}
+              height={425}
+              className="relative h-auto w-full filter-[drop-shadow(0_30px_50px_rgba(0,0,0,.7))]"
             />
           </div>
           <div>
