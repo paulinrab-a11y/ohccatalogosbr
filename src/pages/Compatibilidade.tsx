@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Nav from "../components/Nav";
 import AmbientLighting from "../components/AmbientLighting";
 import Footer, { FloatingWA } from "../components/Footer";
@@ -78,8 +78,23 @@ export default function Compatibilidade() {
     setFiles(next);
   };
 
+  // After a submit, move focus to the result so keyboard and screen-reader users
+  // land on the error or on the new protocol instead of losing their place.
+  const errorBox = useRef<HTMLDivElement>(null);
+  const successHeading = useRef<HTMLHeadingElement>(null);
+  const focusError = useRef(false);
+  useEffect(() => {
+    if (error && focusError.current) errorBox.current?.focus();
+    focusError.current = false;
+  }, [error]);
+  useEffect(() => {
+    if (!success?.protocol) return;
+    window.scrollTo({ top: 0 });
+    successHeading.current?.focus();
+  }, [success?.protocol]);
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    focusError.current = true;
     setError("");
     setSuccess(null);
     const form = new FormData(e.currentTarget);
@@ -128,8 +143,8 @@ export default function Compatibilidade() {
         throw new Error("O serviço não retornou um protocolo válido.");
       setSubmittedSku(sku);
       setSuccess(data);
-      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
+      focusError.current = true;
       setError(
         err instanceof Error
           ? err.message
@@ -148,11 +163,18 @@ export default function Compatibilidade() {
         <Nav />
         <main className="wrap py-14 md:py-20">
           <section className="mx-auto max-w-[760px] rounded-2xl border border-[#43C981]/30 bg-[#0D1016] p-6 text-center shadow-2xl sm:p-10">
-            <div className="mx-auto grid h-14 w-14 place-items-center rounded-full border border-[#43C981]/40 bg-[#43C981]/10 text-2xl text-[#93F1BD]">
+            <div
+              className="mx-auto grid h-14 w-14 place-items-center rounded-full border border-[#43C981]/40 bg-[#43C981]/10 text-2xl text-[#93F1BD]"
+              aria-hidden="true"
+            >
               ✓
             </div>
             <p className="eyebrow mt-6">Consulta registrada</p>
-            <h1 className="mt-3 text-[clamp(42px,8vw,72px)]">
+            <h1
+              ref={successHeading}
+              tabIndex={-1}
+              className="mt-3 text-[clamp(42px,8vw,72px)] outline-none"
+            >
               PROTOCOLO CRIADO
             </h1>
             <div className="mx-auto mt-6 max-w-max rounded-xl border border-ohc-blue/30 bg-ohc-blue/10 px-5 py-3 font-mono text-lg font-bold tracking-[.08em] text-[#AFC8FF]">
@@ -364,6 +386,8 @@ export default function Compatibilidade() {
 
           {error && (
             <div
+              ref={errorBox}
+              tabIndex={-1}
               role="alert"
               className="rounded-lg border border-ohc-red/35 bg-ohc-red/10 p-4 text-sm text-[#FFD0D2]"
             >

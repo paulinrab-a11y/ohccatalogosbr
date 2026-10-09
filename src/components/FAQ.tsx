@@ -36,6 +36,7 @@ export default function FAQ() {
             type="button"
             className="faq-q"
             aria-expanded={open === i}
+            aria-controls={`faq-${i}`}
             onClick={() => setOpen(open === i ? -1 : i)}
           >
             {q}
@@ -51,7 +52,13 @@ export default function FAQ() {
               <path d="M12 5v14M5 12h14" />
             </svg>
           </button>
-          <div className="faq-a">
+          {/* Closed answers are only clipped visually; inert keeps them out of
+              the accessibility tree, matching aria-expanded. */}
+          <div
+            id={`faq-${i}`}
+            className="faq-a"
+            {...(open === i ? {} : { inert: "" })}
+          >
             <div>{a}</div>
           </div>
         </div>
