@@ -22,3 +22,25 @@ test('catalog canonical keeps only known category and brand, never tracking or f
  assert.deepEqual(seo('marca=BMW&categoria=Volantes'), { context: 'Volantes · BMW', path: '/catalogo?categoria=Volantes&marca=BMW' });
  assert.deepEqual(seo('categoria=qualquer+texto&marca=Inexistente'), { context: '', path: '/catalogo' });
 });
+
+test('product titles say what the product is, once', async () => {
+ const { productTitle } = await import('../src/lib/seo.ts');
+ const base = { sku: 'X', slug: 'x', brand: 'BMW', image: null, features: [], application: '', compat: null, price: null, notes: null };
+ assert.equal(productTitle({ ...base, name: 'BMW M3 - Carbono', category: 'Volantes' }), 'Volante BMW M3 - Carbono | OHC Motors');
+ assert.equal(productTitle({ ...base, name: 'Volante Audi R8', category: 'Volantes' }), 'Volante Audi R8 | OHC Motors');
+ assert.equal(productTitle({ ...base, name: 'Paddle Shift Audi B9', category: 'Acessórios' }), 'Paddle Shift Audi B9 | OHC Motors');
+});
+
+test('page heads written at build escape text, keep scripts safe and can skip the canonical', async () => {
+ const { injectHead, renderHead } = await import('../src/lib/seo.ts');
+ const head = renderHead({ title: 'A "x" & <b>', description: 'd', path: '/produto/a', schema: { name: '</script><script>' } });
+ assert.match(head, /<title>A &quot;x&quot; &amp; &lt;b&gt;<\/title>/);
+ assert.match(head, /rel="canonical" href="https:\/\/www\.ohcmotorsbr\.com\.br\/produto\/a"/);
+ assert.ok(!head.includes('</script><script>'));
+ assert.match(head, /og:image" content="https:\/\/www\.ohcmotorsbr\.com\.br\/og\/ohc-motors\.jpg"/);
+ assert.ok(!renderHead({ title: 't', description: 'd', path: '/', canonical: false }).includes('canonical'));
+ const html = '<head><meta charset="UTF-8" /><!--seo:start--><title>old</title><!--seo:end--><link rel="icon" /></head>';
+ const out = injectHead(html, { title: 'novo', description: 'd', path: '/' });
+ assert.ok(out.includes('<title>novo</title>') && !out.includes('old') && out.includes('rel="icon"'));
+ assert.throws(() => injectHead('<head></head>', { title: 't', description: 'd', path: '/' }));
+});

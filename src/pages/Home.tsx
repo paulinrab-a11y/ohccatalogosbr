@@ -6,7 +6,7 @@ import FAQ from "../components/FAQ";
 import Footer, { FinalCTA, FloatingWA } from "../components/Footer";
 import SteeringExperience from "../components/SteeringExperience";
 import { useProducts, brands } from "../lib/products";
-import { applySeo, organizationSchema, websiteSchema } from "../lib/seo";
+import { applySeo, homeHead } from "../lib/seo";
 import { Link } from "../lib/router";
 const TRUST = [
   ["PIX com desconto", "ou até 12x no cartão via InfinitePay"],
@@ -43,16 +43,7 @@ const HOTS = [
 export default function Home() {
   const products = useProducts();
   useEffect(() => {
-    applySeo({
-      title: "OHC Motors | Volantes esportivos e acessórios automotivos",
-      description:
-        "Volantes esportivos OHC Motors em couro, carbono e Alcântara, grades Mercedes com LED e acessórios automotivos. Consulte compatibilidade e atendimento pelo WhatsApp.",
-      path: "/",
-      schema: {
-        "@context": "https://schema.org",
-        "@graph": [organizationSchema, websiteSchema],
-      },
-    });
+    applySeo(homeHead);
   }, []);
   const [hot, setHot] = useState(0);
   const brandList = brands(products);
