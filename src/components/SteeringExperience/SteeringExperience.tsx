@@ -159,6 +159,7 @@ export default function SteeringExperience({
                   mobile={mobile}
                   onReady={() => setReady(true)}
                   onError={() => setFailed(true)}
+                  host={section.current}
                 />
               </Suspense>
             </Boundary>
