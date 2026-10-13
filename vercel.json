@@ -56,7 +56,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src https://wlxknhgaoopycrlxygsd.supabase.co 'self' https://www.facebook.com data: blob: https://www.ohcmotorsbr.com.br; connect-src 'self' blob: https://www.facebook.com https://connect.facebook.net https://*.supabase.co https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://*.ingest.de.sentry.io; worker-src 'self' blob:; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+          "value": "default-src 'self'; script-src 'self' https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src https://wlxknhgaoopycrlxygsd.supabase.co 'self' https://www.facebook.com data: blob: https://www.ohcmotorsbr.com.br; connect-src 'self' blob: https://www.facebook.com https://connect.facebook.net https://*.supabase.co https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://*.ingest.de.sentry.io; worker-src 'self' blob:; media-src 'self'; object-src 'none'; base-uri 'none'; frame-src https://www.facebook.com; form-action https://www.facebook.com; frame-ancestors 'none'"
         },
         {
           "key": "X-Content-Type-Options",

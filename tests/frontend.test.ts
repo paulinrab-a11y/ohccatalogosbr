@@ -40,6 +40,15 @@ test('deployment headers protect content without swallowing backend or model pat
   assert.match(headers['Content-Security-Policy'],/script-src 'self' https:\/\/connect\.facebook\.net;/);assert.equal(headers['X-Content-Type-Options'],'nosniff');
   assert.ok(!c.rewrites.some((r:{source:string})=>r.source==='/(.*)' || r.source==='/:path*'));
 });
+test('CSP lets the Meta Pixel post its events to facebook.com and nowhere else', () => {
+  const c=JSON.parse(readFileSync('vercel.json','utf8'));
+  const csp=c.headers[0].headers.find((h:{key:string})=>h.key==='Content-Security-Policy').value as string;
+  const directive=(name:string)=>csp.split(';').map(s=>s.trim()).find(s=>s.startsWith(name+' '))?.split(/\s+/).slice(1) ?? [];
+  // fbevents.js sends through a hidden iframe + form POST to /tr/ when the beacon is long.
+  assert.deepEqual(directive('form-action'),['https://www.facebook.com']);
+  assert.deepEqual(directive('frame-src'),['https://www.facebook.com']);
+  assert.deepEqual(directive('frame-ancestors'),["'none'"]);
+});
 test('CSP lets GLTFLoader read the textures embedded in the GLB without opening eval', () => {
   const c=JSON.parse(readFileSync('vercel.json','utf8'));
   const csp=c.headers[0].headers.find((h:{key:string})=>h.key==='Content-Security-Policy').value as string;
