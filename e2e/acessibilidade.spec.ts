@@ -38,3 +38,12 @@ test('form fields use 16px text so iOS does not zoom on focus', async ({ page })
  await page.goto('/catalogo');
  expect(await page.getByLabel('Buscar').evaluate((el) => getComputedStyle(el).fontSize)).toBe('16px');
 });
+test('headings never skip a level, footer included', async ({ page }) => {
+ for (const path of ['/', '/catalogo', '/compatibilidade', `/produto/${products[0].slug}`]) {
+  await page.goto(path);
+  await expect(page.locator('h1').first()).toBeAttached();
+  // Only what is rendered: the hero's scroll captions stay hidden until scrolled to.
+  const levels = await page.locator('h1:visible, h2:visible, h3:visible, h4:visible, h5:visible, h6:visible').evaluateAll((els) => els.map((e) => Number(e.tagName[1])));
+  levels.forEach((level, i) => { if (i) expect(level - levels[i - 1], `${path}: h${levels[i - 1]} → h${level}`).toBeLessThanOrEqual(1); });
+ }
+});
