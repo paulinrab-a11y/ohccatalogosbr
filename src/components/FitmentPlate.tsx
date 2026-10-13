@@ -25,7 +25,13 @@ export default function FitmentPlate({
       style={{ "--cells": cells.length } as React.CSSProperties}
     >
       {cells.map(([label, value]) => (
-        <div key={label}>
+        // The code is what the buyer quotes: never broken across lines.
+        <div
+          key={label}
+          className={
+            label === "Código" ? "[overflow-wrap:normal] whitespace-nowrap" : ""
+          }
+        >
           <dt>{label}</dt>
           <dd className={value ? "" : "pending"}>{value || "a confirmar"}</dd>
         </div>

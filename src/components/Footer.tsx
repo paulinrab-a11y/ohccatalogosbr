@@ -1,21 +1,18 @@
 /* Final call to action on the livery stripe, footer and floating WhatsApp. */
 import { useEffect, useState } from "react";
 import { Link } from "../lib/router";
+import LiveryTitle from "./LiveryTitle";
 import { waLink } from "../lib/products";
 export function FinalCTA() {
   return (
-    <section className="relative overflow-hidden py-24 md:py-36">
+    <section className="py-12 md:py-20">
       {/* The same stripe that opens the page closes it. */}
-      <div
-        aria-hidden="true"
-        className="livery livery-skew absolute -inset-x-10 top-1/2 h-[min(46vw,300px)] -translate-y-1/2"
+      <LiveryTitle
+        as="h2"
+        lines={["Confirme a aplicação", "no seu carro"]}
+        titleClass="text-[clamp(40px,10vw,112px)]"
       />
-      <div className="wrap relative">
-        <h2 className="livery-skew max-w-[14ch] text-[clamp(48px,10vw,120px)] leading-[0.86] text-white">
-          Confirme a aplicação no seu carro
-        </h2>
-      </div>
-      <div className="wrap relative mt-[min(18vw,120px)] grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+      <div className="wrap mt-2 grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
         <p className="max-w-[52ch] text-[#c9d0d8]">
           Mande o modelo, o ano e três fotos do volante atual. A equipe confirma
           o SKU e envia o link de pagamento no PIX com desconto ou no cartão em

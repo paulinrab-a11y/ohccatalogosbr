@@ -64,17 +64,26 @@ export default function SteeringOverlay({
           nela, e logo abaixo o campo do carro já funciona. */}
       <div
         ref={intro}
-        className={`absolute inset-x-0 ${staticMode ? "top-[52svh]" : "bottom-[calc(6px+env(safe-area-inset-bottom))] sm:bottom-[5vh]"} pointer-events-auto lg:top-[28svh] lg:bottom-auto`}
+        className={`absolute inset-x-0 ${staticMode ? "top-[52svh]" : "bottom-[calc(12px+env(safe-area-inset-bottom))] sm:bottom-[5vh]"} pointer-events-auto lg:top-[34svh] lg:bottom-auto`}
       >
         {/* Phones: stripe and lettering together. Wide screens: lettering only,
             over the stripe drawn behind the canvas at the same position. */}
+        {/* Phones: the secondary action sits in the free space above the stripe. */}
+        <div className="wrap mb-1 flex justify-end lg:hidden">
+          <Link
+            href="/catalogo"
+            className="inline-flex min-h-11 items-center text-sm font-bold text-[#afc8ff] underline underline-offset-4"
+          >
+            Ver o catálogo completo
+          </Link>
+        </div>
         <LiveryTitle
           lines={HERO}
           paint="lg-text"
-          className="-my-[3vw] livery-paint lg:my-0 lg:animate-none"
-          titleClass="text-[clamp(48px,14vw,72px)] lg:text-[clamp(72px,8vw,128px)]"
+          className="-my-[6vw] livery-paint lg:my-0 lg:animate-none"
+          titleClass="text-[clamp(44px,12.5vw,66px)] lg:text-[clamp(72px,8vw,128px)]"
         />
-        <div className="wrap mt-3 grid gap-3 lg:mt-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:items-start">
+        <div className="wrap mt-2 grid gap-3 lg:mt-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:items-start">
           <p className="hidden max-w-[44ch] text-base text-[#c9d0d8] lg:block">
             Volantes em couro, carbono ou Alcântara, de fabricação própria. A
             equipe confirma a aplicação no seu carro antes de enviar, para todo
@@ -84,7 +93,7 @@ export default function SteeringOverlay({
             <CarPicker compact />
             <Link
               href="/catalogo"
-              className="mt-2 inline-flex min-h-11 items-center text-sm font-bold text-[#afc8ff] underline underline-offset-4 hover:text-white"
+              className="mt-0.5 hidden min-h-10 items-center text-sm font-bold lg:inline-flex text-[#afc8ff] underline underline-offset-4 hover:text-white"
             >
               Ou veja o catálogo completo
             </Link>

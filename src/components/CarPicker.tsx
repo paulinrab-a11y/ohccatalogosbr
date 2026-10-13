@@ -61,7 +61,7 @@ export default function CarPicker({
             onChange={(e) => setBrand(e.target.value)}
             required
           >
-            <option value="">Escolha a marca</option>
+            <option value="">{compact ? "Marca" : "Escolha a marca"}</option>
             {list.map((b) => (
               <option key={b} value={b}>
                 {b}

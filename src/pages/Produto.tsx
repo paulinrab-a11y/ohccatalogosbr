@@ -110,8 +110,8 @@ export default function Produto() {
       <LiveryTitle
         as="p"
         lines={[KIND[p.category] || p.category, p.brand]}
-        className="-mb-[2vw] livery-paint"
-        titleClass="text-[clamp(48px,12vw,84px)]"
+        className="-mb-[1vw] livery-paint"
+        titleClass="text-[clamp(34px,9vw,84px)]"
       />
       <div className="wrap grid gap-8 pb-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-12 md:pb-12">
         <div className="decal min-w-0 overflow-hidden md:sticky md:top-24 md:self-start">
@@ -122,7 +122,7 @@ export default function Produto() {
               width={1000}
               height={1000}
               fetchPriority="high"
-              className="aspect-square w-full bg-[#0e1116] object-contain p-[6%]"
+              className="aspect-[4/3] w-full bg-[#0e1116] object-contain p-[4%] md:aspect-square md:p-[6%]"
             />
           ) : (
             <div className="grid aspect-square place-items-center font-display text-3xl text-[#3A4350]">
@@ -166,7 +166,10 @@ export default function Produto() {
           <h1 className="text-[clamp(34px,9vw,48px)] md:text-[clamp(40px,5vw,64px)] max-w-[16ch]">
             {p.name}
           </h1>
-          <FitmentPlate p={p} className="mt-4 mb-6" />
+          <FitmentPlate
+            p={p}
+            className="mt-4 mb-6 max-sm:[--cells:2]! max-sm:[&>div:last-child]:col-span-2"
+          />
           <div className="mb-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
             {p.price ? (
               <>

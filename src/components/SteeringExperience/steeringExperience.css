@@ -1,5 +1,6 @@
 /* Seção 3D do volante */
-.se-section { position: relative; background: transparent; }
+/* The transparent header (68 px) overlaps the hero, so the scene fills the screen. */
+.se-section { position: relative; background: transparent; margin-top: -68px; }
 .se-pin { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
 .se-canvas { position: absolute; inset: 0; }
 .se-canvas canvas { display: block; touch-action: pan-y; }

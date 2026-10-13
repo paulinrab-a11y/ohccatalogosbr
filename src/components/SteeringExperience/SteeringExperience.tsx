@@ -129,7 +129,7 @@ export default function SteeringExperience({
             it is drawn by the overlay at the same height. */}
         <div
           ref={band}
-          className="absolute inset-x-0 top-[28svh] hidden lg:block"
+          className="absolute inset-x-0 top-[34svh] hidden lg:block"
         >
           <LiveryTitle
             lines={HERO}
