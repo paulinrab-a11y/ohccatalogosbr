@@ -11,39 +11,39 @@
     },
     {
       "source": "/produto/:path*",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/catalogo",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/produto",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/compatibilidade",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/admin",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/admin/:path*",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/conta",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/conta/:path*",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/minha-conta",
-      "destination": "/index.html"
+      "destination": "/"
     }
   ],
   "headers": [
