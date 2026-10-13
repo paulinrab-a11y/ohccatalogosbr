@@ -15,7 +15,7 @@ const ITEMS: [string, string][] = [
   ],
   [
     "Quais são as formas de pagamento?",
-    "PIX com desconto ou cartão em até 12x pela InfinitePay. Depois de confirmar a compatibilidade, enviamos o link de pagamento pelo WhatsApp.",
+    "PIX com desconto ou cartão em 3x sem juros ou até 12x com juros pela InfinitePay. Depois de confirmar a compatibilidade, enviamos o link de pagamento pelo WhatsApp.",
   ],
   [
     "Como funciona a garantia?",

@@ -9,7 +9,7 @@ import { useProducts, usePromotions, brands } from "../lib/products";
 import { applySeo, homeHead } from "../lib/seo";
 import { Link } from "../lib/router";
 const TRUST = [
-  ["PIX com desconto", "ou até 12x no cartão via InfinitePay"],
+  ["PIX com desconto", "ou 3x sem juros no cartão via InfinitePay"],
   ["90 dias de garantia", "contra defeito de fabricação"],
   ["7 dias", "para arrependimento, conforme o CDC"],
   ["Original OHC", "volantes fabricados pela OHC Motors"],

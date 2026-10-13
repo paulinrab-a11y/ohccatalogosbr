@@ -28,7 +28,7 @@ test('a running promotion shows in the menu, on /promocoes and on the cards', as
  await expect(card.getByText('-10%')).toBeVisible();
  await expect(card.getByText(/R\$\s3\.000,00/)).toBeVisible();
  await expect(card.getByText(/R\$\s2\.700,00/)).toBeVisible();
- await expect(card.getByText(/12x de R\$\s280,00/)).toBeVisible();
+ await expect(card.getByText(/3x de R\$\s1\.120,00 sem juros/)).toBeVisible();
  // Phones reach the menu through the hamburger; wide screens see the bar.
  const open = page.getByRole('button', { name: 'Abrir menu' });
  if (await open.isVisible()) await open.click();
@@ -51,7 +51,7 @@ test('product page: price above the fold, regular price without promo, "Consulte
  await page.goto(`/produto/${B.slug}`);
  const price = page.getByText(/R\$\s3\.000,00/).first();
  await expect(price).toBeVisible();
- await expect(page.getByText('ou em até 12x no cartão')).toBeVisible();
+ await expect(page.getByText('ou 3x sem juros no cartão (até 12x com juros)')).toBeVisible();
  expect((await price.boundingBox())!.y).toBeLessThan(page.viewportSize()!.height);
  await page.goto(`/produto/${C.slug}`);
  await expect(page.getByText('Consulte no WhatsApp')).toBeVisible();

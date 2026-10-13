@@ -41,8 +41,8 @@ test('empty dates leave the promotion open on that side', () => {
 });
 
 test('installments come only from a registered card price, rounded up to the cent', () => {
- assert.equal(parcela(3500), 291.67);
- assert.equal(parcela(3600), 300);
+ assert.equal(parcela(3500), 1166.67);
+ assert.equal(parcela(3600), 1200);
  assert.equal(parcela(null), null);
  assert.equal(parcela(undefined), null);
  assert.equal(formatBRL(2700).replace(/\s/g, ' '), 'R$ 2.700,00');

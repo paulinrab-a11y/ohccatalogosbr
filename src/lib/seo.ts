@@ -190,7 +190,7 @@ export const compatibilityHead: PageHead = {
 export const promotionsHead: PageHead = {
   title: "Promoções | OHC Motors",
   description:
-    "Volantes e acessórios OHC Motors em oferta por tempo limitado. Preço no PIX ou em até 12x no cartão, com envio para todo o Brasil.",
+    "Volantes e acessórios OHC Motors em oferta por tempo limitado. Preço no PIX ou em 3x sem juros no cartão, com envio para todo o Brasil.",
   path: "/promocoes",
   noindex: true,
 };
