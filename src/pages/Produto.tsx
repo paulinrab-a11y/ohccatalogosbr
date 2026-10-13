@@ -137,14 +137,17 @@ export default function Produto() {
   return (
     <>
       <Nav />
+      {/* Phones: the stripe names the part above the photo. Wide screens: the
+          photo, name, price and buy button all fit the first screen, so the
+          stripe (which would push them down ~450px) is left out. */}
       <LiveryTitle
         as="p"
         lines={[KIND[p.category] || p.category, p.brand]}
-        className="-mb-[3vw] livery-paint md:-mb-[1vw]"
+        className="-mb-[3vw] livery-paint md:hidden"
         titleClass="text-[clamp(30px,8vw,84px)]"
       />
-      <div className="wrap grid gap-6 pb-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-12 md:pb-14">
-        <div className="decal relative min-w-0 overflow-hidden md:sticky md:top-24 md:self-start">
+      <div className="wrap grid gap-6 pb-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-12 md:pt-10 md:pb-14">
+        <div className="decal relative min-w-0 overflow-hidden md:sticky! md:top-24 md:self-start">
           {img ? (
             <img
               src={img}
