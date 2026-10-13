@@ -53,7 +53,7 @@ export default function PriceBlock({
           </span>
         )}
         <span
-          className={`font-display leading-none tracking-wide text-white ${page ? "text-[clamp(44px,11vw,60px)]" : "text-[26px] sm:text-[28px]"}`}
+          className={`font-display leading-none tracking-wide text-white ${page ? "text-[clamp(44px,11vw,60px)]" : "text-[23px] sm:text-[28px]"}`}
         >
           {formatBRL(v.preco)}
         </span>

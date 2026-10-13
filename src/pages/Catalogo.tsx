@@ -7,6 +7,7 @@ import { useRoute } from "../lib/router";
 import { carLabel, readCar, type MyCar } from "../lib/myCar";
 import {
   CATS,
+  byCategoryThenName,
   useCatalog,
   brands,
   matches,
@@ -103,6 +104,7 @@ export default function Catalogo() {
   const groups = useMemo(() => {
     const g: Record<string, typeof list> = {};
     list.forEach((p) => (g[p.brand] ||= []).push(p));
+    for (const items of Object.values(g)) items.sort(byCategoryThenName);
     return g;
   }, [list]);
   return (
@@ -111,7 +113,7 @@ export default function Catalogo() {
       <LiveryTitle
         lines={["Catálogo", brand || cat || "Todas as marcas"]}
         className="-mb-[3vw]"
-        titleClass="text-[clamp(52px,12vw,104px)]"
+        titleClass="text-[clamp(48px,11vw,84px)]"
       />
       <header className="wrap">
         {car && !carActive && (
@@ -131,7 +133,7 @@ export default function Catalogo() {
         )}
       </header>
       <div className="wrap grid grid-cols-[minmax(0,1fr)] gap-6 py-6 md:grid-cols-[200px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)] md:gap-10 md:py-10">
-        <aside className="min-w-0 md:sticky md:top-24 md:self-start">
+        <aside className="facets min-w-0 md:sticky md:top-24 md:max-h-[calc(100svh-7rem)] md:self-start md:overflow-y-auto md:pr-1">
           <div className="ub-field">
             <label htmlFor="q">Buscar</label>
             <input
@@ -148,7 +150,7 @@ export default function Catalogo() {
           <h2 className="mt-6 mb-2 font-body text-xs font-bold text-[#c9d0d8]">
             Categoria
           </h2>
-          <div className="chip-row md:grid md:gap-1.5">
+          <div className="chip-row md:grid md:gap-0.5">
             <Opt
               on={!cat}
               label="Todas"
@@ -168,7 +170,7 @@ export default function Catalogo() {
           <h2 className="mt-5 mb-2 font-body text-xs font-bold text-[#c9d0d8]">
             Marca
           </h2>
-          <div className="chip-row md:grid md:gap-1.5">
+          <div className="chip-row md:grid md:gap-0.5">
             <Opt
               on={!brand}
               label="Todas"
@@ -218,7 +220,7 @@ export default function Catalogo() {
             </div>
           )}
           {sorted && (
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {sorted.map((p) => (
                 <ProductCard key={p.sku} p={p} />
               ))}
@@ -233,7 +235,7 @@ export default function Catalogo() {
                     {b}
                     <span className="data-band">{groups[b].length}</span>
                   </h2>
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {groups[b].map((p) => (
                       <ProductCard key={p.sku} p={p} />
                     ))}

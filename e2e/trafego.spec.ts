@@ -82,3 +82,21 @@ test('ad links may filter the catalog in short form and sort by price', async ({
  await expect(page.getByLabel('Ordenar')).toHaveValue('preco-desc');
  await expect(page).toHaveURL(/categoria=Volantes&marca=BMW&ordem=preco-desc/);
 });
+
+test('catalog cards stay lean: no fitment plate, aligned rows, wheels before accessories in each brand', async ({ page }) => {
+ await serve(page, null);
+ await page.goto('/catalogo');
+ const sections = page.locator('main section');
+ await expect(sections.first().locator('article').first()).toBeVisible();
+ await expect(page.locator('main article dl')).toHaveCount(0);
+ // Cards sharing a row share their top and their height.
+ const boxes = await sections.first().locator('article').evaluateAll((els) => els.slice(0, 2).map((e) => { const r = e.getBoundingClientRect(); return [Math.round(r.top), Math.round(r.height)]; }));
+ expect(boxes[0]).toEqual(boxes[1]);
+ const category = new Map(products.map((p: any) => [p.name, p.category]));
+ for (const section of await sections.all()) {
+  const names = await section.locator('article h3').allTextContents();
+  const cats = names.map((n) => category.get(n.trim()));
+  const firstOther = cats.findIndex((c) => c !== 'Volantes');
+  if (firstOther >= 0) expect(cats.slice(firstOther)).not.toContain('Volantes');
+ }
+});
