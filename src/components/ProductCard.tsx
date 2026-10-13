@@ -38,7 +38,7 @@ export default function ProductCard({
               className="h-full w-full object-contain p-[7%] transition-transform duration-150 group-hover:scale-[1.03]"
             />
           ) : (
-            <div className="grid h-full place-items-center font-display text-xl tracking-widest text-[#5b6572]">
+            <div className="grid h-full place-items-center font-display text-xl tracking-widest text-[#8b95a3]">
               Foto em breve
             </div>
           )}
@@ -66,7 +66,7 @@ export default function ProductCard({
           onClick={() => track("Contact", productParams(p.sku, price))}
           target="_blank"
           rel="noopener"
-          aria-label={`Pedir ${p.name} pelo WhatsApp`}
+          aria-label={`Pedir no WhatsApp: ${p.name}`}
         >
           Pedir no WhatsApp
           <span aria-hidden="true">→</span>
