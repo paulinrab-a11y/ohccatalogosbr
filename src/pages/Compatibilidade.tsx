@@ -342,14 +342,23 @@ export default function Compatibilidade() {
               Envie de 1 a 3 fotos. O site reduz o tamanho antes de registrar,
               sem alterar o conteúdo técnico da imagem.
             </p>
+            {/* The native file button is grey and speaks the browser's
+                language; this one matches the site. The input stays in the
+                page (visually hidden) so keyboard and screen readers use it. */}
             <input
               id="photos"
-              className="mt-4 block w-full text-sm"
+              className="peer sr-only"
               type="file"
               accept="image/jpeg,image/png,image/webp"
               multiple
               onChange={(e) => handleFiles(e.target.files)}
             />
+            <label
+              htmlFor="photos"
+              className="btn btn-blue mt-4 cursor-pointer peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#3b7bff]"
+            >
+              {files.length ? "Trocar fotos" : "Escolher fotos"}
+            </label>
             {files.length > 0 && (
               <div className="mt-4 grid gap-2">
                 {files.map((file) => (

@@ -5,7 +5,13 @@ import CarPicker from "../components/CarPicker";
 import FAQ from "../components/FAQ";
 import Footer, { FinalCTA, FloatingWA } from "../components/Footer";
 import SteeringExperience from "../components/SteeringExperience";
-import { useProducts, usePromotions, brands } from "../lib/products";
+import {
+  useProducts,
+  usePromotions,
+  brands,
+  type Product,
+} from "../lib/products";
+import { getPrecoVigente } from "../lib/pricing";
 import { applySeo, homeHead } from "../lib/seo";
 import { Link } from "../lib/router";
 const TRUST = [
@@ -50,7 +56,7 @@ export default function Home() {
   // Shown only while a promotion is running; otherwise the home is unchanged.
   const { promos } = usePromotions();
   const countOf = (b: string) => products.filter((p) => p.brand === b).length;
-  const featured = [
+  const curated = [
     "3.02.B02.00002",
     "1.02.B02.00008",
     "3.02.B08.00155",
@@ -61,7 +67,18 @@ export default function Home() {
     "1.02.B02.00040",
   ]
     .map((s) => products.find((p) => p.sku === s))
-    .filter(Boolean);
+    .filter((p): p is Product => Boolean(p));
+  // The curated picks first; other priced wheels fill the grid up to 8, so no
+  // row is left with a lone card when a picked SKU leaves the catalog.
+  const featured = [
+    ...curated,
+    ...products.filter(
+      (p) =>
+        p.category === "Volantes" &&
+        getPrecoVigente(p).preco != null &&
+        !curated.includes(p),
+    ),
+  ].slice(0, 8);
   return (
     <>
       <div className="relative">
@@ -215,9 +232,9 @@ export default function Home() {
               Ver o catálogo completo
             </Link>
           </div>
-          <div className="mt-10 snap-row md:grid md:grid-cols-3 lg:grid-cols-4 md:gap-4 md:overflow-visible md:p-0 md:m-0 md:*:max-w-none md:*:flex-auto">
+          <div className="mt-10 snap-row md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-4 md:overflow-visible md:p-0 md:m-0 md:*:max-w-none md:*:flex-auto">
             {featured.map((p) => (
-              <ProductCard key={p!.sku} p={p!} />
+              <ProductCard key={p.sku} p={p} />
             ))}
           </div>
         </section>

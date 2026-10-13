@@ -82,3 +82,12 @@ test('ad links may filter the catalog in short form and sort by price', async ({
  await expect(page.getByLabel('Ordenar')).toHaveValue('preco-desc');
  await expect(page).toHaveURL(/categoria=Volantes&marca=BMW&ordem=preco-desc/);
 });
+
+test('home featured grid fills whole rows, curated picks first', async ({ page, isMobile }) => {
+ test.skip(isMobile, 'phones show the featured cards as a swipeable row');
+ await serve(page, null);
+ await page.goto('/');
+ const section = page.locator('section', { has: page.getByRole('heading', { name: 'Em destaque' }) });
+ await expect(section.locator('article').first()).toBeVisible();
+ await expect(section.locator('article')).toHaveCount(8);
+});
