@@ -1,14 +1,22 @@
 /* Textos e CTA sobre o 3D; opacidade calculada no rAF a partir do progresso (sem setState por frame). */
-import { useEffect, useRef, type MutableRefObject } from "react";
+import {
+  useEffect,
+  useRef,
+  type MutableRefObject,
+  type RefObject,
+} from "react";
 import { COPY, OUTRO } from "./timeline";
 import { Link } from "../../lib/router";
-import DecryptedText from "../DecryptedText";
+import CarPicker from "../CarPicker";
 export default function SteeringOverlay({
   progress,
   staticMode = false,
+  band,
 }: {
   progress: MutableRefObject<number>;
   staticMode?: boolean;
+  /** Desktop stripe drawn behind the canvas; it fades with the opening. */
+  band?: RefObject<HTMLDivElement | null>;
 }) {
   const items = useRef<HTMLDivElement[]>([]);
   const outro = useRef<HTMLDivElement>(null);
@@ -40,6 +48,7 @@ export default function SteeringOverlay({
         intro.current.style.opacity = String(o);
         intro.current.style.pointerEvents = o > 0.5 ? "auto" : "none";
         intro.current.style.visibility = o > 0.01 ? "visible" : "hidden";
+        if (band?.current) band.current.style.opacity = String(o);
       }
     };
     raf = requestAnimationFrame(loop);
@@ -47,34 +56,30 @@ export default function SteeringOverlay({
   }, [staticMode]);
   return (
     <div className="pointer-events-none absolute inset-0 z-3">
-      {/* Abertura (0 a 10%): título do herói sobre o 3D; em modo estático fica fixo */}
+      {/* Abertura (0 a 10%): a faixa da pintura cruza a tela com o título pintado
+          nela, e logo abaixo o campo do carro já funciona. */}
       <div
         ref={intro}
-        className={`absolute left-5 right-5 sm:left-12 sm:right-auto ${staticMode ? "top-[14svh]" : "bottom-[12svh] sm:bottom-[14vh]"} max-w-[640px] pointer-events-auto`}
+        className={`absolute inset-x-0 ${staticMode ? "top-[52svh]" : "bottom-[calc(14px+env(safe-area-inset-bottom))] sm:bottom-[7vh]"} pointer-events-auto lg:top-[42svh] lg:bottom-auto`}
       >
-        <p className="eyebrow mb-3 flex items-center gap-3">
-          <span className="inline-block h-px w-9 bg-ohc-glow" />
-          <DecryptedText text="Fabricação própria · São Paulo" speed={30} />
-        </p>
-        <h1 className="text-[clamp(44px,11vw,64px)] sm:text-[clamp(56px,7.5vw,120px)] leading-[0.92] max-w-[11ch] [text-shadow:0_20px_60px_rgba(0,0,0,.85)]">
-          <DecryptedText
-            text="O volante certo para o seu carro."
-            speed={38}
-            characters="OHCMTRS0123456789#"
-            encryptedClassName="text-ohc-glow/80"
+        <div className="relative">
+          <div
+            aria-hidden="true"
+            className="livery livery-skew livery-paint absolute -inset-x-8 -top-3 -bottom-4 sm:-bottom-6 lg:hidden"
           />
-        </h1>
-        <p className="mt-4 max-w-[44ch] text-[14px] sm:text-base text-ohc-steel">
-          Volantes em couro, carbono ou Alcântara. A equipe confirma a aplicação
-          no seu carro antes de enviar, para todo o Brasil.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/catalogo" className="btn btn-blue">
-            Ver catálogo
-          </Link>
-          <span className="hidden sm:inline-flex items-center text-[11px] tracking-[0.3em] uppercase text-ohc-steel">
-            Role para explorar
-          </span>
+          <h1 className="livery-skew relative px-5 py-1 text-[clamp(54px,15.5vw,76px)] leading-[0.86] text-white sm:px-12 sm:text-[clamp(72px,8.4vw,132px)]">
+            O volante
+            <br />
+            do seu carro
+          </h1>
+        </div>
+        <div className="wrap mt-7 grid gap-4 sm:mt-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:items-end">
+          <p className="hidden max-w-[44ch] text-base text-[#c9d0d8] lg:block">
+            Volantes em couro, carbono ou Alcântara, de fabricação própria. A
+            equipe confirma a aplicação no seu carro antes de enviar, para todo
+            o Brasil.
+          </p>
+          <CarPicker compact />
         </div>
       </div>
       {COPY.map(([, , t, s], i) => (
@@ -96,8 +101,7 @@ export default function SteeringOverlay({
         className={`absolute inset-x-5 bottom-[10svh] sm:inset-x-12 sm:bottom-[12vh] flex flex-col items-start gap-4 ${staticMode ? "opacity-100 pointer-events-auto" : "opacity-0"}`}
       >
         <h3 className="font-display leading-none text-[clamp(44px,10vw,110px)]">
-          <span className="text-ohc-blue">OHC</span>{" "}
-          <span className="text-ohc-red">MOTORS</span>
+          Feito pela OHC
         </h3>
         <Link href="/catalogo?categoria=Volantes" className="btn btn-blue">
           Ver volantes

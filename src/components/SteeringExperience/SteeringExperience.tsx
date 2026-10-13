@@ -62,7 +62,8 @@ export default function SteeringExperience({
   onReady?: () => void;
 }) {
   const section = useRef<HTMLElement>(null),
-    pinned = useRef<HTMLDivElement>(null);
+    pinned = useRef<HTMLDivElement>(null),
+    band = useRef<HTMLDivElement>(null);
   const mobile = useIsMobile();
   const reduced = prefersReduced();
   const [near, setNear] = useState(false);
@@ -123,6 +124,13 @@ export default function SteeringExperience({
       aria-label="Apresentação 3D do volante OHC"
     >
       <div ref={pinned} className="se-pin">
+        {/* On wide screens the livery stripe runs behind the wheel; the title on
+            it is drawn by the overlay at the same height. */}
+        <div
+          ref={band}
+          aria-hidden="true"
+          className="livery livery-skew livery-paint absolute -inset-x-8 top-[calc(42svh-12px)] hidden h-[calc(14.45vw+44px)] lg:block"
+        />
         {failed ? (
           <div className="se-fallback">
             <img
@@ -155,15 +163,14 @@ export default function SteeringExperience({
             style={{ opacity: ready ? 0 : 1 }}
             aria-live="polite"
           >
-            <div className="ub-dots">
-              <i />
-              <i />
-              <i />
-            </div>
             <span>Carregando o volante 3D…</span>
           </div>
         )}
-        <SteeringOverlay progress={progress} staticMode={reduced || failed} />
+        <SteeringOverlay
+          progress={progress}
+          staticMode={reduced || failed}
+          band={band}
+        />
       </div>
     </section>
   );

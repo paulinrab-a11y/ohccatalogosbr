@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Nav from "../components/Nav";
-import AmbientLighting from "../components/AmbientLighting";
 import Footer, { FloatingWA } from "../components/Footer";
 import { useRoute } from "../lib/router";
 import { useProducts, waLink } from "../lib/products";
@@ -159,28 +158,25 @@ export default function Compatibilidade() {
     const message = `Olá! Enviei uma análise de compatibilidade no site da OHC Motors. Meu protocolo é ${success.protocol}${selectedProduct ? ` e tenho interesse no ${selectedProduct.name} (${selectedProduct.sku}).` : "."}`;
     return (
       <>
-        <AmbientLighting />
         <Nav />
         <main className="wrap py-14 md:py-20">
-          <section className="mx-auto max-w-[760px] rounded-2xl border border-[#43C981]/30 bg-[#0D1016] p-6 text-center shadow-2xl sm:p-10">
-            <div
-              className="mx-auto grid h-14 w-14 place-items-center rounded-full border border-[#43C981]/40 bg-[#43C981]/10 text-2xl text-[#93F1BD]"
+          <section className="decal mx-auto max-w-[760px] p-6 sm:p-10">
+            <span
               aria-hidden="true"
-            >
-              ✓
-            </div>
-            <p className="eyebrow mt-6">Consulta registrada</p>
+              className="livery livery-rule livery-paint block w-24 rounded-sm"
+            />
             <h1
               ref={successHeading}
               tabIndex={-1}
-              className="mt-3 text-[clamp(42px,8vw,72px)] outline-none"
+              className="mt-6 text-[clamp(42px,8vw,72px)] outline-none"
             >
-              PROTOCOLO CRIADO
+              Consulta registrada
             </h1>
-            <div className="mx-auto mt-6 max-w-max rounded-xl border border-ohc-blue/30 bg-ohc-blue/10 px-5 py-3 font-mono text-lg font-bold tracking-[.08em] text-[#AFC8FF]">
+            <p className="mt-3 text-sm text-[#c9d0d8]">Seu protocolo:</p>
+            <div className="mt-2 max-w-max rounded-md border border-ohc-blue/50 bg-[#182033] px-5 py-3 text-lg font-bold tracking-[.08em] text-[#AFC8FF] [font-variant-numeric:tabular-nums]">
               {success.protocol}
             </div>
-            <p className="mx-auto mt-6 max-w-[58ch] text-sm leading-relaxed text-ohc-steel">
+            <p className="mt-6 max-w-[58ch] text-sm leading-relaxed text-[#c9d0d8]">
               {success.public_result ||
                 "A consulta foi registrada e a equipe OHC Motors poderá revisar os dados técnicos antes de confirmar a aplicação."}
             </p>
@@ -217,31 +213,33 @@ export default function Compatibilidade() {
 
   return (
     <>
-      <AmbientLighting />
       <Nav />
       <div className="wrap py-12 md:py-16">
         <h1 className="max-w-[14ch] text-[clamp(40px,7vw,72px)]">
           Confirme a aplicação antes de comprar
         </h1>
-        <p className="mt-4 max-w-[65ch] text-ohc-steel">
+        <p className="mt-4 max-w-[65ch] text-[#c9d0d8]">
           A análise agora é registrada no sistema OHC e recebe um protocolo.
           Depois do envio, você continua o atendimento no WhatsApp com esse
           código.
         </p>
-        <div className="mt-10 grid gap-3 md:grid-cols-3">
+        {/* The order matters here, so the steps keep their numbers. */}
+        <ol className="mt-10 grid border-t border-ohc-line md:grid-cols-3">
           {STEPS.map(([t, d], i) => (
-            <div
+            <li
               key={t}
-              className="rounded-lg border border-ohc-line bg-ohc-bg2 p-6"
+              className="flex gap-4 border-b border-ohc-line py-5 md:border-b-0 md:border-l md:px-6 md:first:border-l-0 md:first:pl-0"
             >
-              <div className="font-display text-[44px] leading-none text-ohc-glow">
+              <span className="font-display text-[40px] leading-[0.8] text-ohc-red">
                 {i + 1}
-              </div>
-              <h3 className="mt-3 font-body text-base font-bold">{t}</h3>
-              <p className="mt-1.5 text-sm text-ohc-steel">{d}</p>
-            </div>
+              </span>
+              <span>
+                <b className="block font-body text-base font-bold">{t}</b>
+                <span className="mt-1 block text-sm text-[#c9d0d8]">{d}</span>
+              </span>
+            </li>
           ))}
-        </div>
+        </ol>
 
         <h2 className="mb-5 mt-14 text-[34px]">Solicitar análise</h2>
         <form className="grid max-w-[760px] gap-4" onSubmit={submit}>

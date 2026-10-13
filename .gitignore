@@ -8,3 +8,9 @@ playwright-report/
 test-results/
 *.log
 supabase/.temp/
+
+# impeccable: local decision rounds and review captures
+.impeccable/mocks/
+.impeccable/questions/
+.impeccable/payload.json
+.impeccable/review/

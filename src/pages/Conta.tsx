@@ -236,7 +236,6 @@ export default function Conta() {
       <Nav />
       <main className="customer-shell wrap">
         <div className="customer-intro">
-          <p className="eyebrow">OHC Motors · Sua conta</p>
           <h1>{titles[mode]}</h1>
           <p>Acesse seus dados de cadastro com segurança.</p>
           <Link href="/catalogo" className="customer-back">

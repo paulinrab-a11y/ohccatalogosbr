@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import AmbientLighting from "../components/AmbientLighting";
 import { adminAuth } from "../lib/adminApi";
 import { Link, useRoute } from "../lib/router";
 
@@ -81,7 +80,6 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-ohc-bg text-ohc-text">
-      <AmbientLighting />
       <main className="relative z-10 grid min-h-screen place-items-center px-5 py-10">
         <section className="w-full max-w-[470px] rounded-2xl border border-ohc-line bg-[#0E1117]/95 p-6 shadow-[0_30px_100px_rgba(0,0,0,.55)] backdrop-blur-xl sm:p-8">
           <div className="flex items-center justify-between gap-4 border-b border-ohc-line pb-6">
@@ -95,7 +93,9 @@ export default function AdminLogin() {
             </span>
           </div>
           <div className="pt-7">
-            <p className="eyebrow">Área restrita</p>
+            <p className="text-xs font-bold uppercase tracking-[.2em] text-ohc-steel">
+              Área restrita
+            </p>
             <h1 className="mt-2 text-[42px] leading-none sm:text-[52px]">
               Painel OHC Motors
             </h1>
