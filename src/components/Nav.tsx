@@ -1,4 +1,4 @@
-/* Navbar + full-screen mobile menu — 21st.dev navbar/mobile-nav block pattern (shadcn style), rebuilt without Radix. */
+/* Navbar and full-screen mobile menu. */
 import { useEffect, useState, useRef } from "react";
 import { Link, useRoute } from "../lib/router";
 import { waLink } from "../lib/products";
@@ -67,8 +67,11 @@ export default function Nav({
   }, [open]);
   return (
     <>
+      <a href="#conteudo" className="skip-link">
+        Pular para o conteúdo
+      </a>
       <header
-        className={`sticky top-0 z-40 transition-colors duration-500 ${solid ? "bg-ohc-bg/85 backdrop-blur-md border-b border-ohc-line" : "bg-transparent"}`}
+        className={`sticky top-0 z-40 transition-colors duration-500 ${solid ? "bg-ohc-bg border-b border-ohc-line" : "bg-transparent"}`}
       >
         <div className="wrap flex h-[68px] items-center justify-between gap-3 xl:gap-6">
           <Link
@@ -79,6 +82,8 @@ export default function Nav({
             <img
               src="/ohc-logo.webp"
               alt="OHC Motors"
+              width={500}
+              height={209}
               className="h-[34px] w-auto"
             />
           </Link>
@@ -99,7 +104,7 @@ export default function Nav({
           </nav>
           <Link
             href={accountHref}
-            className="ml-auto inline-flex min-w-0 items-center justify-center gap-2 text-xs sm:text-sm font-semibold min-h-11 xl:ml-0"
+            className="ml-auto inline-flex min-h-11 min-w-11 items-center justify-center gap-2 text-sm font-semibold xl:ml-0"
           >
             <svg
               aria-hidden="true"
@@ -114,7 +119,7 @@ export default function Nav({
               <circle cx="12" cy="8" r="4" />
               <path d="M4 22v-3a8 8 0 0 1 16 0v3" />
             </svg>
-            <span>{accountLabel}</span>
+            <span className="sr-only sm:not-sr-only">{accountLabel}</span>
           </Link>
           <a
             className="ub-wa hidden shrink-0 xl:inline-flex"
@@ -132,7 +137,7 @@ export default function Nav({
             onClick={() => setOpen(true)}
             aria-label="Abrir menu"
             aria-expanded={open}
-            className="xl:hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-ohc-line bg-ohc-bg/60"
+            className="xl:hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-ohc-line bg-ohc-bg"
           >
             <svg
               aria-hidden="true"
@@ -149,6 +154,8 @@ export default function Nav({
           </button>
         </div>
       </header>
+      {/* Target of the skip link: the page content starts right after the header. */}
+      <div id="conteudo" tabIndex={-1} className="outline-none" />
       <div
         ref={menuRef}
         role="dialog"
@@ -165,23 +172,27 @@ export default function Nav({
             ref={closeRef}
             onClick={() => setOpen(false)}
             aria-label="Fechar menu"
-            className="grid h-11 w-11 place-items-center rounded-lg border border-white/20 text-2xl"
+            className="grid h-11 w-11 place-items-center rounded-md border border-ohc-line text-2xl"
           >
             ×
           </button>
         </div>
         <nav className="mt-[8vh] grid" aria-label="Navegação móvel">
-          {[...LINKS, [accountHref, accountLabel]].map(([h, l], i) => (
+          {[...LINKS, [accountHref, accountLabel]].map(([h, l]) => (
             <Link
               key={h}
               href={h}
               onClick={() => setOpen(false)}
-              className="flex min-h-[64px] items-center gap-3 py-3 border-t border-ohc-line font-display text-[clamp(26px,7.5vw,48px)] tracking-wide last:border-b"
+              aria-current={current === h ? "page" : undefined}
+              className="flex min-h-[64px] items-center justify-between gap-3 py-3 border-t border-ohc-line font-display text-[clamp(30px,8vw,48px)] tracking-wide last:border-b"
             >
-              <span className="font-body text-[13px] tracking-[0.2em] text-ohc-glow">
-                0{i + 1}
-              </span>
               {l}
+              {current === h && (
+                <span
+                  aria-hidden="true"
+                  className="livery livery-rule w-10 rounded-sm"
+                />
+              )}
             </Link>
           ))}
         </nav>
@@ -195,8 +206,8 @@ export default function Nav({
         >
           Falar no WhatsApp
         </a>
-        <p className="mt-3 text-center text-xs text-ohc-steel">
-          Fabricação própria · São Paulo, SP
+        <p className="mt-3 text-center text-xs text-[#8b95a3]">
+          Fabricação própria · Estoque em São Paulo, SP
         </p>
       </div>
     </>

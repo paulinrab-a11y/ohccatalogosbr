@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Nav from "../components/Nav";
-import AmbientLighting from "../components/AmbientLighting";
 import Footer, { FloatingWA } from "../components/Footer";
+import LiveryTitle from "../components/LiveryTitle";
 import { useRoute } from "../lib/router";
 import { useProducts, waLink } from "../lib/products";
 import { applySeo } from "../lib/seo";
@@ -78,8 +78,23 @@ export default function Compatibilidade() {
     setFiles(next);
   };
 
+  // After a submit, move focus to the result so keyboard and screen-reader users
+  // land on the error or on the new protocol instead of losing their place.
+  const errorBox = useRef<HTMLDivElement>(null);
+  const successHeading = useRef<HTMLHeadingElement>(null);
+  const focusError = useRef(false);
+  useEffect(() => {
+    if (error && focusError.current) errorBox.current?.focus();
+    focusError.current = false;
+  }, [error]);
+  useEffect(() => {
+    if (!success?.protocol) return;
+    window.scrollTo({ top: 0 });
+    successHeading.current?.focus();
+  }, [success?.protocol]);
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    focusError.current = true;
     setError("");
     setSuccess(null);
     const form = new FormData(e.currentTarget);
@@ -128,8 +143,8 @@ export default function Compatibilidade() {
         throw new Error("O serviço não retornou um protocolo válido.");
       setSubmittedSku(sku);
       setSuccess(data);
-      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
+      focusError.current = true;
       setError(
         err instanceof Error
           ? err.message
@@ -144,21 +159,25 @@ export default function Compatibilidade() {
     const message = `Olá! Enviei uma análise de compatibilidade no site da OHC Motors. Meu protocolo é ${success.protocol}${selectedProduct ? ` e tenho interesse no ${selectedProduct.name} (${selectedProduct.sku}).` : "."}`;
     return (
       <>
-        <AmbientLighting />
         <Nav />
         <main className="wrap py-14 md:py-20">
-          <section className="mx-auto max-w-[760px] rounded-2xl border border-[#43C981]/30 bg-[#0D1016] p-6 text-center shadow-2xl sm:p-10">
-            <div className="mx-auto grid h-14 w-14 place-items-center rounded-full border border-[#43C981]/40 bg-[#43C981]/10 text-2xl text-[#93F1BD]">
-              ✓
-            </div>
-            <p className="eyebrow mt-6">Consulta registrada</p>
-            <h1 className="mt-3 text-[clamp(42px,8vw,72px)]">
-              PROTOCOLO CRIADO
+          <section className="decal mx-auto max-w-[760px] p-6 sm:p-10">
+            <span
+              aria-hidden="true"
+              className="livery livery-rule livery-paint block w-24 rounded-sm"
+            />
+            <h1
+              ref={successHeading}
+              tabIndex={-1}
+              className="mt-6 text-[clamp(42px,8vw,72px)] outline-none"
+            >
+              Consulta registrada
             </h1>
-            <div className="mx-auto mt-6 max-w-max rounded-xl border border-ohc-blue/30 bg-ohc-blue/10 px-5 py-3 font-mono text-lg font-bold tracking-[.08em] text-[#AFC8FF]">
+            <p className="mt-3 text-sm text-[#c9d0d8]">Seu protocolo:</p>
+            <div className="mt-2 max-w-max rounded-md border border-ohc-blue/50 bg-[#182033] px-5 py-3 text-lg font-bold tracking-[.08em] text-[#AFC8FF] [font-variant-numeric:tabular-nums]">
               {success.protocol}
             </div>
-            <p className="mx-auto mt-6 max-w-[58ch] text-sm leading-relaxed text-ohc-steel">
+            <p className="mt-6 max-w-[58ch] text-sm leading-relaxed text-[#c9d0d8]">
               {success.public_result ||
                 "A consulta foi registrada e a equipe OHC Motors poderá revisar os dados técnicos antes de confirmar a aplicação."}
             </p>
@@ -195,31 +214,35 @@ export default function Compatibilidade() {
 
   return (
     <>
-      <AmbientLighting />
       <Nav />
-      <div className="wrap py-12 md:py-16">
-        <h1 className="max-w-[14ch] text-[clamp(40px,7vw,72px)]">
-          Confirme a aplicação antes de comprar
-        </h1>
-        <p className="mt-4 max-w-[65ch] text-ohc-steel">
+      <LiveryTitle
+        lines={["Confirme a aplicação", "antes de comprar"]}
+        className="-mb-[3vw]"
+        titleClass="text-[clamp(40px,10.5vw,104px)]"
+      />
+      <div className="wrap pb-12 md:pb-16">
+        <p className="mt-4 max-w-[65ch] text-[#c9d0d8]">
           A análise agora é registrada no sistema OHC e recebe um protocolo.
           Depois do envio, você continua o atendimento no WhatsApp com esse
           código.
         </p>
-        <div className="mt-10 grid gap-3 md:grid-cols-3">
+        {/* The order matters here, so the steps keep their numbers. */}
+        <ol className="mt-10 grid border-t border-ohc-line md:grid-cols-3">
           {STEPS.map(([t, d], i) => (
-            <div
+            <li
               key={t}
-              className="rounded-lg border border-ohc-line bg-ohc-bg2 p-6"
+              className="flex gap-4 border-b border-ohc-line py-5 md:border-b-0 md:border-l md:px-6 md:first:border-l-0 md:first:pl-0"
             >
-              <div className="font-display text-[44px] leading-none text-ohc-glow">
+              <span className="font-display text-[40px] leading-[0.8] text-ohc-red">
                 {i + 1}
-              </div>
-              <h3 className="mt-3 font-body text-base font-bold">{t}</h3>
-              <p className="mt-1.5 text-sm text-ohc-steel">{d}</p>
-            </div>
+              </span>
+              <span>
+                <b className="block font-body text-base font-bold">{t}</b>
+                <span className="mt-1 block text-sm text-[#c9d0d8]">{d}</span>
+              </span>
+            </li>
           ))}
-        </div>
+        </ol>
 
         <h2 className="mb-5 mt-14 text-[34px]">Solicitar análise</h2>
         <form className="grid max-w-[760px] gap-4" onSubmit={submit}>
@@ -306,13 +329,13 @@ export default function Compatibilidade() {
               maxLength={750}
               rows={3}
               placeholder="Paddle shift, ACC, comandos, alterações já feitas no carro…"
-              className="w-full rounded-md border border-ohc-line bg-ohc-bg2 px-4 py-3 text-[15px]"
+              className="w-full rounded-md border border-ohc-line bg-ohc-bg2 px-4 py-3 text-base"
             />
           </Field>
 
-          <div className="rounded-xl border border-ohc-line bg-ohc-bg2 p-4">
+          <div className="decal p-4">
             <label
-              className="text-[11px] font-bold uppercase tracking-[.2em] text-ohc-steel"
+              className="text-[13px] font-semibold text-[#c9d0d8]"
               htmlFor="photos"
             >
               Fotos técnicas
@@ -364,6 +387,8 @@ export default function Compatibilidade() {
 
           {error && (
             <div
+              ref={errorBox}
+              tabIndex={-1}
               role="alert"
               className="rounded-lg border border-ohc-red/35 bg-ohc-red/10 p-4 text-sm text-[#FFD0D2]"
             >

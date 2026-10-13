@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
-import AmbientLighting from "../components/AmbientLighting";
 import Footer from "../components/Footer";
+import LiveryTitle from "../components/LiveryTitle";
+import FitmentPlate from "../components/FitmentPlate";
 import { Link, useRoute } from "../lib/router";
 import { useCatalog, brl, small, waLink } from "../lib/products";
 import {
@@ -11,6 +12,13 @@ import {
   productTitle,
   productUrl,
 } from "../lib/seo";
+// Singular label for the livery header ("Volante" / "BMW").
+const KIND: Record<string, string> = {
+  Volantes: "Volante",
+  Grades: "Grade",
+  "Faróis & Lanternas": "Farol e lanterna",
+  Acessórios: "Acessório",
+};
 function productSlug(path: string) {
   if (!path.startsWith("/produto/")) return "";
   try {
@@ -26,9 +34,12 @@ export default function Produto() {
   const p = products.find(
     (x) => x.slug === slug || x.sku === route.search.get("sku"),
   );
-  const [img, setImg] = useState("");
+  // The main photo is derived on the first render so its request starts with the
+  // page; a thumbnail click only overrides it.
+  const [picked, setImg] = useState("");
+  const img = picked || p?.image || "";
   useEffect(() => {
-    setImg(p?.image || "");
+    setImg("");
     if (!p) {
       if (!loading)
         applySeo({
@@ -95,15 +106,23 @@ export default function Produto() {
     );
   return (
     <>
-      <AmbientLighting />
       <Nav />
-      <div className="wrap grid gap-8 py-8 md:grid-cols-[1.1fr_1fr] md:gap-12 md:py-12">
-        <div className="md:sticky md:top-24 md:self-start rounded-xl border border-ohc-line studio-bg overflow-hidden">
+      <LiveryTitle
+        as="p"
+        lines={[KIND[p.category] || p.category, p.brand]}
+        className="-mb-[1vw] livery-paint"
+        titleClass="text-[clamp(34px,9vw,84px)]"
+      />
+      <div className="wrap grid gap-8 pb-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-12 md:pb-12">
+        <div className="decal min-w-0 overflow-hidden md:sticky md:top-24 md:self-start">
           {img ? (
             <img
               src={img}
               alt={p.name}
-              className="aspect-square w-full object-contain p-[6%] filter-[drop-shadow(0_30px_40px_rgba(0,0,0,.6))]"
+              width={1000}
+              height={1000}
+              fetchPriority="high"
+              className="aspect-[4/3] w-full bg-[#0e1116] object-contain p-[4%] md:aspect-square md:p-[6%]"
             />
           ) : (
             <div className="grid aspect-square place-items-center font-display text-3xl text-[#3A4350]">
@@ -111,14 +130,15 @@ export default function Produto() {
             </div>
           )}
           {p.images && p.images.length > 1 && (
-            <div className="flex gap-2 px-3 pb-3">
+            <div className="flex gap-2 overflow-x-auto p-3">
               {p.images.map((u) => (
                 <button
                   key={u}
                   type="button"
                   onClick={() => setImg(u)}
                   aria-label="Ver foto"
-                  className={`h-[72px] w-[72px] rounded-md border bg-ohc-bg2 p-1.5 ${img === u ? "border-ohc-glow" : "border-ohc-line"}`}
+                  aria-pressed={img === u}
+                  className={`h-[72px] w-[72px] shrink-0 rounded-md border-2 bg-[#0e1116] p-1.5 ${img === u ? "border-ohc-blue" : "border-ohc-line"}`}
                 >
                   <img
                     src={small(u)}
@@ -130,9 +150,9 @@ export default function Produto() {
             </div>
           )}
         </div>
-        <div>
+        <div className="min-w-0">
           <nav
-            className="mb-4 flex gap-2 text-xs text-ohc-steel"
+            className="mb-4 flex flex-wrap gap-2 text-xs text-[#c9d0d8]"
             aria-label="Caminho"
           >
             <Link href="/catalogo">Catálogo</Link>
@@ -146,10 +166,11 @@ export default function Produto() {
           <h1 className="text-[clamp(34px,9vw,48px)] md:text-[clamp(40px,5vw,64px)] max-w-[16ch]">
             {p.name}
           </h1>
-          <p className="mt-2 mb-5 text-[13px] text-ohc-steel">
-            SKU <b className="text-ohc-text">{p.sku}</b>
-          </p>
-          <div className="mb-6 flex items-baseline gap-3">
+          <FitmentPlate
+            p={p}
+            className="mt-4 mb-6 max-sm:[--cells:2]! max-sm:[&>div:last-child]:col-span-2"
+          />
+          <div className="mb-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
             {p.price ? (
               <>
                 <span className="font-display text-[46px] leading-none">
@@ -188,7 +209,7 @@ export default function Produto() {
               Confirmar compatibilidade
             </Link>
           </div>
-          <dl className="grid grid-cols-[130px_1fr] border-t border-ohc-line text-[14px] [&>dt]:py-3.5 [&>dd]:py-3.5 [&>dt]:border-b [&>dd]:border-b [&>dt]:border-ohc-line [&>dd]:border-ohc-line [&>dt]:text-[13px] [&>dt]:font-semibold [&>dt]:text-ohc-steel">
+          <dl className="grid grid-cols-[110px_minmax(0,1fr)] sm:grid-cols-[130px_minmax(0,1fr)] [&>dd]:[overflow-wrap:anywhere] border-t border-ohc-line text-[14px] [&>dt]:py-3.5 [&>dd]:py-3.5 [&>dt]:border-b [&>dd]:border-b [&>dt]:border-ohc-line [&>dd]:border-ohc-line [&>dt]:text-[13px] [&>dt]:font-semibold [&>dt]:text-ohc-steel">
             <dt>Aplicação</dt>
             <dd>{p.application}</dd>
             <dt>Compatível com</dt>
@@ -198,7 +219,7 @@ export default function Produto() {
                   {p.compat.map((c) => (
                     <li
                       key={c}
-                      className="before:mr-2.5 before:inline-block before:h-1.5 before:w-1.5 before:rounded-full before:bg-ohc-glow before:align-middle"
+                      className="before:mr-2.5 before:inline-block before:h-1.5 before:w-3 before:bg-ohc-blue before:align-middle"
                     >
                       {c}
                     </li>
@@ -247,14 +268,12 @@ export default function Produto() {
             >
               Sobre este produto
             </h2>
-            <p className="mt-3 text-[15px] leading-7 text-ohc-steel">
+            <p className="mt-3 max-w-[65ch] text-[15px] leading-7 text-[#c9d0d8]">
               {productDescription(p)}
             </p>
           </section>
           {p.notes && (
-            <div className="mt-6 rounded-r-md border-l-[3px] border-ohc-glow bg-ohc-bg2 px-4 py-4 text-sm">
-              {p.notes}
-            </div>
+            <div className="decal mt-6 px-4 py-4 text-sm">{p.notes}</div>
           )}
         </div>
       </div>

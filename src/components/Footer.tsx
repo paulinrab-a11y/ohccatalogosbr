@@ -1,23 +1,26 @@
-/* CTA + Footer — 21st.dev "Call to action" and "Footer" block patterns. */
+/* Final call to action on the livery stripe, footer and floating WhatsApp. */
+import { useEffect, useState } from "react";
 import { Link } from "../lib/router";
+import LiveryTitle from "./LiveryTitle";
 import { waLink } from "../lib/products";
 export function FinalCTA() {
   return (
-    <section className="relative py-20 md:py-28 text-center">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(40%_60%_at_20%_50%,rgba(33,79,161,.28),transparent_70%),radial-gradient(40%_60%_at_80%_50%,rgba(237,28,36,.2),transparent_70%)]" />
-      <div className="wrap relative">
-        <p className="eyebrow">Pronto para o seu carro</p>
-        <h2 className="mx-auto mt-3 max-w-[16ch] text-[clamp(44px,9vw,110px)]">
-          Fale com a OHC e confirme a aplicação.
-        </h2>
-        <p className="mx-auto mt-5 max-w-[52ch] text-ohc-steel">
+    <section className="py-12 md:py-20">
+      {/* The same stripe that opens the page closes it. */}
+      <LiveryTitle
+        as="h2"
+        lines={["Confirme a aplicação", "no seu carro"]}
+        titleClass="text-[clamp(40px,10vw,112px)]"
+      />
+      <div className="wrap mt-2 grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+        <p className="max-w-[52ch] text-[#c9d0d8]">
           Mande o modelo, o ano e três fotos do volante atual. A equipe confirma
           o SKU e envia o link de pagamento no PIX com desconto ou no cartão em
           até 12x.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="flex flex-wrap gap-3">
           <a
-            className="ub-wa text-base px-7 py-4"
+            className="ub-wa px-7 py-4 text-base"
             href={waLink(
               "Olá! Quero confirmar a compatibilidade de um produto OHC Motors.",
             )}
@@ -39,7 +42,14 @@ export default function Footer() {
     <footer className="border-t border-ohc-line">
       <div className="wrap grid gap-8 py-12 text-[13px] text-ohc-steel md:grid-cols-[2fr_1fr_1fr]">
         <div>
-          <img src="/ohc-logo.webp" alt="OHC Motors" className="mb-4 h-8" />
+          <img
+            src="/ohc-logo.webp"
+            alt="OHC Motors"
+            width={500}
+            height={209}
+            loading="lazy"
+            className="mb-4 h-8 w-auto"
+          />
           <p>
             Volantes esportivos de fabricação própria, grades, faróis e
             acessórios. Confirmamos a aplicação de cada produto antes do envio.
@@ -104,7 +114,20 @@ export default function Footer() {
     </footer>
   );
 }
-export function FloatingWA() {
+/** On the home page the button waits until the visitor scrolls past the
+    hero, so it never covers the car picker in the first screen. */
+export function FloatingWA({ afterHero = false }: { afterHero?: boolean }) {
+  const [shown, setShown] = useState(!afterHero);
+  useEffect(() => {
+    if (!afterHero) return;
+    const on = () => {
+      const past = scrollY > innerHeight * 0.9;
+      setShown((was) => (was === past ? was : past));
+    };
+    on();
+    addEventListener("scroll", on, { passive: true });
+    return () => removeEventListener("scroll", on);
+  }, [afterHero]);
   return (
     <a
       href={waLink(
@@ -113,7 +136,10 @@ export function FloatingWA() {
       target="_blank"
       rel="noopener"
       aria-label="Falar no WhatsApp"
-      className="fixed bottom-5 right-5 z-30 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-[#0B2416] shadow-[0_8px_30px_rgba(0,0,0,.45)] md:h-auto md:w-auto md:rounded-md md:px-5 md:py-3 md:text-sm md:font-bold"
+      // Safe-area offsets keep the button above the iPhone home bar (viewport-fit=cover).
+      tabIndex={shown ? undefined : -1}
+      aria-hidden={shown ? undefined : true}
+      className={`fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-[calc(1rem+env(safe-area-inset-right))] z-30 grid h-13 w-13 place-items-center rounded-full bg-[#25D366] text-[#0B2416] shadow-[0_6px_18px_rgba(0,0,0,.4)] transition-[opacity,transform] duration-200 md:h-auto md:w-auto md:rounded-md md:px-5 md:py-3 md:text-sm md:font-bold ${shown ? "opacity-100" : "pointer-events-none translate-y-3 opacity-0"}`}
     >
       <svg
         className="h-6 w-6 md:hidden"

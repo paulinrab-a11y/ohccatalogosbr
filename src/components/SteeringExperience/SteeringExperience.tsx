@@ -11,7 +11,8 @@ import {
 } from "react";
 import "./steeringExperience.css";
 import { reportError } from "../../lib/observability";
-import SteeringOverlay from "./SteeringOverlay";
+import SteeringOverlay, { HERO, HERO_SIZE } from "./SteeringOverlay";
+import LiveryTitle from "../LiveryTitle";
 import { useScrollProgress } from "./useScrollProgress";
 import { hasWebGL, isTouch, prefersReduced, useIsMobile } from "./useMedia";
 import { SECTION_VH } from "./timeline";
@@ -32,16 +33,42 @@ class Boundary extends Component<
     return this.state.failed ? null : this.props.children;
   }
 }
+/* O three.js e o GLB pesam vários segundos de CPU no celular. Esperar o load da
+   página e um momento ocioso deixa o texto e o resto do herói aparecerem antes. */
+function useAfterLoad() {
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    let cancel = () => {};
+    const go = () => {
+      if (typeof requestIdleCallback === "function") {
+        const id = requestIdleCallback(() => setDone(true), { timeout: 1500 });
+        cancel = () => cancelIdleCallback(id);
+      } else {
+        const id = setTimeout(() => setDone(true), 300);
+        cancel = () => clearTimeout(id);
+      }
+    };
+    if (document.readyState === "complete") go();
+    else addEventListener("load", go, { once: true });
+    return () => {
+      removeEventListener("load", go);
+      cancel();
+    };
+  }, []);
+  return done;
+}
 export default function SteeringExperience({
   onReady,
 }: {
   onReady?: () => void;
 }) {
   const section = useRef<HTMLElement>(null),
-    pinned = useRef<HTMLDivElement>(null);
+    pinned = useRef<HTMLDivElement>(null),
+    band = useRef<HTMLDivElement>(null);
   const mobile = useIsMobile();
   const reduced = prefersReduced();
   const [near, setNear] = useState(false);
+  const idle = useAfterLoad();
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(() => !hasWebGL());
   const mouse = useRef({ x: 0, y: 0 });
@@ -98,15 +125,31 @@ export default function SteeringExperience({
       aria-label="Apresentação 3D do volante OHC"
     >
       <div ref={pinned} className="se-pin">
+        {/* On wide screens the livery stripe runs behind the wheel; the title on
+            it is drawn by the overlay at the same height. */}
+        <div
+          ref={band}
+          className="absolute inset-x-0 top-[34svh] hidden lg:block"
+        >
+          <LiveryTitle
+            lines={HERO}
+            as="p"
+            paint="fill"
+            className="livery-paint"
+            titleClass={HERO_SIZE}
+          />
+        </div>
         {failed ? (
           <div className="se-fallback">
             <img
               src="/img/volante-frente.webp"
               alt="Volante OHC Motors em fibra de carbono e Alcântara com shift light"
-              loading="lazy"
+              width={1100}
+              height={1000}
+              fetchPriority="high"
             />
           </div>
-        ) : near ? (
+        ) : near && idle ? (
           <div className="se-canvas">
             <Boundary onError={() => setFailed(true)}>
               <Suspense fallback={null}>
@@ -128,15 +171,14 @@ export default function SteeringExperience({
             style={{ opacity: ready ? 0 : 1 }}
             aria-live="polite"
           >
-            <div className="ub-dots">
-              <i />
-              <i />
-              <i />
-            </div>
-            <span>Carregando o volante 3D</span>
+            <span>Carregando o volante 3D…</span>
           </div>
         )}
-        <SteeringOverlay progress={progress} staticMode={reduced || failed} />
+        <SteeringOverlay
+          progress={progress}
+          staticMode={reduced || failed}
+          band={band}
+        />
       </div>
     </section>
   );

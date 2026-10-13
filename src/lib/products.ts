@@ -14,6 +14,8 @@ export type Product = {
   compat: string[] | null;
   price: number | null;
   notes: string | null;
+  /** Model years when the catalog has them, e.g. "2015–2020". */
+  years?: string | null;
 };
 export const PRODUCTS = raw as Product[];
 const WA = "5511955798211";
@@ -93,6 +95,13 @@ export function resolveImage(
   return fallback;
 }
 
+export function yearRange(start?: number | null, end?: number | null) {
+  if (start && end) return start === end ? String(start) : `${start}–${end}`;
+  if (start) return `a partir de ${start}`;
+  if (end) return `até ${end}`;
+  return null;
+}
+
 function dbToProduct(row: DbProduct): Product {
   const fallback = PRODUCTS.find((p) => p.sku === row.sku);
   const extra = splitText(row.outras_imagens)
@@ -130,6 +139,7 @@ function dbToProduct(row: DbProduct): Product {
     compat,
     price: row.price ?? null,
     notes: row.descricao || fallback?.notes || null,
+    years: yearRange(row.ano_inicio, row.ano_fim),
   };
 }
 
