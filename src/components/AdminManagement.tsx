@@ -563,7 +563,7 @@ function ProductEditor({
                 onChange={(e) => field("price", e.target.value)}
               />
             </Field>
-            <Field label="Preço no cartão (total, até 12x, opcional)">
+            <Field label="Preço no cartão (total em 3x sem juros, opcional)">
               <input
                 type="number"
                 step="0.01"

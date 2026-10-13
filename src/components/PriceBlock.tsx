@@ -67,8 +67,9 @@ export default function PriceBlock({
         className={`text-[#c9d0d8] ${page ? "text-sm" : "text-[12px] leading-snug"}`}
       >
         {installment != null
-          ? `ou 12x de ${formatBRL(installment)} no cartão`
-          : "ou em até 12x no cartão"}
+          ? `ou 3x de ${formatBRL(installment)} sem juros no cartão`
+          : "ou 3x sem juros no cartão"}
+        {page && " (até 12x com juros)"}
       </p>
       {page && v.emPromocao && v.validoAte && (
         <p className="text-sm font-semibold text-[#ff8a8f]">

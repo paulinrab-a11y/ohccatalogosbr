@@ -15,7 +15,7 @@ export type Product = {
   compat: string[] | null;
   /** PIX price (already discounted). */
   price: number | null;
-  /** Total on card, up to 12x; optional. */
+  /** Total on card, paid in 3x interest-free; optional. */
   cardPrice?: number | null;
   promoPrice?: number | null;
   promoStart?: string | null;

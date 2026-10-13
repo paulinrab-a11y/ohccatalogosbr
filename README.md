@@ -71,7 +71,7 @@ Leia o [CLAUDE.md](./CLAUDE.md) antes de qualquer alteração. Ele resume o esta
 Os preços ficam na tabela `product_prices` do Supabase e são editados no painel em **Admin → Produtos → editar**:
 
 - **Preço no PIX:** é o preço exibido no site e o mesmo usado pela automação do WhatsApp.
-- **Preço no cartão (opcional):** o valor total em até 12x. Com ele, o site mostra "ou 12x de R$ X"; sem ele, mostra só "ou em até 12x no cartão".
+- **Preço no cartão (opcional):** o valor total no cartão em 3x sem juros. Com ele, o site mostra "ou 3x de R$ X sem juros no cartão"; sem ele, mostra só "ou 3x sem juros no cartão". A página do produto acrescenta "(até 12x com juros)", sem valor, porque os juros dependem da InfinitePay.
 - **Preço promocional no PIX, início e fim (opcionais):** as datas são dias de São Paulo; a promoção vale do início do primeiro dia até o fim do último.
 - **Mostrar preço no site:** precisa estar marcado para o preço aparecer. "Preço ativo (WhatsApp)" continua controlando só a automação.
 

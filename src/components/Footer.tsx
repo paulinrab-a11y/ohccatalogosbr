@@ -17,7 +17,7 @@ export function FinalCTA() {
         <p className="max-w-[52ch] text-[#c9d0d8]">
           Mande o modelo, o ano e três fotos do volante atual. A equipe confirma
           o SKU e envia o link de pagamento no PIX com desconto ou no cartão em
-          até 12x.
+          3x sem juros ou até 12x com juros.
         </p>
         <div className="flex flex-wrap gap-3">
           <a
@@ -57,8 +57,9 @@ export default function Footer() {
             acessórios. Confirmamos a aplicação de cada produto antes do envio.
           </p>
           <p className="mt-2">
-            PIX com desconto ou cartão em até 12x pela InfinitePay. Garantia de
-            90 dias contra defeito e 7 dias para arrependimento.
+            PIX com desconto ou cartão em 3x sem juros ou até 12x com juros pela
+            InfinitePay. Garantia de 90 dias contra defeito e 7 dias para
+            arrependimento.
           </p>
         </div>
         <div>
