@@ -102,7 +102,8 @@ export function yearRange(start?: number | null, end?: number | null) {
   return null;
 }
 
-function dbToProduct(row: DbProduct): Product {
+/** Maps one public catalog row (Supabase) to a site product. */
+export function dbToProduct(row: DbProduct): Product {
   const fallback = PRODUCTS.find((p) => p.sku === row.sku);
   const extra = splitText(row.outras_imagens)
     .map((src, i) => resolveImage(src, fallback?.images?.[i + 1] || null))
