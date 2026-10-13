@@ -7,11 +7,52 @@ import ProductCard from "../components/ProductCard";
 import { useRoute } from "../lib/router";
 import { CATS, useCatalog, brands, matches } from "../lib/products";
 import { applySeo, websiteSchema } from "../lib/seo";
+function Opt({
+  on,
+  label,
+  n,
+  onClick,
+}: {
+  on: boolean;
+  label: string;
+  n: number;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-pressed={on}
+      onClick={onClick}
+      className={`flex items-center justify-between gap-3 rounded-md px-3 py-2 text-left text-sm min-h-[40px] ${on ? "bg-ohc-blue text-white" : "border border-ohc-line md:border-0 hover:bg-ohc-bg2"}`}
+    >
+      {label}
+      <span className="text-xs opacity-70">{n}</span>
+    </button>
+  );
+}
 export default function Catalogo() {
   const { products, loading } = useCatalog();
   const { route } = useRoute();
+  const [cat, setCat] = useState(route.search.get("categoria") || "");
+  const [brand, setBrand] = useState(route.search.get("marca") || "");
+  const [q, setQ] = useState(route.search.get("q") || "");
+  // Filters live in the URL so reload, back and shared links keep them.
+  // replaceState avoids a history entry (and a remount) per click or keystroke.
   useEffect(() => {
-    const { context, path } = catalogSeoContext(route.search);
+    const params = new URLSearchParams();
+    if (cat) params.set("categoria", cat);
+    if (brand) params.set("marca", brand);
+    if (q.trim()) params.set("q", q.trim());
+    const query = params.toString();
+    const next = `/catalogo${query ? `?${query}` : ""}${location.hash}`;
+    if (next !== location.pathname + location.search + location.hash)
+      history.replaceState(history.state, "", next);
+  }, [cat, brand, q]);
+  useEffect(() => {
+    const filters = new URLSearchParams();
+    if (cat) filters.set("categoria", cat);
+    if (brand) filters.set("marca", brand);
+    const { context, path } = catalogSeoContext(filters);
     applySeo({
       title: context
         ? `${context} | Catálogo OHC Motors`
@@ -22,10 +63,7 @@ export default function Catalogo() {
       path,
       schema: websiteSchema,
     });
-  }, [route.search.toString()]);
-  const [cat, setCat] = useState(route.search.get("categoria") || "");
-  const [brand, setBrand] = useState(route.search.get("marca") || "");
-  const [q, setQ] = useState(route.search.get("q") || "");
+  }, [cat, brand]);
   const list = useMemo(
     () =>
       products.filter(
@@ -41,27 +79,6 @@ export default function Catalogo() {
     list.forEach((p) => (g[p.brand] ||= []).push(p));
     return g;
   }, [list]);
-  const Opt = ({
-    on,
-    label,
-    n,
-    onClick,
-  }: {
-    on: boolean;
-    label: string;
-    n: number;
-    onClick: () => void;
-  }) => (
-    <button
-      type="button"
-      aria-pressed={on}
-      onClick={onClick}
-      className={`flex items-center justify-between gap-3 rounded-md px-3 py-2 text-left text-sm min-h-[40px] ${on ? "bg-ohc-blue text-white" : "border border-ohc-line md:border-0 hover:bg-ohc-bg2"}`}
-    >
-      {label}
-      <span className="text-xs opacity-70">{n}</span>
-    </button>
-  );
   return (
     <>
       <AmbientLighting />
@@ -72,9 +89,13 @@ export default function Catalogo() {
             <label htmlFor="q">Buscar</label>
             <input
               id="q"
+              name="q"
+              type="search"
+              autoComplete="off"
+              spellCheck={false}
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Modelo, SKU ou veículo"
+              placeholder="Modelo, SKU ou veículo…"
             />
           </div>
           <h4 className="mt-6 mb-2 text-xs font-bold text-ohc-steel">
@@ -118,7 +139,7 @@ export default function Catalogo() {
         </aside>
         <main className="min-w-0">
           <h1 className="text-[clamp(44px,7vw,72px)]">Catálogo</h1>
-          <p className="mb-6 text-sm text-ohc-steel">
+          <p className="mb-6 text-sm text-ohc-steel" aria-live="polite">
             Mostrando <b className="text-ohc-text">{list.length}</b>{" "}
             {list.length === 1 ? "produto" : "produtos"} em{" "}
             <b className="text-ohc-text">
@@ -126,10 +147,7 @@ export default function Catalogo() {
             </b>
           </p>
           {!list.length && (
-            <div
-              className="rounded-lg border border-dashed border-ohc-line p-6 sm:p-10 text-center text-ohc-steel"
-              aria-live="polite"
-            >
+            <div className="rounded-lg border border-dashed border-ohc-line p-6 sm:p-10 text-center text-ohc-steel">
               {loading
                 ? "Carregando catálogo…"
                 : "Nenhum produto com esses filtros. Limpe a busca ou pergunte à equipe no WhatsApp."}

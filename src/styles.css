@@ -55,6 +55,24 @@
 @layer utilities {
   :root {
     color-scheme: dark;
+    /* Anchors and keyboard focus land below the 68 px sticky header. */
+    scroll-padding-top: 84px;
+  }
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .skip-link {
+    @apply fixed left-3 top-3 z-[200] rounded-md bg-ohc-blue px-4 py-3 text-sm font-bold text-white;
+    transform: translateY(-160%);
+  }
+  .skip-link:focus-visible {
+    transform: none;
   }
   body {
     @apply bg-ohc-bg text-ohc-text font-body antialiased;
@@ -176,7 +194,8 @@
   }
   .ub-field input,
   .ub-field select {
-    @apply w-full rounded-md bg-ohc-bg2 border border-ohc-line px-4 text-[15px] text-ohc-text min-h-[48px];
+    /* 16 px: smaller text makes iOS Safari zoom the page on focus. */
+    @apply w-full rounded-md bg-ohc-bg2 border border-ohc-line px-4 text-base text-ohc-text min-h-[48px];
     appearance: none;
     transition:
       border-color 0.2s,
@@ -189,6 +208,10 @@
     box-shadow:
       0 0 0 3px rgba(59, 123, 255, 0.18),
       0 0 24px rgba(59, 123, 255, 0.25);
+  }
+  .ub-field option {
+    /* Windows draws native option lists light unless told otherwise. */
+    @apply bg-ohc-bg2 text-ohc-text;
   }
   .ub-field select {
     background-image:

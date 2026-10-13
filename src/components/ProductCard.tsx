@@ -13,7 +13,11 @@ export default function ProductCard({
   return (
     <TiltedCard className="group h-full">
       <SpotlightCard className="flex h-full flex-col">
-        <Link href={`/produto/${encodeURIComponent(p.slug)}`} className="block">
+        <Link
+          href={`/produto/${encodeURIComponent(p.slug)}`}
+          // Inset ring: the card clips overflow, so the default outset outline would be hidden.
+          className="block rounded-[inherit] focus-visible:outline-offset-[-3px]"
+        >
           <div className="aspect-square studio-bg">
             {p.image ? (
               <img

@@ -67,6 +67,9 @@ export default function Nav({
   }, [open]);
   return (
     <>
+      <a href="#conteudo" className="skip-link">
+        Pular para o conteúdo
+      </a>
       <header
         className={`sticky top-0 z-40 transition-colors duration-500 ${solid ? "bg-ohc-bg/85 backdrop-blur-md border-b border-ohc-line" : "bg-transparent"}`}
       >
@@ -79,6 +82,8 @@ export default function Nav({
             <img
               src="/ohc-logo.webp"
               alt="OHC Motors"
+              width={500}
+              height={209}
               className="h-[34px] w-auto"
             />
           </Link>
@@ -149,6 +154,8 @@ export default function Nav({
           </button>
         </div>
       </header>
+      {/* Target of the skip link: the page content starts right after the header. */}
+      <div id="conteudo" tabIndex={-1} className="outline-none" />
       <div
         ref={menuRef}
         role="dialog"

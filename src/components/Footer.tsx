@@ -39,7 +39,14 @@ export default function Footer() {
     <footer className="border-t border-ohc-line">
       <div className="wrap grid gap-8 py-12 text-[13px] text-ohc-steel md:grid-cols-[2fr_1fr_1fr]">
         <div>
-          <img src="/ohc-logo.webp" alt="OHC Motors" className="mb-4 h-8" />
+          <img
+            src="/ohc-logo.webp"
+            alt="OHC Motors"
+            width={500}
+            height={209}
+            loading="lazy"
+            className="mb-4 h-8 w-auto"
+          />
           <p>
             Volantes esportivos de fabricação própria, grades, faróis e
             acessórios. Confirmamos a aplicação de cada produto antes do envio.
@@ -113,7 +120,8 @@ export function FloatingWA() {
       target="_blank"
       rel="noopener"
       aria-label="Falar no WhatsApp"
-      className="fixed bottom-5 right-5 z-30 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-[#0B2416] shadow-[0_8px_30px_rgba(0,0,0,.45)] md:h-auto md:w-auto md:rounded-md md:px-5 md:py-3 md:text-sm md:font-bold"
+      // Safe-area offsets keep the button above the iPhone home bar (viewport-fit=cover).
+      className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-[calc(1.25rem+env(safe-area-inset-right))] z-30 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-[#0B2416] shadow-[0_8px_30px_rgba(0,0,0,.45)] md:h-auto md:w-auto md:rounded-md md:px-5 md:py-3 md:text-sm md:font-bold"
     >
       <svg
         className="h-6 w-6 md:hidden"
