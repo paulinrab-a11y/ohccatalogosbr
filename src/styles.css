@@ -224,7 +224,18 @@
   .plate dd {
     @apply mt-0.5 text-[14px] font-semibold text-ohc-text;
   }
+  /* Card variant: label left, value right, one row each. */
+  .plate-rows > div {
+    @apply flex items-baseline justify-between gap-3 px-2.5 py-1.5;
+  }
+  .plate-rows dt {
+    @apply shrink-0;
+  }
+  .plate-rows dd {
+    @apply mt-0 min-w-0 text-right;
+  }
   .plate dd.pending {
+    white-space: nowrap;
     @apply text-[#afc8ff];
   }
   .data-band b {

@@ -43,7 +43,7 @@ export default function ProductCard({
           )}
         </div>
         <div className="flex flex-1 flex-col gap-2 p-3.5 sm:p-4">
-          <h3 className="font-body text-[14px] font-bold leading-snug [overflow-wrap:anywhere] [hyphens:auto] sm:text-[15px]">
+          <h3 className="font-body text-[14px] font-bold leading-snug [overflow-wrap:anywhere] sm:text-[15px]">
             {p.name}
           </h3>
           {!compact && (
@@ -51,6 +51,7 @@ export default function ProductCard({
               p={p}
               application={shortApplication(p.application)}
               showCode={false}
+              variant="rows"
               className="[--plate-bg:#12151b] [&_dd]:text-[13px]"
             />
           )}
@@ -64,7 +65,7 @@ export default function ProductCard({
       </Link>
       {!compact && (
         <a
-          className="flex min-h-11 items-center gap-2 border-t border-ohc-line px-3.5 text-[13px] font-bold text-[#3fd97a] hover:text-[#6ff09d] sm:px-4"
+          className="flex min-h-11 items-center gap-1.5 whitespace-nowrap border-t border-ohc-line px-3.5 text-[12px] font-bold sm:gap-2 sm:text-[13px] text-[#3fd97a] hover:text-[#6ff09d] sm:px-4"
           href={waLink(
             `Olá! Tenho interesse no ${p.name} (SKU ${p.sku}). Meu carro é: `,
           )}
