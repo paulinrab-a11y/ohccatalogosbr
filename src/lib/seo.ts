@@ -2,15 +2,33 @@ import { brands, CATS, PRODUCTS, type Product } from "./products";
 
 const SITE_ORIGIN = "https://www.ohcmotorsbr.com.br";
 const SITE_NAME = "OHC Motors";
+/** Share image for pages without a product photo (1200×630). */
+const DEFAULT_IMAGE = `${SITE_ORIGIN}/og/ohc-motors.jpg`;
+
+/** Everything one page says about itself to search engines and link previews. */
+export type PageHead = {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+  type?: "website" | "product";
+  schema?: unknown;
+  noindex?: boolean;
+  /** Left out of the shared SPA shell, which other routes reuse. */
+  canonical?: boolean;
+};
 
 /**
  * Catalog filters that may shape the title and canonical URL. Tracking
  * parameters (utm_*, fbclid), the search box and unknown values are ignored,
  * so they never create indexable duplicates.
  */
-export function catalogSeoContext(search: URLSearchParams) {
+export function catalogSeoContext(
+  search: URLSearchParams,
+  products: Product[] = PRODUCTS,
+) {
   const category = CATS.find((c) => c === search.get("categoria"));
-  const brand = brands(PRODUCTS).find((b) => b === search.get("marca"));
+  const brand = brands(products).find((b) => b === search.get("marca"));
   const params = new URLSearchParams();
   if (category) params.set("categoria", category);
   if (brand) params.set("marca", brand);
@@ -22,6 +40,13 @@ function clean(value: string) {
   return value.replace(/\s+/g, " ").trim();
 }
 
+/** Photos are stored as site paths or full URLs; previews need full URLs. */
+function absoluteImage(src: string | null | undefined) {
+  if (!src) return undefined;
+  if (/^https?:\/\//i.test(src)) return src;
+  return `${SITE_ORIGIN}${src.startsWith("/") ? "" : "/"}${src}`;
+}
+
 function productType(product: Product) {
   if (product.category === "Volantes") return "volante";
   if (product.category === "Grades") return "grade automotiva";
@@ -29,6 +54,12 @@ function productType(product: Product) {
     return "farol ou lanterna automotiva";
   return "acessório automotivo";
 }
+
+// What the product is, for titles: "Volante BMW M3 - Carbono".
+const KIND: Record<string, string> = {
+  Volantes: "Volante",
+  Grades: "Grade",
+};
 
 export function productDescription(product: Product) {
   const type = productType(product);
@@ -55,11 +86,137 @@ export function productDescription(product: Product) {
 }
 
 export function productTitle(product: Product) {
-  return clean(`${product.name} | ${SITE_NAME}`);
+  const kind = KIND[product.category];
+  const name = clean(product.name);
+  // Say what it is unless the name already does ("Grade Panamericana…").
+  const label =
+    kind && !name.toLowerCase().startsWith(kind.toLowerCase())
+      ? `${kind} ${name}`
+      : name;
+  return `${label} | ${SITE_NAME}`;
 }
 
-export function productUrl(product: Product) {
+function productUrl(product: Product) {
   return `${SITE_ORIGIN}/produto/${encodeURIComponent(product.slug)}`;
+}
+
+function productSchema(product: Product) {
+  const schema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    sku: product.sku,
+    brand: { "@type": "Brand", name: product.brand || SITE_NAME },
+    category: product.category,
+    description: productDescription(product),
+    url: productUrl(product),
+  };
+  const image = absoluteImage(product.image);
+  if (image) schema.image = [image];
+  if (product.price != null) {
+    schema.offers = {
+      "@type": "Offer",
+      url: productUrl(product),
+      priceCurrency: "BRL",
+      price: product.price,
+      availability: "https://schema.org/InStock",
+      seller: { "@type": "Organization", name: SITE_NAME },
+    };
+  }
+  return schema;
+}
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_ORIGIN,
+  logo: `${SITE_ORIGIN}/ohc-logo.webp`,
+  areaServed: "BR",
+  sameAs: ["https://www.instagram.com/ohcmotorsbr/"],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_ORIGIN,
+  inLanguage: "pt-BR",
+};
+
+/* Page heads, shared by the pages (applied in the browser) and by the build
+   (written into each page's HTML so previews and crawlers see them without JS). */
+
+export const homeHead: PageHead = {
+  title: "OHC Motors | Volantes esportivos e acessórios automotivos",
+  description:
+    "Volantes esportivos OHC Motors em couro, carbono e Alcântara, grades Mercedes com LED e acessórios automotivos. Consulte compatibilidade e atendimento pelo WhatsApp.",
+  path: "/",
+  schema: {
+    "@context": "https://schema.org",
+    "@graph": [organizationSchema, websiteSchema],
+  },
+};
+
+export const compatibilityHead: PageHead = {
+  title: "Consultar compatibilidade do volante | OHC Motors",
+  description:
+    "Descubra se um volante OHC Motors é compatível com seu carro. Informe marca, modelo, ano e versão e envie fotos para uma análise segura.",
+  path: "/compatibilidade",
+  schema: websiteSchema,
+};
+
+export function catalogHead(
+  search: URLSearchParams,
+  products: Product[] = PRODUCTS,
+): PageHead {
+  const { context, path } = catalogSeoContext(search, products);
+  return {
+    title: context
+      ? `${context} | Catálogo OHC Motors`
+      : "Catálogo de volantes e acessórios | OHC Motors",
+    description: context
+      ? `Encontre produtos OHC Motors para ${context}. Veja fotos, materiais, aplicações, preço e confirme a compatibilidade antes da compra.`
+      : "Catálogo OHC Motors de volantes esportivos, grades Mercedes, faróis e acessórios automotivos. Filtre por marca, categoria ou veículo.",
+    path,
+    schema: websiteSchema,
+  };
+}
+
+export function productHead(product: Product): PageHead {
+  return {
+    title: productTitle(product),
+    description: productDescription(product),
+    path: `/produto/${encodeURIComponent(product.slug)}`,
+    image: absoluteImage(product.image),
+    type: "product",
+    schema: {
+      ...productSchema(product),
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Catálogo",
+            item: `${SITE_ORIGIN}/catalogo`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: product.brand,
+            item: `${SITE_ORIGIN}/catalogo?marca=${encodeURIComponent(product.brand)}`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: product.name,
+            item: productUrl(product),
+          },
+        ],
+      },
+    },
+  };
 }
 
 function setMeta(attribute: "name" | "property", key: string, content: string) {
@@ -103,72 +260,89 @@ export function applySeo({
   title,
   description,
   path,
+  image = DEFAULT_IMAGE,
+  type = "website",
   schema,
   noindex = false,
-}: {
-  title: string;
-  description: string;
-  path: string;
-  schema?: unknown;
-  noindex?: boolean;
-}) {
+}: PageHead) {
   document.title = title;
   setMeta("name", "description", description);
   setMeta("name", "robots", noindex ? "noindex, nofollow" : "index, follow");
   setCanonical(`${SITE_ORIGIN}${path}`);
   setMeta("property", "og:title", title);
   setMeta("property", "og:description", description);
-  setMeta("property", "og:type", "website");
+  setMeta("property", "og:type", type);
   setMeta("property", "og:url", `${SITE_ORIGIN}${path}`);
+  setMeta("property", "og:image", image);
   setMeta("property", "og:site_name", SITE_NAME);
   setMeta("name", "twitter:card", "summary_large_image");
   setMeta("name", "twitter:title", title);
   setMeta("name", "twitter:description", description);
+  setMeta("name", "twitter:image", image);
   // A page without schema must not keep the previous page's (e.g. a Product).
   if (schema) setJsonLd("page", schema);
   else document.head.querySelector('script[data-ohc-schema="page"]')?.remove();
 }
 
-export function productSchema(product: Product) {
-  const schema: Record<string, unknown> = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    sku: product.sku,
-    brand: { "@type": "Brand", name: product.brand || SITE_NAME },
-    category: product.category,
-    description: productDescription(product),
-    url: productUrl(product),
-  };
-  const image = product.image ? `${SITE_ORIGIN}${product.image}` : undefined;
-  if (image) schema.image = [image];
-  if (product.price != null) {
-    schema.offers = {
-      "@type": "Offer",
-      url: productUrl(product),
-      priceCurrency: "BRL",
-      price: product.price,
-      availability: "https://schema.org/InStock",
-      seller: { "@type": "Organization", name: SITE_NAME },
-    };
-  }
-  return schema;
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+/** The same head as applySeo(), as HTML for a page written at build time. */
+export function renderHead({
+  title,
+  description,
+  path,
+  image = DEFAULT_IMAGE,
+  type = "website",
+  schema,
+  noindex = false,
+  canonical = true,
+}: PageHead) {
+  const url = `${SITE_ORIGIN}${path}`;
+  const meta = (attribute: string, key: string, content: string) =>
+    `<meta ${attribute}="${key}" content="${escapeHtml(content)}" />`;
+  return [
+    `<title>${escapeHtml(title)}</title>`,
+    meta("name", "description", description),
+    meta("name", "robots", noindex ? "noindex, nofollow" : "index, follow"),
+    canonical ? `<link rel="canonical" href="${escapeHtml(url)}" />` : "",
+    meta("property", "og:title", title),
+    meta("property", "og:description", description),
+    meta("property", "og:type", type),
+    canonical ? meta("property", "og:url", url) : "",
+    meta("property", "og:image", image),
+    meta("property", "og:site_name", SITE_NAME),
+    meta("property", "og:locale", "pt_BR"),
+    meta("name", "twitter:card", "summary_large_image"),
+    meta("name", "twitter:title", title),
+    meta("name", "twitter:description", description),
+    meta("name", "twitter:image", image),
+    // "<" is escaped so product text can never close the script element.
+    schema
+      ? `<script type="application/ld+json" data-ohc-schema="page">${JSON.stringify(schema).replace(/</g, "\\u003c")}</script>`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("\n    ");
 }
 
-export const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: SITE_NAME,
-  url: SITE_ORIGIN,
-  logo: `${SITE_ORIGIN}/ohc-logo.webp`,
-  areaServed: "BR",
-  sameAs: ["https://www.instagram.com/ohcmotorsbr/"],
-};
-
-export const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: SITE_NAME,
-  url: SITE_ORIGIN,
-  inLanguage: "pt-BR",
-};
+/**
+ * Swaps the generic head of index.html for a page's own. Everything between the
+ * <!--seo:start--> and <!--seo:end--> markers is replaced; scripts, styles and
+ * font preloads outside them are kept.
+ */
+export function injectHead(html: string, head: PageHead) {
+  const start = html.indexOf("<!--seo:start-->");
+  const end = html.indexOf("<!--seo:end-->");
+  if (start < 0 || end < start)
+    throw new Error("index.html sem marcadores SEO");
+  return (
+    html.slice(0, start + "<!--seo:start-->".length) +
+    `\n    ${renderHead(head)}\n    ` +
+    html.slice(end)
+  );
+}

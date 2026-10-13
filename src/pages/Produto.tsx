@@ -5,13 +5,7 @@ import LiveryTitle from "../components/LiveryTitle";
 import FitmentPlate from "../components/FitmentPlate";
 import { Link, useRoute } from "../lib/router";
 import { useCatalog, brl, small, waLink } from "../lib/products";
-import {
-  applySeo,
-  productDescription,
-  productSchema,
-  productTitle,
-  productUrl,
-} from "../lib/seo";
+import { applySeo, productDescription, productHead } from "../lib/seo";
 // Singular label for the livery header ("Volante" / "BMW").
 const KIND: Record<string, string> = {
   Volantes: "Volante",
@@ -50,37 +44,7 @@ export default function Produto() {
         });
       return;
     }
-    applySeo({
-      title: productTitle(p),
-      description: productDescription(p),
-      path: `/produto/${encodeURIComponent(p.slug)}`,
-      schema: {
-        ...productSchema(p),
-        breadcrumb: {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              name: "Catálogo",
-              item: "https://www.ohcmotorsbr.com.br/catalogo",
-            },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: p.brand,
-              item: `https://www.ohcmotorsbr.com.br/catalogo?marca=${encodeURIComponent(p.brand)}`,
-            },
-            {
-              "@type": "ListItem",
-              position: 3,
-              name: p.name,
-              item: productUrl(p),
-            },
-          ],
-        },
-      },
-    });
+    applySeo(productHead(p));
   }, [p, loading, route.path]);
   if (!p)
     return (

@@ -11,6 +11,32 @@ function escapeXml(value) {
     .replaceAll("'", "&apos;");
 }
 
+// Stored photos are site paths (/img/p/...) or full URLs; sitemaps need full URLs.
+export function absoluteUrl(src) {
+  if (!src) return null;
+  if (/^https?:\/\//i.test(src)) return src;
+  return src.startsWith("/") ? `${ORIGIN}${src}` : null;
+}
+
+// Brand and category pages have their own canonical (src/lib/seo.ts). Only the
+// categories the site recognizes (CATS in src/lib/products.ts) get one.
+const CATS = ["Volantes", "Grades", "Faróis & Lanternas", "Acessórios"];
+
+export function catalogUrls(products) {
+  const unique = (key) =>
+    [...new Set(products.map((p) => p[key]).filter(Boolean))].sort();
+  return [
+    ...unique("categoria")
+      .filter((c) => CATS.includes(c))
+      .map((c) => ["categoria", c]),
+    ...unique("marca").map((m) => ["marca", m]),
+  ].map(([key, value]) => ({
+    loc: `${ORIGIN}/catalogo?${new URLSearchParams({ [key]: value })}`,
+    changefreq: "weekly",
+    priority: "0.7",
+  }));
+}
+
 function slugFor(row) {
   return (
     row.slug ||
@@ -37,6 +63,7 @@ export default async function handler(req, res) {
         changefreq: "weekly",
         priority: "0.8",
       },
+      ...catalogUrls(products),
       // The site only opens products that have a SKU (src/lib/products.ts).
       ...products
         .filter((product) => product.sku)
@@ -44,7 +71,7 @@ export default async function handler(req, res) {
           loc: `${ORIGIN}/produto/${encodeURIComponent(slugFor(product))}`,
           changefreq: "weekly",
           priority: "0.8",
-          image: product.imagem_principal,
+          image: absoluteUrl(product.imagem_principal),
         })),
     ];
     const body = [
