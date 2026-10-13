@@ -1,0 +1,543 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-13T14:53:03.458Z",
+  "title": "Design System: OHC Motors",
+  "extensions": {
+    "colorMeta": {
+      "livery-blue": {
+        "role": "primary",
+        "displayName": "Livery Blue",
+        "canonical": "oklch(44.4% 0.142 260)",
+        "tonalRamp": [
+          "#00003c",
+          "#001e5e",
+          "#193e81",
+          "#385fa5",
+          "#5881ca",
+          "#7aa5f0",
+          "#9ccaff",
+          "#c1f0ff"
+        ]
+      },
+      "livery-blue-hover": {
+        "role": "primary",
+        "displayName": "Livery Blue Lift",
+        "canonical": "oklch(52.1% 0.170 260)",
+        "tonalRamp": [
+          "#00003c",
+          "#001e5e",
+          "#193e81",
+          "#385fa5",
+          "#5881ca",
+          "#7aa5f0",
+          "#9dcaff",
+          "#c1f0ff"
+        ]
+      },
+      "signal-blue": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "oklch(61.5% 0.208 262)",
+        "tonalRamp": [
+          "#00003c",
+          "#021d5e",
+          "#1d3e81",
+          "#3b5fa5",
+          "#5b81ca",
+          "#7ca4f0",
+          "#9fc9ff",
+          "#c3efff"
+        ]
+      },
+      "livery-red": {
+        "role": "secondary",
+        "displayName": "Livery Red",
+        "canonical": "oklch(60.3% 0.235 26)",
+        "tonalRamp": [
+          "#2d0000",
+          "#510000",
+          "#751f1c",
+          "#9a413a",
+          "#c0635a",
+          "#e7867c",
+          "#ffaa9f",
+          "#ffcfc3"
+        ]
+      },
+      "whatsapp-green": {
+        "role": "tertiary",
+        "displayName": "WhatsApp Green",
+        "canonical": "oklch(76.1% 0.201 149)",
+        "tonalRamp": [
+          "#001500",
+          "#003300",
+          "#00521a",
+          "#1f733a",
+          "#46965a",
+          "#6aba7c",
+          "#8edf9f",
+          "#b3ffc3"
+        ]
+      },
+      "whatsapp-green-hover": {
+        "role": "tertiary",
+        "displayName": "WhatsApp Green Pressed",
+        "canonical": "oklch(68.7% 0.185 149)",
+        "tonalRamp": [
+          "#001500",
+          "#003300",
+          "#005219",
+          "#217339",
+          "#479659",
+          "#6bba7b",
+          "#8fdf9e",
+          "#b4ffc2"
+        ]
+      },
+      "whatsapp-ink": {
+        "role": "tertiary",
+        "displayName": "WhatsApp Ink",
+        "canonical": "oklch(23.6% 0.041 156)",
+        "tonalRamp": [
+          "#001005",
+          "#122b1d",
+          "#2f4939",
+          "#4e6958",
+          "#6f8a78",
+          "#91ad9b",
+          "#b4d2be",
+          "#d9f7e3"
+        ]
+      },
+      "whatsapp-link": {
+        "role": "tertiary",
+        "displayName": "WhatsApp Link Green",
+        "canonical": "oklch(78.4% 0.185 151)",
+        "tonalRamp": [
+          "#001600",
+          "#003300",
+          "#00531d",
+          "#18743d",
+          "#42965d",
+          "#66ba7f",
+          "#8be0a2",
+          "#b0ffc6"
+        ]
+      },
+      "livery-white": {
+        "role": "neutral",
+        "displayName": "Livery White",
+        "canonical": "oklch(95.7% 0.005 247)",
+        "tonalRamp": [
+          "#090b0d",
+          "#232527",
+          "#404245",
+          "#5f6164",
+          "#808385",
+          "#a2a5a8",
+          "#c6c9cc",
+          "#eceff2"
+        ]
+      },
+      "gloss-black": {
+        "role": "neutral",
+        "displayName": "Gloss Black",
+        "canonical": "oklch(15.9% 0.009 264)",
+        "tonalRamp": [
+          "#090b0f",
+          "#23252a",
+          "#3f4247",
+          "#5f6167",
+          "#7f8288",
+          "#a2a5ab",
+          "#c6c9cf",
+          "#ebeef5"
+        ]
+      },
+      "panel-black": {
+        "role": "neutral",
+        "displayName": "Panel Black",
+        "canonical": "oklch(19.5% 0.013 264)",
+        "tonalRamp": [
+          "#080b11",
+          "#22252c",
+          "#3e4249",
+          "#5d6169",
+          "#7e828a",
+          "#a1a5ad",
+          "#c5c9d2",
+          "#eaeff8"
+        ]
+      },
+      "photo-well": {
+        "role": "neutral",
+        "displayName": "Photo Well",
+        "canonical": "oklch(17.7% 0.011 260)",
+        "tonalRamp": [
+          "#080b10",
+          "#22252b",
+          "#3f4248",
+          "#5e6168",
+          "#7e8389",
+          "#a1a5ac",
+          "#c5c9d1",
+          "#eaeff6"
+        ]
+      },
+      "lit-chip-ground": {
+        "role": "neutral",
+        "displayName": "Lit Chip Ground",
+        "canonical": "oklch(24.6% 0.038 266)",
+        "tonalRamp": [
+          "#050a1b",
+          "#1c2538",
+          "#384257",
+          "#576178",
+          "#78829a",
+          "#9aa5be",
+          "#bec9e3",
+          "#e3efff"
+        ]
+      },
+      "rule-line": {
+        "role": "neutral",
+        "displayName": "Rule Line",
+        "canonical": "oklch(28.8% 0.016 259)",
+        "tonalRamp": [
+          "#070b12",
+          "#20252d",
+          "#3d424b",
+          "#5c626b",
+          "#7d838c",
+          "#9fa5b0",
+          "#c3cad4",
+          "#e8effa"
+        ]
+      },
+      "keyline": {
+        "role": "neutral",
+        "displayName": "Keyline",
+        "canonical": "oklch(31.2% 0.020 260)",
+        "tonalRamp": [
+          "#070b14",
+          "#20252f",
+          "#3c424d",
+          "#5b626d",
+          "#7c838f",
+          "#9ea5b2",
+          "#c2cad6",
+          "#e7effc"
+        ]
+      },
+      "keyline-hover": {
+        "role": "neutral",
+        "displayName": "Keyline Hover",
+        "canonical": "oklch(50.3% 0.024 255)",
+        "tonalRamp": [
+          "#050b15",
+          "#1d2631",
+          "#39434f",
+          "#58626f",
+          "#798391",
+          "#9ba6b4",
+          "#bfcad9",
+          "#e4f0ff"
+        ]
+      },
+      "steel": {
+        "role": "neutral",
+        "displayName": "Steel",
+        "canonical": "oklch(72.2% 0.030 258)",
+        "tonalRamp": [
+          "#040b17",
+          "#1c2533",
+          "#384352",
+          "#576272",
+          "#788394",
+          "#9aa6b8",
+          "#becadd",
+          "#e3f0ff"
+        ]
+      },
+      "muted-label": {
+        "role": "neutral",
+        "displayName": "Muted Label",
+        "canonical": "oklch(66.6% 0.024 256)",
+        "tonalRamp": [
+          "#050b15",
+          "#1e2631",
+          "#3a434f",
+          "#59626f",
+          "#798391",
+          "#9ca6b4",
+          "#c0cad9",
+          "#e5f0ff"
+        ]
+      },
+      "soft-text": {
+        "role": "neutral",
+        "displayName": "Soft Text",
+        "canonical": "oklch(85.5% 0.013 251)",
+        "tonalRamp": [
+          "#070c11",
+          "#20262c",
+          "#3d4349",
+          "#5c6269",
+          "#7d838a",
+          "#9fa6ad",
+          "#c3cad2",
+          "#e8eff8"
+        ]
+      },
+      "pending-blue": {
+        "role": "neutral",
+        "displayName": "Pending Blue",
+        "canonical": "oklch(83.3% 0.082 265)",
+        "tonalRamp": [
+          "#01042d",
+          "#11224c",
+          "#2d406e",
+          "#4b6090",
+          "#6b81b4",
+          "#8ca4d9",
+          "#b0c9ff",
+          "#d4eeff"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Livery Display",
+        "purpose": "Two-line titles painted on the livery stripe; one per page (H1 or final CTA)."
+      },
+      "headline": {
+        "displayName": "Section Headline",
+        "purpose": "Section headings on black, capped at 9-10ch."
+      },
+      "title": {
+        "displayName": "Painted Title",
+        "purpose": "Car-picker prompt, hotspot list items, brand group headings, price-as-statement."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Paragraphs in Soft Text, 44-48ch."
+      },
+      "card-name": {
+        "displayName": "Card Name",
+        "purpose": "Product names in cards; wrap and hyphenate, never truncate."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, nav links, chip and button text."
+      },
+      "data": {
+        "displayName": "Data Band",
+        "purpose": "SKU, chassis and years: uppercase, tracked, tabular numerals."
+      }
+    },
+    "shadows": [
+      {
+        "name": "decal-keyline",
+        "value": "inset 0 0 0 1px rgba(238,241,244,0.12)",
+        "purpose": "Edge of every decal panel and product card."
+      },
+      {
+        "name": "chip-keyline",
+        "value": "inset 0 0 0 1px #2b313b",
+        "purpose": "Unselected chip outline; #5b6572 on hover, #214fa1 when selected."
+      },
+      {
+        "name": "field-focus-ring",
+        "value": "0 0 0 3px rgba(59,123,255,0.22)",
+        "purpose": "Input and select focus, with a Signal Blue border."
+      },
+      {
+        "name": "floating-whatsapp",
+        "value": "0 6px 18px rgba(0,0,0,.4)",
+        "purpose": "The only lifted element: the floating WhatsApp button."
+      }
+    ],
+    "motion": [
+      {
+        "name": "livery-paint",
+        "value": "transform: scaleX(0) to none, origin left, 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The stripe paints across once on entry or when a car is committed. Static under reduced motion."
+      },
+      {
+        "name": "state-change",
+        "value": "150-160ms on color, background, box-shadow, transform",
+        "purpose": "Chip, button and link state changes."
+      },
+      {
+        "name": "button-press",
+        "value": "translateY(1px)",
+        "purpose": "Active state on buttons."
+      },
+      {
+        "name": "menu-sheet",
+        "value": "opacity + translateY(-8px), 300ms",
+        "purpose": "Mobile menu sheet entrance; Esc closes it instantly."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Livery Blue action: Ver volantes, Ver catálogo, form submits.",
+      "html": "<button class=\"ds-btn-primary\">Ver volantes</button>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:14px 24px;border:0;border-radius:6px;background:var(--color-ohc-blue);color:#fff;font-family:Montserrat,system-ui,sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:transform .15s,background-color .15s}.ds-btn-primary:hover{background:#2a63c9}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid var(--color-ohc-glow);outline-offset:3px;}.ds-btn-primary:disabled{opacity:.45;cursor:not-allowed}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action beside a primary or WhatsApp button.",
+      "html": "<button class=\"ds-btn-ghost\">Confirmar compatibilidade</button>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:14px 24px;border:1px solid var(--color-ohc-line);border-radius:6px;background:transparent;color:var(--color-ohc-text);font-family:Montserrat,system-ui,sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:transform .15s,border-color .15s}.ds-btn-ghost:hover{border-color:var(--color-ohc-steel)}.ds-btn-ghost:active{transform:translateY(1px)}.ds-btn-ghost:focus-visible{outline:2px solid var(--color-ohc-glow);outline-offset:3px;}"
+    },
+    {
+      "name": "WhatsApp Button",
+      "kind": "button",
+      "refersTo": "button-whatsapp",
+      "description": "The purchase channel; the only green on the site.",
+      "html": "<a class=\"ds-btn-wa\" href=\"#\">Pedir pelo WhatsApp</a>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-btn-wa{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:12px 20px;border-radius:6px;background:#25d366;color:#0b2416;font-family:Montserrat,system-ui,sans-serif;font-size:14px;font-weight:700;text-decoration:none;transition:background-color .16s}.ds-btn-wa:hover{background:#1fb855}.ds-btn-wa:focus-visible{outline:2px solid var(--color-ohc-glow);outline-offset:3px;}"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Outline when off; livery stripe lit along the bottom edge when on.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">BMW <small>24</small></button><button class=\"ds-chip\" aria-pressed=\"false\">Porsche <small>9</small></button></div>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-chips{display:flex;gap:8px;padding:12px;background:var(--color-ohc-bg)}.ds-chip{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:0;border-radius:6px;background:transparent;color:#c9d0d8;font-family:Montserrat,system-ui,sans-serif;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px #2b313b;cursor:pointer;transition:color .16s,box-shadow .16s}.ds-chip small{font-size:12px;font-weight:600;color:var(--color-ohc-steel);font-variant-numeric:tabular-nums}.ds-chip:hover{color:#fff;box-shadow:inset 0 0 0 1px #5b6572}.ds-chip:focus-visible{outline:2px solid var(--color-ohc-glow);outline-offset:3px;}.ds-chip[aria-pressed=true]{color:#fff;background:#182033;box-shadow:inset 0 0 0 1px var(--color-ohc-blue)}.ds-chip[aria-pressed=true] small{color:#c9d0d8}.ds-chip[aria-pressed=true]::after{content:'';position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:0 0 6px 6px;background:linear-gradient(180deg,#214fa1 0 45%,#eef1f4 45% 60%,#ed1c24 60%)}"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "48px field with 16px text; Signal Blue border and ring on focus.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-m\">Modelo ou chassi (opcional)</label><input id=\"ds-m\" placeholder=\"Ex.: M3, F30, W205…\"></div>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-field{display:grid;gap:6px;padding:12px;background:var(--color-ohc-bg)}.ds-field label{font-family:Montserrat,system-ui,sans-serif;font-size:13px;font-weight:600;color:#c9d0d8}.ds-field input{width:100%;min-height:48px;padding:0 16px;border:1px solid var(--color-ohc-line);border-radius:6px;background:var(--color-ohc-bg2);color:var(--color-ohc-text);font-family:Montserrat,system-ui,sans-serif;font-size:16px;caret-color:var(--color-ohc-glow);transition:border-color .2s,box-shadow .2s}.ds-field input:focus{outline:none;border-color:var(--color-ohc-glow);box-shadow:0 0 0 3px rgba(59,123,255,.22)}"
+    },
+    {
+      "name": "Car Picker (Decal Panel)",
+      "kind": "card",
+      "refersTo": "decal-panel",
+      "description": "The primary action as a decal panel: Bebas prompt, brand select, submit, fit note.",
+      "html": "<form class=\"ds-decal\" onsubmit=\"return false\"><p class=\"ds-decal-t\">Qual é o seu carro?</p><div class=\"ds-decal-row\"><select aria-label=\"Marca\"><option>Escolha a marca</option><option>BMW</option></select><button>Ver volantes</button></div><p class=\"ds-decal-n\">A equipe confirma a aplicação no seu carro antes da compra.</p></form>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-decal{position:relative;max-width:520px;padding:16px;border-radius:6px;background:var(--color-ohc-bg2);color:var(--color-ohc-text);box-shadow:inset 0 0 0 1px rgba(238,241,244,.12);clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);font-family:Montserrat,system-ui,sans-serif;}.ds-decal::after{content:'';position:absolute;top:0;right:0;width:16px;height:16px;pointer-events:none;background:linear-gradient(to bottom left,transparent calc(50% - .75px),rgba(238,241,244,.28) 50%,transparent calc(50% + .75px));}.ds-decal-t{margin:0;font-family:'Bebas Neue',Impact,sans-serif;font-weight:400;letter-spacing:.025em;font-size:28px;line-height:1}.ds-decal-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;margin-top:12px}.ds-decal select{min-height:48px;padding:0 16px;border:1px solid var(--color-ohc-line);border-radius:6px;background:var(--color-ohc-bg2);color:var(--color-ohc-text);font-size:16px}.ds-decal select:focus{outline:none;border-color:var(--color-ohc-glow);box-shadow:0 0 0 3px rgba(59,123,255,.22)}.ds-decal button{min-height:48px;padding:0 24px;border:0;border-radius:6px;background:var(--color-ohc-blue);color:#fff;font-size:14px;font-weight:700;cursor:pointer}.ds-decal button:hover{background:#2a63c9}.ds-decal button:focus-visible{outline:2px solid var(--color-ohc-glow);outline-offset:3px;}.ds-decal-n{margin:12px 0 0;font-size:13px;color:var(--color-ohc-steel)}"
+    },
+    {
+      "name": "Fitment Plate",
+      "kind": "custom",
+      "refersTo": "fitment-plate-cell",
+      "description": "Homologation-style ruled cells: application, years, code; unknowns read 'a confirmar'.",
+      "html": "<dl class=\"ds-plate\"><div><dt>Aplicação</dt><dd>M3</dd></div><div><dt>Anos</dt><dd class=\"ds-pending\">a confirmar</dd></div><div><dt>Código</dt><dd>1.02.B02.00062</dd></div></dl>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-plate{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin:0;padding:1px;overflow:hidden;border-radius:6px;background:#2b313b;font-variant-numeric:tabular-nums;font-family:Montserrat,system-ui,sans-serif;}.ds-plate>div{min-width:0;padding:10px 12px;background:var(--color-ohc-bg)}.ds-plate dt{font-size:12px;font-weight:600;color:#8b95a3}.ds-plate dd{margin:2px 0 0;font-size:14px;font-weight:600;color:var(--color-ohc-text)}.ds-plate>div:last-child dd{white-space:nowrap}.ds-plate dd.ds-pending{color:#afc8ff}"
+    },
+    {
+      "name": "Livery Title",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Two-line title painted on the skewed stripe: blue field, white hairline, red field. Paints across once.",
+      "html": "<div class=\"ds-livery-wrap\"><h1 class=\"ds-livery\"><span class=\"ds-b\"><span>O volante</span></span><span class=\"ds-w\"></span><span class=\"ds-r\"><span>do seu carro</span></span></h1></div>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-livery-wrap{overflow:hidden;padding:40px 0;background:var(--color-ohc-bg)}.ds-livery{margin:0;transform:skewY(-8deg);font-family:'Bebas Neue',Impact,sans-serif;font-weight:400;letter-spacing:.025em;font-size:64px;line-height:.86;text-transform:uppercase;color:#fff;transform-origin:0 50%;animation:ds-paint .7s cubic-bezier(.16,1,.3,1) both}.ds-livery .ds-b,.ds-livery .ds-r{display:block}.ds-livery .ds-b{background:var(--color-ohc-blue)}.ds-livery .ds-r{background:var(--color-ohc-red)}.ds-livery .ds-w{display:block;height:.07em;background:var(--color-ohc-text)}.ds-livery .ds-b>span,.ds-livery .ds-r>span{display:block;padding:.1em 20px .04em}@keyframes ds-paint{from{transform:skewY(-8deg) scaleX(0)}}@media (prefers-reduced-motion:reduce){.ds-livery{animation:none}}"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": "decal-panel",
+      "description": "Decal card: photo well, name, SKU/price row, full-width WhatsApp row.",
+      "html": "<article class=\"ds-card\"><a href=\"#\" class=\"ds-card-link\"><div class=\"ds-well\"></div><div class=\"ds-body\"><h3>Volante BMW M3 Carbono</h3><div class=\"ds-row\"><span class=\"ds-band\">1.02.B02.00062</span><span class=\"ds-price\">Consultar</span></div></div></a><a class=\"ds-wa\" href=\"#\">Pedir no WhatsApp <span aria-hidden=\"true\">→</span></a></article>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-card{position:relative;max-width:280px;border-radius:6px;background:var(--color-ohc-bg2);color:var(--color-ohc-text);box-shadow:inset 0 0 0 1px rgba(238,241,244,.12);clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);font-family:Montserrat,system-ui,sans-serif;}.ds-card::after{content:'';position:absolute;top:0;right:0;width:16px;height:16px;pointer-events:none;background:linear-gradient(to bottom left,transparent calc(50% - .75px),rgba(238,241,244,.28) 50%,transparent calc(50% + .75px));}.ds-card-link{display:block;color:inherit;text-decoration:none;border-radius:inherit}.ds-card-link:focus-visible{outline:2px solid var(--color-ohc-glow);outline-offset:-3px}.ds-well{aspect-ratio:1;background:#0e1116}.ds-body{display:grid;gap:8px;padding:14px}.ds-body h3{margin:0;font-size:14px;font-weight:700;line-height:1.375}.ds-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--color-ohc-line);padding-top:10px}.ds-band{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--color-ohc-steel);font-variant-numeric:tabular-nums}.ds-price{font-size:14px;font-weight:700}.ds-wa{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-top:1px solid var(--color-ohc-line);font-size:13px;font-weight:700;color:#3fd97a;text-decoration:none}.ds-wa:hover{color:#6ff09d}"
+    },
+    {
+      "name": "Mobile Menu",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Full-screen menu rows in Bebas, ruled; the current row carries a small livery rule.",
+      "html": "<nav class=\"ds-mnav\"><a href=\"#\" aria-current=\"page\">Volantes <span class=\"ds-rule\" aria-hidden=\"true\"></span></a><a href=\"#\">Catálogo</a><a href=\"#\">Compatibilidade</a></nav>",
+      "css": ":host{--color-ohc-blue:#214fa1;--color-ohc-glow:#3b7bff;--color-ohc-red:#ed1c24;--color-ohc-bg:#0b0d11;--color-ohc-bg2:#12151b;--color-ohc-line:#262b33;--color-ohc-steel:#9aa6b8;--color-ohc-text:#eef1f4;}.ds-mnav{display:grid;padding:0 20px;background:var(--color-ohc-bg)}.ds-mnav a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;border-top:1px solid var(--color-ohc-line);color:var(--color-ohc-text);text-decoration:none;font-family:'Bebas Neue',Impact,sans-serif;font-weight:400;letter-spacing:.025em;font-size:36px}.ds-mnav a:last-child{border-bottom:1px solid var(--color-ohc-line)}.ds-mnav a:hover{color:#fff}.ds-mnav a:focus-visible{outline:2px solid var(--color-ohc-glow);outline-offset:3px;}.ds-rule{width:40px;height:9px;border-radius:2px;background:linear-gradient(180deg,#214fa1 0 45%,#eef1f4 45% 57%,#ed1c24 57%)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Homologation Decal Sheet",
+    "overview": "The public site wears OHC's racing livery. One stripe module (a blue field, a white hairline, a red field) crosses the screen at a fixed skew and carries the visitor's path: car, wheel, fit, WhatsApp. Everything else on the page is a decal applied to gloss-black bodywork: flat panels with a hairline keyline and one clipped corner, ruled fitment plates that read like a homologation sticker, and tabular data bands that put chassis, years and code in the same place on every product.\n\nPersuasion comes from the real object, not the wrapper. The real 3D wheel and real product photos sit on plain black with no glow; the livery is the only loud thing, and it is loud on purpose: as tall painted lettering, as a lit underline on a selected chip, as a short rule under a committed choice. The ground stays black and quiet so the stripe and the product can both be read at a glance on a phone held in one hand.\n\nThe build explicitly refuses the dark-glow template it replaced: no light rays, blobs or radial glows behind content, no decrypt/split/blur text, no tilt or spotlight cards, no count-ups, no marquee.",
+    "keyCharacteristics": [
+      "Gloss-black ground, no glows; colour arrives only as livery.",
+      "One stripe module, always whole, always skewed -8deg.",
+      "Decal panels: flat, 1px inset keyline, 16px clipped top-right corner, 6px radius.",
+      "Bebas Neue as painted livery lettering; Montserrat for everything you read or tap.",
+      "Fitment data in ruled, tabular cells; missing values say \"a confirmar\", never a guess.",
+      "State is a mark: selected lights the stripe, unselected is an outline."
+    ],
+    "rules": [
+      {
+        "name": "The Whole Stripe Rule",
+        "body": "Blue, white hairline and red always appear together, in that order, top to bottom. Never use one livery colour as a gradient, a glow or a solo band.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Glow Rule",
+        "body": "Colour never leaks into the ground. No radial blooms, coloured shadows or tinted blurs behind content; depth comes from the 3D scene and the photo, not from light effects.",
+        "section": "colors"
+      },
+      {
+        "name": "The Green Is the Till Rule",
+        "body": "WhatsApp green means \"talk to OHC about this SKU\". It appears on nothing else.",
+        "section": "colors"
+      },
+      {
+        "name": "The Painted Lettering Rule",
+        "body": "Bebas is only ever display: titles, prompts and price-as-statement (\"Sob consulta\"). Product names, labels, buttons and data are Montserrat.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Code Rule",
+        "body": "Every SKU, year and protocol number uses tabular numerals; the SKU never breaks across lines.",
+        "section": "typography"
+      },
+      {
+        "name": "The Keyline-Not-Shadow Rule",
+        "body": "A panel is defined by a 1px inset keyline or by tone, never by a border plus a drop shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use the livery stripe whole (blue / white hairline / red) and at -8deg skew every time it appears.",
+      "Do build containers as decal panels: Panel Black, 1px inset keyline at 12% Livery White, 16px clipped top-right corner, 6px radius.",
+      "Do put application, years and code in a Fitment Plate or data band on every product, with \"a confirmar\" when unknown.",
+      "Do mark selection with the lit stripe (Livery Blue keyline plus a 4px livery underline); leave unselected states as outlines.",
+      "Do keep everything a visitor taps at 44px or taller, fields at 48px with 16px text.",
+      "Do limit motion to the 3D scroll scene, the one-time stripe paint and short (about 160ms) colour or opacity changes, with a static path under `prefers-reduced-motion`."
+    ],
+    "donts": [
+      "Don't add glows, light rays, blobs, radial gradients or coloured shadows to the ground.",
+      "Don't use decrypt, split, blur-in or count-up text, tilt or spotlight cards, or a brand marquee.",
+      "Don't combine a border with a drop shadow on a panel; use the keyline or tone.",
+      "Don't set product names, buttons or data in Bebas; Bebas is painted lettering only.",
+      "Don't use WhatsApp green for anything except the WhatsApp channel.",
+      "Don't use a single livery colour as a solo band, gradient or text colour."
+    ]
+  }
+}

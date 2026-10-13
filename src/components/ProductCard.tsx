@@ -34,7 +34,7 @@ export default function ProductCard({
               decoding="async"
               width={560}
               height={560}
-              className="h-full w-full object-contain p-[7%] transition-transform duration-300 group-hover:scale-[1.03]"
+              className="h-full w-full object-contain p-[7%] transition-transform duration-150 group-hover:scale-[1.03]"
             />
           ) : (
             <div className="grid h-full place-items-center font-display text-xl tracking-widest text-[#5b6572]">

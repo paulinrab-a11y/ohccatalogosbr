@@ -333,9 +333,9 @@ export default function Compatibilidade() {
             />
           </Field>
 
-          <div className="rounded-xl border border-ohc-line bg-ohc-bg2 p-4">
+          <div className="decal p-4">
             <label
-              className="text-[11px] font-bold uppercase tracking-[.2em] text-ohc-steel"
+              className="text-[13px] font-semibold text-[#c9d0d8]"
               htmlFor="photos"
             >
               Fotos técnicas
