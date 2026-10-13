@@ -3,6 +3,7 @@ import { catalogSeoContext } from "../lib/seo";
 import Nav from "../components/Nav";
 import Footer, { FloatingWA } from "../components/Footer";
 import ProductCard from "../components/ProductCard";
+import LiveryTitle from "../components/LiveryTitle";
 import { useRoute } from "../lib/router";
 import { carLabel, readCar, type MyCar } from "../lib/myCar";
 import { CATS, useCatalog, brands, matches } from "../lib/products";
@@ -86,8 +87,12 @@ export default function Catalogo() {
   return (
     <>
       <Nav />
-      <header className="wrap pt-8 md:pt-12">
-        <h1 className="text-[clamp(48px,8vw,88px)]">Catálogo</h1>
+      <LiveryTitle
+        lines={["Catálogo", brand || cat || "Todas as marcas"]}
+        className="-mb-[3vw]"
+        titleClass="text-[clamp(52px,12vw,104px)]"
+      />
+      <header className="wrap">
         {car && !carActive && (
           <button
             type="button"

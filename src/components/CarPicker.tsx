@@ -40,19 +40,21 @@ export default function CarPicker({
   return (
     <form
       onSubmit={submit}
-      className={`decal relative overflow-hidden ${compact ? "p-3.5" : "p-4 sm:p-5"} ${className}`}
+      className={`decal relative overflow-hidden ${compact ? "p-3" : "p-4 sm:p-5"} ${className}`}
       aria-label="Encontrar o volante do seu carro"
     >
-      <p
-        className={`font-display leading-none tracking-wide ${compact ? "text-[24px]" : "text-[28px] sm:text-[32px]"}`}
-      >
-        Qual é o seu carro?
-      </p>
+      {!compact && (
+        <p className="font-display text-[28px] leading-none tracking-wide sm:text-[32px]">
+          Qual é o seu carro?
+        </p>
+      )}
       <div
-        className={`mt-3 grid gap-3 ${compact ? "grid-cols-[minmax(0,1fr)_auto] items-end" : "sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end"}`}
+        className={`${compact ? "" : "mt-3"} grid gap-3 ${compact ? "grid-cols-[minmax(0,1fr)_auto] items-end" : "sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end"}`}
       >
         <div className="ub-field">
-          <label htmlFor={`${id}-marca`}>Marca</label>
+          <label htmlFor={`${id}-marca`}>
+            {compact ? "Qual é o seu carro?" : "Marca"}
+          </label>
           <select
             id={`${id}-marca`}
             value={brand}

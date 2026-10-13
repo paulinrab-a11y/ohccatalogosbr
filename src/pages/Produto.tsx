@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import LiveryTitle from "../components/LiveryTitle";
+import FitmentPlate from "../components/FitmentPlate";
 import { Link, useRoute } from "../lib/router";
 import { useCatalog, brl, small, waLink } from "../lib/products";
 import {
@@ -10,6 +12,13 @@ import {
   productTitle,
   productUrl,
 } from "../lib/seo";
+// Singular label for the livery header ("Volante" / "BMW").
+const KIND: Record<string, string> = {
+  Volantes: "Volante",
+  Grades: "Grade",
+  "Faróis & Lanternas": "Farol e lanterna",
+  Acessórios: "Acessório",
+};
 function productSlug(path: string) {
   if (!path.startsWith("/produto/")) return "";
   try {
@@ -98,7 +107,13 @@ export default function Produto() {
   return (
     <>
       <Nav />
-      <div className="wrap grid gap-8 py-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-12 md:py-12">
+      <LiveryTitle
+        as="p"
+        lines={[KIND[p.category] || p.category, p.brand]}
+        className="-mb-[2vw] livery-paint"
+        titleClass="text-[clamp(48px,12vw,84px)]"
+      />
+      <div className="wrap grid gap-8 pb-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-12 md:pb-12">
         <div className="decal min-w-0 overflow-hidden md:sticky md:top-24 md:self-start">
           {img ? (
             <img
@@ -151,14 +166,7 @@ export default function Produto() {
           <h1 className="text-[clamp(34px,9vw,48px)] md:text-[clamp(40px,5vw,64px)] max-w-[16ch]">
             {p.name}
           </h1>
-          <p className="data-band mt-3 mb-5 [overflow-wrap:anywhere]">
-            {p.application && (
-              <>
-                <b>{p.application}</b> ·{" "}
-              </>
-            )}
-            Código <b>{p.sku}</b>
-          </p>
+          <FitmentPlate p={p} className="mt-4 mb-6" />
           <div className="mb-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
             {p.price ? (
               <>

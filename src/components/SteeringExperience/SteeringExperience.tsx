@@ -11,7 +11,8 @@ import {
 } from "react";
 import "./steeringExperience.css";
 import { reportError } from "../../lib/observability";
-import SteeringOverlay from "./SteeringOverlay";
+import SteeringOverlay, { HERO, HERO_SIZE } from "./SteeringOverlay";
+import LiveryTitle from "../LiveryTitle";
 import { useScrollProgress } from "./useScrollProgress";
 import { hasWebGL, isTouch, prefersReduced, useIsMobile } from "./useMedia";
 import { SECTION_VH } from "./timeline";
@@ -128,9 +129,16 @@ export default function SteeringExperience({
             it is drawn by the overlay at the same height. */}
         <div
           ref={band}
-          aria-hidden="true"
-          className="livery livery-skew livery-paint absolute -inset-x-8 top-[calc(42svh-12px)] hidden h-[calc(14.45vw+44px)] lg:block"
-        />
+          className="absolute inset-x-0 top-[28svh] hidden lg:block"
+        >
+          <LiveryTitle
+            lines={HERO}
+            as="p"
+            paint="fill"
+            className="livery-paint"
+            titleClass={HERO_SIZE}
+          />
+        </div>
         {failed ? (
           <div className="se-fallback">
             <img

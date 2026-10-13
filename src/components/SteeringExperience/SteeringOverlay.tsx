@@ -8,6 +8,10 @@ import {
 import { COPY, OUTRO } from "./timeline";
 import { Link } from "../../lib/router";
 import CarPicker from "../CarPicker";
+import LiveryTitle from "../LiveryTitle";
+
+export const HERO: [string, string] = ["O volante", "do seu carro"];
+export const HERO_SIZE = "text-[clamp(72px,8vw,128px)]";
 export default function SteeringOverlay({
   progress,
   staticMode = false,
@@ -60,26 +64,31 @@ export default function SteeringOverlay({
           nela, e logo abaixo o campo do carro já funciona. */}
       <div
         ref={intro}
-        className={`absolute inset-x-0 ${staticMode ? "top-[52svh]" : "bottom-[calc(14px+env(safe-area-inset-bottom))] sm:bottom-[7vh]"} pointer-events-auto lg:top-[42svh] lg:bottom-auto`}
+        className={`absolute inset-x-0 ${staticMode ? "top-[52svh]" : "bottom-[calc(6px+env(safe-area-inset-bottom))] sm:bottom-[5vh]"} pointer-events-auto lg:top-[28svh] lg:bottom-auto`}
       >
-        <div className="relative">
-          <div
-            aria-hidden="true"
-            className="livery livery-skew livery-paint absolute -inset-x-8 -top-3 -bottom-4 sm:-bottom-6 lg:hidden"
-          />
-          <h1 className="livery-skew relative px-5 py-1 text-[clamp(54px,15.5vw,76px)] leading-[0.86] text-white sm:px-12 sm:text-[clamp(72px,8.4vw,132px)]">
-            O volante
-            <br />
-            do seu carro
-          </h1>
-        </div>
-        <div className="wrap mt-7 grid gap-4 sm:mt-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:items-end">
+        {/* Phones: stripe and lettering together. Wide screens: lettering only,
+            over the stripe drawn behind the canvas at the same position. */}
+        <LiveryTitle
+          lines={HERO}
+          paint="lg-text"
+          className="-my-[3vw] livery-paint lg:my-0 lg:animate-none"
+          titleClass="text-[clamp(48px,14vw,72px)] lg:text-[clamp(72px,8vw,128px)]"
+        />
+        <div className="wrap mt-3 grid gap-3 lg:mt-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:items-start">
           <p className="hidden max-w-[44ch] text-base text-[#c9d0d8] lg:block">
             Volantes em couro, carbono ou Alcântara, de fabricação própria. A
             equipe confirma a aplicação no seu carro antes de enviar, para todo
             o Brasil.
           </p>
-          <CarPicker compact />
+          <div>
+            <CarPicker compact />
+            <Link
+              href="/catalogo"
+              className="mt-2 inline-flex min-h-11 items-center text-sm font-bold text-[#afc8ff] underline underline-offset-4 hover:text-white"
+            >
+              Ou veja o catálogo completo
+            </Link>
+          </div>
         </div>
       </div>
       {COPY.map(([, , t, s], i) => (

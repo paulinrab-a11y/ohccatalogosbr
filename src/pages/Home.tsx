@@ -172,17 +172,19 @@ export default function Home() {
         </section>
 
         {/* Confiança */}
-        <section aria-label="Condições" className="border-y border-ohc-line">
-          <dl className="wrap grid sm:grid-cols-2 lg:grid-cols-4">
+        <section
+          aria-label="Condições de compra"
+          className="wrap pb-20 md:pb-28"
+        >
+          <dl className="plate [--cells:1] sm:[--cells:2] lg:[--cells:4]">
             {TRUST.map(([b, s]) => (
-              <div
-                key={b}
-                className="border-b border-ohc-line py-6 last:border-b-0 sm:border-b-0 lg:border-l lg:px-6 lg:first:border-l-0 lg:first:pl-0"
-              >
-                <dt className="font-display text-[28px] leading-none tracking-wide">
+              <div key={b} className="py-4!">
+                <dt className="font-display! text-[26px]! leading-none tracking-wide text-ohc-text!">
                   {b}
                 </dt>
-                <dd className="mt-2 text-sm text-[#c9d0d8]">{s}</dd>
+                <dd className="mt-1.5! text-sm! font-medium! text-[#c9d0d8]!">
+                  {s}
+                </dd>
               </div>
             ))}
           </dl>

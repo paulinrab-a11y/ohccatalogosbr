@@ -2,6 +2,7 @@
    telemetry band (application, code, price). No tilt or spotlight. */
 import { Link } from "../lib/router";
 import { brl, small, waLink, type Product } from "../lib/products";
+import FitmentPlate from "./FitmentPlate";
 
 /** Long chassis lists ("F15/F16/F20/…") read as the first three plus a count. */
 function shortApplication(application: string) {
@@ -45,10 +46,13 @@ export default function ProductCard({
           <h3 className="font-body text-[14px] font-bold leading-snug [overflow-wrap:anywhere] [hyphens:auto] sm:text-[15px]">
             {p.name}
           </h3>
-          {!compact && p.application && (
-            <p className="data-band min-w-0 [overflow-wrap:anywhere]">
-              {shortApplication(p.application)}
-            </p>
+          {!compact && (
+            <FitmentPlate
+              p={p}
+              application={shortApplication(p.application)}
+              showCode={false}
+              className="[--plate-bg:#12151b] [&_dd]:text-[13px]"
+            />
           )}
           <div className="mt-auto flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-t border-ohc-line pt-2.5">
             <span className="data-band">{p.sku}</span>

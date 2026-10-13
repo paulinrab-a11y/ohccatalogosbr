@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Nav from "../components/Nav";
 import Footer, { FloatingWA } from "../components/Footer";
+import LiveryTitle from "../components/LiveryTitle";
 import { useRoute } from "../lib/router";
 import { useProducts, waLink } from "../lib/products";
 import { applySeo } from "../lib/seo";
@@ -214,10 +215,12 @@ export default function Compatibilidade() {
   return (
     <>
       <Nav />
-      <div className="wrap py-12 md:py-16">
-        <h1 className="max-w-[14ch] text-[clamp(40px,7vw,72px)]">
-          Confirme a aplicação antes de comprar
-        </h1>
+      <LiveryTitle
+        lines={["Confirme a aplicação", "antes de comprar"]}
+        className="-mb-[3vw]"
+        titleClass="text-[clamp(40px,10.5vw,104px)]"
+      />
+      <div className="wrap pb-12 md:pb-16">
         <p className="mt-4 max-w-[65ch] text-[#c9d0d8]">
           A análise agora é registrada no sistema OHC e recebe um protocolo.
           Depois do envio, você continua o atendimento no WhatsApp com esse
