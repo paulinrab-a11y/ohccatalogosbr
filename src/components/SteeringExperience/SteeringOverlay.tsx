@@ -28,9 +28,13 @@ export default function SteeringOverlay({
   useEffect(() => {
     if (staticMode) return;
     let raf = 0;
+    let last = -1;
     const loop = () => {
       raf = requestAnimationFrame(loop);
       const p = progress.current;
+      // Style writes only when the scroll progress actually moved.
+      if (p === last) return;
+      last = p;
       COPY.forEach(([a, b], i) => {
         const el = items.current[i];
         if (!el) return;

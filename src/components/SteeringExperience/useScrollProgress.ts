@@ -1,4 +1,5 @@
-/* Progresso real do scroll da seção (0 → 1) via GSAP ScrollTrigger pin + scrub, sem eventos wheel.
+/* Progresso real do scroll da seção (0 → 1) via GSAP ScrollTrigger, sem eventos wheel.
+   A seção fica presa por CSS (position: sticky); sem pin por JS, não há salto ao soltar.
    O valor vai para uma ref (lido no render loop), nunca para setState a 60 fps. */
 import { useEffect, useRef, type RefObject } from "react";
 export function useScrollProgress(
@@ -20,8 +21,6 @@ export function useScrollProgress(
       refresh = () => ScrollTrigger.refresh();
       st = ScrollTrigger.create({
         trigger: section.current,
-        pin: pinned.current,
-        pinSpacing: false,
         start: "top top",
         end: "bottom bottom",
         scrub: true,
