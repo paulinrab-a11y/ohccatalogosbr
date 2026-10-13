@@ -1,4 +1,10 @@
-import { brands, CATS, PRODUCTS, type Product } from "./products";
+import {
+  PRODUCTS,
+  resolveBrand,
+  resolveCategory,
+  type Product,
+} from "./products";
+import { getPrecoVigente } from "./pricing";
 
 const SITE_ORIGIN = "https://www.ohcmotorsbr.com.br";
 const SITE_NAME = "OHC Motors";
@@ -27,8 +33,8 @@ export function catalogSeoContext(
   search: URLSearchParams,
   products: Product[] = PRODUCTS,
 ) {
-  const category = CATS.find((c) => c === search.get("categoria"));
-  const brand = brands(products).find((b) => b === search.get("marca"));
+  const category = resolveCategory(search.get("categoria"));
+  const brand = resolveBrand(search.get("marca"), products);
   const params = new URLSearchParams();
   if (category) params.set("categoria", category);
   if (brand) params.set("marca", brand);
@@ -93,7 +99,16 @@ export function productTitle(product: Product) {
     kind && !name.toLowerCase().startsWith(kind.toLowerCase())
       ? `${kind} ${name}`
       : name;
-  return `${label} | ${SITE_NAME}`;
+  // The application ("F30", "W205") helps searches by car, when short and new.
+  const app = clean(product.application || "");
+  const withApp =
+    app &&
+    app.length <= 24 &&
+    !/confirmar|an[aá]lise/i.test(app) &&
+    !name.toLowerCase().includes(app.toLowerCase())
+      ? `${label} (${app})`
+      : label;
+  return `${withApp} | ${SITE_NAME}`;
 }
 
 function productUrl(product: Product) {
@@ -113,12 +128,17 @@ function productSchema(product: Product) {
   };
   const image = absoluteImage(product.image);
   if (image) schema.image = [image];
-  if (product.price != null) {
+  // The price charged now: the promotional one while a promotion runs.
+  const { preco, validoAte } = getPrecoVigente(product);
+  if (preco != null && !product.priceDemo) {
     schema.offers = {
       "@type": "Offer",
       url: productUrl(product),
       priceCurrency: "BRL",
-      price: product.price,
+      price: preco,
+      ...(validoAte
+        ? { priceValidUntil: validoAte.toISOString().slice(0, 10) }
+        : {}),
       availability: "https://schema.org/InStock",
       seller: { "@type": "Organization", name: SITE_NAME },
     };
@@ -164,6 +184,15 @@ export const compatibilityHead: PageHead = {
     "Descubra se um volante OHC Motors é compatível com seu carro. Informe marca, modelo, ano e versão e envie fotos para uma análise segura.",
   path: "/compatibilidade",
   schema: websiteSchema,
+};
+
+// Promotions come and go, so the page is not indexed.
+export const promotionsHead: PageHead = {
+  title: "Promoções | OHC Motors",
+  description:
+    "Volantes e acessórios OHC Motors em oferta por tempo limitado. Preço no PIX ou em até 12x no cartão, com envio para todo o Brasil.",
+  path: "/promocoes",
+  noindex: true,
 };
 
 export function catalogHead(

@@ -35,7 +35,9 @@ test('65 original products retain resolvable local original images', () => {
 test('deployment headers protect content without swallowing backend or model paths', () => {
   const c=JSON.parse(readFileSync('vercel.json','utf8'));
   const headers=Object.fromEntries(c.headers[0].headers.map((h:{key:string;value:string})=>[h.key,h.value]));
-  assert.match(headers['Content-Security-Policy'],/frame-ancestors 'none'/);assert.match(headers['Content-Security-Policy'],/script-src 'self';/);assert.equal(headers['X-Content-Type-Options'],'nosniff');
+  assert.match(headers['Content-Security-Policy'],/frame-ancestors 'none'/);
+  // Scripts: the site itself plus the Meta Pixel loader, nothing else.
+  assert.match(headers['Content-Security-Policy'],/script-src 'self' https:\/\/connect\.facebook\.net;/);assert.equal(headers['X-Content-Type-Options'],'nosniff');
   assert.ok(!c.rewrites.some((r:{source:string})=>r.source==='/(.*)' || r.source==='/:path*'));
 });
 test('CSP lets GLTFLoader read the textures embedded in the GLB without opening eval', () => {

@@ -8,8 +8,11 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { listPublicProducts } from "../server/publicCatalog.js";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import ProductShell from "../src/components/ProductShell";
 import { defaultShareImage, productShareImage } from "./og-images";
-import { dbToProduct, PRODUCTS, type Product } from "../src/lib/products";
+import { dbToProduct, PRODUCTS, small, type Product } from "../src/lib/products";
 import {
   catalogHead,
   compatibilityHead,
@@ -40,6 +43,24 @@ function write(path: string, html: string) {
   writeFileSync(file, html);
 }
 
+/* The product page HTML also carries a static first paint (photo, name) and the
+   product data, so the photo, the page's largest element, shows before the app
+   loads, and the app renders at once instead of waiting for the catalog. */
+function productPage(product: Product, head: ReturnType<typeof productHead>) {
+  const data = JSON.stringify({ ...product, price: null, promoPrice: null, cardPrice: null }).replace(/</g, "\\u003c");
+  const preload = product.image
+    ? `<link rel="preload" as="image" href="${product.image}" imagesrcset="${small(product.image)} 560w, ${product.image} 1000w" imagesizes="(min-width: 768px) 50vw, 100vw" fetchpriority="high" />
+  </head>`
+    : "</head>";
+  return injectHead(template, head)
+    .replace("</head>", preload)
+    .replace(
+      '<div id="root"></div>',
+      `<div id="root">${renderToStaticMarkup(createElement(ProductShell, { p: product }))}</div>
+    <script type="application/json" id="ohc-product">${data}</script>`,
+    );
+}
+
 const { list, source } = await loadProducts();
 await defaultShareImage(DIST);
 // index.html is also the SPA fallback for other routes (vercel.json rewrites),
@@ -51,9 +72,11 @@ let count = 0;
 for (const product of list) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(product.slug)) continue;
   const share = await productShareImage(DIST, product.sku, product.image);
-  const head = productHead(product);
+  // Prices and promotions change without a deploy, so the build-time HTML
+  // carries no offer; the page adds the current one when it loads.
+  const head = productHead({ ...product, price: null, promoPrice: null });
   if (share) head.image = `https://www.ohcmotorsbr.com.br${share}`;
-  write(`produto/${product.slug}.html`, injectHead(template, head));
+  write(`produto/${product.slug}.html`, productPage(product, head));
   count++;
 }
 console.log(`prerender: ${count} produtos (${source}), início, catálogo e compatibilidade`);

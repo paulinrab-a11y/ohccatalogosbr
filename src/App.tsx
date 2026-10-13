@@ -4,6 +4,9 @@ import Home from "./pages/Home";
 import Catalogo from "./pages/Catalogo";
 import Produto from "./pages/Produto";
 import Compatibilidade from "./pages/Compatibilidade";
+import Promocoes from "./pages/Promocoes";
+import CookieNotice from "./components/CookieNotice";
+import { track } from "./lib/pixel";
 import { reduced } from "./lib/motion";
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
@@ -65,6 +68,7 @@ function Pages() {
   if (route.path === "/produto" || route.path.startsWith("/produto/"))
     return <Produto key={route.search.toString()} />;
   if (route.path === "/compatibilidade") return <Compatibilidade />;
+  if (route.path === "/promocoes") return <Promocoes />;
   if (route.path === "/") return <Home />;
   return (
     <main className="wrap py-16">
@@ -73,10 +77,20 @@ function Pages() {
     </main>
   );
 }
+/** Measurement and the cookie notice for the public site (not the admin). */
+function PublicChrome() {
+  const { route } = useRoute();
+  const admin = route.path.startsWith("/admin");
+  useEffect(() => {
+    if (!admin) track("PageView");
+  }, [route.path, admin]);
+  return admin ? null : <CookieNotice />;
+}
 export default function App() {
   return (
     <RouterProvider>
       <Pages />
+      <PublicChrome />
     </RouterProvider>
   );
 }

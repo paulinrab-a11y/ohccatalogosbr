@@ -5,7 +5,7 @@ import CarPicker from "../components/CarPicker";
 import FAQ from "../components/FAQ";
 import Footer, { FinalCTA, FloatingWA } from "../components/Footer";
 import SteeringExperience from "../components/SteeringExperience";
-import { useProducts, brands } from "../lib/products";
+import { useProducts, usePromotions, brands } from "../lib/products";
 import { applySeo, homeHead } from "../lib/seo";
 import { Link } from "../lib/router";
 const TRUST = [
@@ -47,6 +47,8 @@ export default function Home() {
   }, []);
   const [hot, setHot] = useState(0);
   const brandList = brands(products);
+  // Shown only while a promotion is running; otherwise the home is unchanged.
+  const { promos } = usePromotions();
   const countOf = (b: string) => products.filter((p) => p.brand === b).length;
   const featured = [
     "3.02.B02.00002",
@@ -91,6 +93,27 @@ export default function Home() {
             </ul>
           </div>
         </section>
+
+        {promos.length > 0 && (
+          <section aria-labelledby="ofertas" className="wrap py-16 md:py-24">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 id="ofertas" className="text-[clamp(40px,8vw,88px)]">
+                Em oferta
+              </h2>
+              <Link
+                href="/promocoes"
+                className="text-sm font-bold text-[#afc8ff] underline underline-offset-4 hover:text-white"
+              >
+                Ver todas as promoções
+              </Link>
+            </div>
+            <div className="mt-8 snap-row md:m-0 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:p-0 lg:grid-cols-4 md:*:max-w-none md:*:flex-auto">
+              {promos.slice(0, 4).map((p) => (
+                <ProductCard key={p.sku} p={p} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Detalhes: BMW M3 Alcântara/Carbono com shift light, hotspots */}
         <section

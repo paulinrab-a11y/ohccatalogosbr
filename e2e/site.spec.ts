@@ -20,7 +20,8 @@ test('legacy product links with ?sku= still open the product page',async({page})
 test('product page waits for a slow catalog instead of flashing not found; missing product is noindex',async({page})=>{
  await page.route('**/api/catalog',async route=>{await new Promise(r=>setTimeout(r,1500));await route.fallback();});
  await page.goto(`/produto/${products[0].slug}`);
- await expect(page.getByText('Carregando produto…')).toBeVisible();await expect(page.getByText(/não encontrado/i)).toHaveCount(0);
+ // Build-time pages show the product at once and wait only for the price.
+ await expect(page.getByText(/Carregando (produto|preço)…/)).toBeVisible();await expect(page.getByText(/não encontrado/i)).toHaveCount(0);
  await expect(page.locator('h1')).toContainText(products[0].name);
  await page.goto('/produto/produto-sintetico-inexistente');await expect(page.getByText(/Produto não encontrado/)).toBeVisible();
  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content',/noindex/);

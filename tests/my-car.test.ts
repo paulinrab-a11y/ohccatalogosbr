@@ -14,3 +14,18 @@ test('the car opens the catalog filtered by brand with the model as search text'
   assert.equal(carLabel({ brand: 'Ford', model: 'Mustang' }), 'Ford Mustang');
   assert.equal(carLabel({ brand: 'Ford', model: '' }), 'Ford');
 });
+
+test('ad links may name category and brand in short lowercase form', async () => {
+ const { resolveBrand, resolveCategory } = await import('../src/lib/products.ts');
+ const list = [{ brand: 'BMW' }, { brand: 'Mercedes-Benz' }, { brand: 'Volkswagen' }, { brand: 'Faróis' }] as any;
+ assert.equal(resolveCategory('volantes'), 'Volantes');
+ assert.equal(resolveCategory('Faróis & Lanternas'), 'Faróis & Lanternas');
+ assert.equal(resolveCategory('farois'), 'Faróis & Lanternas');
+ assert.equal(resolveCategory('demais'), 'Acessórios');
+ assert.equal(resolveCategory('qualquer'), '');
+ assert.equal(resolveBrand('bmw', list), 'BMW');
+ assert.equal(resolveBrand('mercedes', list), 'Mercedes-Benz');
+ assert.equal(resolveBrand('Mercedes-Benz', list), 'Mercedes-Benz');
+ assert.equal(resolveBrand('vw', list), 'Volkswagen');
+ assert.equal(resolveBrand('inexistente', list), '');
+});

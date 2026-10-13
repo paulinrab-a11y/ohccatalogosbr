@@ -97,7 +97,9 @@ test('media upload stores a real WebP sent as raw base64 or as the panel data UR
  await assert.rejects(data.uploadMediaAdmin({content_type:'image/webp',data:`data:image/svg+xml;base64,${webp.toString('base64')}`}),{status:400});
 });
 test('public catalog projects allowed fields and never exposes private price or admin metadata',async(t)=>{
- t.mock.method(globalThis,'fetch',async(url:string,init:any)=>{assert.ok(url.startsWith('https://backend.example.invalid'));assert.ok(!init.headers.Authorization);return Response.json([{sku:'TEST',ativo:true,responsavel:'private-person',price:999,service_role:'private-token'},{sku:'HIDDEN',ativo:false}]);});
+ // Prices come only from published product_prices rows (none here), never from catalog columns.
+ const env=process.env.VERCEL_ENV;process.env.VERCEL_ENV='production';t.after(()=>{process.env.VERCEL_ENV=env;});
+ t.mock.method(globalThis,'fetch',async(url:string,init:any)=>{assert.ok(url.startsWith('https://backend.example.invalid'));assert.ok(!init.headers.Authorization);if(url.includes('product_prices'))return Response.json([]);return Response.json([{sku:'TEST',ativo:true,responsavel:'private-person',price:999,service_role:'private-token'},{sku:'HIDDEN',ativo:false}]);});
  const result=await publicCatalog();assert.equal(result.length,1);assert.equal(result[0].price,null);assert.ok(!JSON.stringify(result).includes('private-'));
 });
 test('customer token and forged metadata are rejected by every protected admin gateway',async(t)=>{

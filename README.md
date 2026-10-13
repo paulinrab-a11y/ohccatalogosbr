@@ -65,3 +65,38 @@ Não há declaração de “100% seguro”. A auditoria reduz riscos no escopo e
 ## Continuidade no Claude
 
 Leia o [CLAUDE.md](./CLAUDE.md) antes de qualquer alteração. Ele resume o estado atual de produção, as regras de autenticação cliente/admin, os testes, as pendências e o fluxo obrigatório de issue, branch e PR. O `AGENTS.md` contém o mesmo guia para outros agentes.
+
+## Preços e promoções no site
+
+Os preços ficam na tabela `product_prices` do Supabase e são editados no painel em **Admin → Produtos → editar**:
+
+- **Preço no PIX:** é o preço exibido no site e o mesmo usado pela automação do WhatsApp.
+- **Preço no cartão (opcional):** o valor total em até 12x. Com ele, o site mostra "ou 12x de R$ X"; sem ele, mostra só "ou em até 12x no cartão".
+- **Preço promocional no PIX, início e fim (opcionais):** as datas são dias de São Paulo; a promoção vale do início do primeiro dia até o fim do último.
+- **Mostrar preço no site:** precisa estar marcado para o preço aparecer. "Preço ativo (WhatsApp)" continua controlando só a automação.
+
+O painel mostra uma prévia de como o preço fica no site.
+
+**Como a promoção entra e sai sozinha.** O site calcula o preço vigente no navegador de quem visita (`getPrecoVigente` em `src/lib/pricing.ts`), a cada carregamento e a cada minuto. Não precisa publicar de novo:
+- Antes do início e depois do fim, aparece o preço normal.
+- Sem nenhuma promoção ativa:
+  - o item "Promoções" some do menu;
+  - a seção de ofertas some da página inicial;
+  - `/promocoes` leva ao catálogo.
+- Uma promoção só vale se o preço promocional for menor que o preço normal. O preço "De" é sempre o preço normal cadastrado.
+
+**Fora da produção** (prévias da Vercel e ambiente local), enquanto nenhum preço estiver publicado, o site mostra preços de demonstração marcados como "Preço de demonstração (prévia)". Em produção isso nunca acontece.
+
+## Meta Pixel e links de anúncio
+
+- Defina `VITE_META_PIXEL_ID` na Vercel (ambiente Production) com o ID do Pixel. Sem a variável, o site funciona sem Pixel.
+- Eventos enviados:
+  - `PageView` em toda página pública;
+  - `ViewContent` na página de produto, com código, valor vigente e BRL;
+  - `Contact` em todo botão de WhatsApp.
+- Na primeira visita aparece um aviso de cookies; ele não bloqueia o site.
+- Os parâmetros `utm_source`, `utm_campaign` e `fbclid` ficam guardados durante a visita. A mensagem do WhatsApp termina com `(ref: fonte-campanha)`.
+- Destinos de anúncio:
+  - `/produto/<slug>`;
+  - `/catalogo?marca=bmw&categoria=volantes`, que também aceita `ordem=preco-asc` ou `ordem=preco-desc`;
+  - `/promocoes`.
