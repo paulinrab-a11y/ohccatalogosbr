@@ -5,7 +5,15 @@ import ProductCard from "../components/ProductCard";
 import LiveryTitle from "../components/LiveryTitle";
 import { useRoute } from "../lib/router";
 import { carLabel, readCar, type MyCar } from "../lib/myCar";
-import { CATS, useCatalog, brands, matches } from "../lib/products";
+import {
+  CATS,
+  useCatalog,
+  brands,
+  matches,
+  resolveBrand,
+  resolveCategory,
+} from "../lib/products";
+import { getPrecoVigente } from "../lib/pricing";
 import { applySeo, catalogHead } from "../lib/seo";
 function Opt({
   on,
@@ -33,9 +41,20 @@ function Opt({
 export default function Catalogo() {
   const { products, loading } = useCatalog();
   const { route } = useRoute();
-  const [cat, setCat] = useState(route.search.get("categoria") || "");
+  // Ad links may say categoria=volantes&marca=bmw; both resolve to the
+  // catalog's own names. The brand list arrives with the catalog.
+  const [cat, setCat] = useState(() =>
+    resolveCategory(route.search.get("categoria")),
+  );
   const [brand, setBrand] = useState(route.search.get("marca") || "");
+  useEffect(() => {
+    if (products.length && brand) setBrand(resolveBrand(brand, products));
+  }, [products]);
   const [q, setQ] = useState(route.search.get("q") || "");
+  const [order, setOrder] = useState(() => {
+    const o = route.search.get("ordem");
+    return o === "preco-asc" || o === "preco-desc" ? o : "";
+  });
   // The car saved on the home page; offered here when no filter is set.
   const [car, setCar] = useState<MyCar | null>(null);
   useEffect(() => setCar(readCar()), []);
@@ -47,11 +66,12 @@ export default function Catalogo() {
     if (cat) params.set("categoria", cat);
     if (brand) params.set("marca", brand);
     if (q.trim()) params.set("q", q.trim());
+    if (order) params.set("ordem", order);
     const query = params.toString();
     const next = `/catalogo${query ? `?${query}` : ""}${location.hash}`;
     if (next !== location.pathname + location.search + location.hash)
       history.replaceState(history.state, "", next);
-  }, [cat, brand, q]);
+  }, [cat, brand, q, order]);
   useEffect(() => {
     const filters = new URLSearchParams();
     if (cat) filters.set("categoria", cat);
@@ -68,6 +88,18 @@ export default function Catalogo() {
       ),
     [products, cat, brand, q],
   );
+  // Sorted by the price charged now; products without a price go last.
+  const sorted = useMemo(() => {
+    if (!order) return null;
+    const price = (p: (typeof list)[number]) => getPrecoVigente(p).preco;
+    return [...list].sort((a, b) => {
+      const pa = price(a);
+      const pb = price(b);
+      if (pa == null) return pb == null ? 0 : 1;
+      if (pb == null) return -1;
+      return order === "preco-asc" ? pa - pb : pb - pa;
+    });
+  }, [list, order]);
   const groups = useMemo(() => {
     const g: Record<string, typeof list> = {};
     list.forEach((p) => (g[p.brand] ||= []).push(p));
@@ -155,13 +187,29 @@ export default function Catalogo() {
           </div>
         </aside>
         <main className="min-w-0">
-          <p className="mb-6 text-sm text-[#c9d0d8]" aria-live="polite">
-            Mostrando <b className="text-ohc-text">{list.length}</b>{" "}
-            {list.length === 1 ? "produto" : "produtos"} em{" "}
-            <b className="text-ohc-text">
-              {[cat, brand].filter(Boolean).join(" · ") || "todo o catálogo"}
-            </b>
-          </p>
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-sm text-[#c9d0d8]" aria-live="polite">
+              Mostrando <b className="text-ohc-text">{list.length}</b>{" "}
+              {list.length === 1 ? "produto" : "produtos"} em{" "}
+              <b className="text-ohc-text">
+                {[cat, brand].filter(Boolean).join(" · ") || "todo o catálogo"}
+              </b>
+            </p>
+            <div className="ub-field min-w-[190px]">
+              <label htmlFor="ordem" className="sr-only">
+                Ordenar
+              </label>
+              <select
+                id="ordem"
+                value={order}
+                onChange={(e) => setOrder(e.target.value)}
+              >
+                <option value="">Ordenar por marca</option>
+                <option value="preco-asc">Menor preço</option>
+                <option value="preco-desc">Maior preço</option>
+              </select>
+            </div>
+          </div>
           {!list.length && (
             <div className="decal p-6 text-[#c9d0d8] sm:p-10">
               {loading
@@ -169,21 +217,29 @@ export default function Catalogo() {
                 : "Nenhum produto com esses filtros. Limpe a busca ou pergunte à equipe no WhatsApp."}
             </div>
           )}
-          {Object.keys(groups)
-            .sort()
-            .map((b) => (
-              <section key={b} className="mb-10">
-                <h2 className="mb-4 flex flex-wrap items-baseline gap-x-3 border-b border-ohc-line pb-2 text-[clamp(32px,9vw,40px)] [overflow-wrap:anywhere]">
-                  {b}
-                  <span className="data-band">{groups[b].length}</span>
-                </h2>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {groups[b].map((p) => (
-                    <ProductCard key={p.sku} p={p} />
-                  ))}
-                </div>
-              </section>
-            ))}
+          {sorted && (
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {sorted.map((p) => (
+                <ProductCard key={p.sku} p={p} />
+              ))}
+            </div>
+          )}
+          {!sorted &&
+            Object.keys(groups)
+              .sort()
+              .map((b) => (
+                <section key={b} className="mb-10">
+                  <h2 className="mb-4 flex flex-wrap items-baseline gap-x-3 border-b border-ohc-line pb-2 text-[clamp(32px,9vw,40px)] [overflow-wrap:anywhere]">
+                    {b}
+                    <span className="data-band">{groups[b].length}</span>
+                  </h2>
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {groups[b].map((p) => (
+                      <ProductCard key={p.sku} p={p} />
+                    ))}
+                  </div>
+                </section>
+              ))}
         </main>
       </div>
       <Footer />

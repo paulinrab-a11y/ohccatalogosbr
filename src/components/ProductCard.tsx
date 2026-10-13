@@ -1,8 +1,13 @@
-/* Product card: a flat decal panel with the real photo, the name and a
-   telemetry band (application, code, price). No tilt or spotlight. */
+/* Product card: a flat decal panel with the real photo, the name, the fitment
+   plate and the current price. The whole card opens the product page; WhatsApp
+   is a secondary shortcut. No tilt or spotlight. */
 import { Link } from "../lib/router";
-import { brl, small, waLink, type Product } from "../lib/products";
+import { small, waLink, type Product } from "../lib/products";
+import { getPrecoVigente } from "../lib/pricing";
+import { productMessage } from "../lib/attribution";
+import { productParams, track } from "../lib/pixel";
 import FitmentPlate from "./FitmentPlate";
+import PriceBlock, { DiscountBadge } from "./PriceBlock";
 
 /** Long chassis lists ("F15/F16/F20/…") read as the first three plus a count. */
 function shortApplication(application: string) {
@@ -18,6 +23,7 @@ export default function ProductCard({
   p: Product;
   compact?: boolean;
 }) {
+  const price = getPrecoVigente(p).preco;
   return (
     <article className="decal group flex h-full min-w-0 flex-col">
       <Link
@@ -25,7 +31,7 @@ export default function ProductCard({
         // Inset ring: the decal clips its corner, so an outset outline would be cut.
         className="flex flex-1 flex-col rounded-[inherit] focus-visible:outline-offset-[-3px]"
       >
-        <div className="aspect-square bg-[#0e1116]">
+        <div className="relative aspect-square bg-[#0e1116]">
           {p.image ? (
             <img
               src={small(p.image)}
@@ -41,6 +47,7 @@ export default function ProductCard({
               Foto em breve
             </div>
           )}
+          <DiscountBadge p={p} className="absolute left-2.5 top-2.5" />
         </div>
         <div className="flex flex-1 flex-col gap-2 p-3.5 sm:p-4">
           <h3 className="font-body text-[14px] font-bold leading-snug [overflow-wrap:anywhere] sm:text-[15px]">
@@ -55,20 +62,17 @@ export default function ProductCard({
               className="[--plate-bg:#12151b] [&_dd]:text-[13px]"
             />
           )}
-          <div className="mt-auto flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-t border-ohc-line pt-2.5">
-            <span className="data-band">{p.sku}</span>
-            <span className="text-sm font-bold text-ohc-text">
-              {p.price ? brl(p.price) : "Consultar"}
-            </span>
+          <div className="mt-auto border-t border-ohc-line pt-2.5">
+            <PriceBlock p={p} />
+            <p className="data-band mt-1.5">{p.sku}</p>
           </div>
         </div>
       </Link>
       {!compact && (
         <a
           className="flex min-h-11 items-center gap-1.5 whitespace-nowrap border-t border-ohc-line px-3.5 text-[12px] font-bold sm:gap-2 sm:text-[13px] text-[#3fd97a] hover:text-[#6ff09d] sm:px-4"
-          href={waLink(
-            `Olá! Tenho interesse no ${p.name} (SKU ${p.sku}). Meu carro é: `,
-          )}
+          href={waLink(productMessage(p, price))}
+          onClick={() => track("Contact", productParams(p.sku, price))}
           target="_blank"
           rel="noopener"
           aria-label={`Pedir ${p.name} pelo WhatsApp`}

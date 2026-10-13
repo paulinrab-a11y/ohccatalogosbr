@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import raw from "../data/products.json";
+import { getPrecoVigente } from "./pricing";
 
 export type Product = {
   sku: string;
@@ -12,7 +13,15 @@ export type Product = {
   features: string[];
   application: string;
   compat: string[] | null;
+  /** PIX price (already discounted). */
   price: number | null;
+  /** Total on card, up to 12x; optional. */
+  cardPrice?: number | null;
+  promoPrice?: number | null;
+  promoStart?: string | null;
+  promoEnd?: string | null;
+  /** Demonstration price (previews only, never production). */
+  priceDemo?: boolean;
   notes: string | null;
   /** Model years when the catalog has them, e.g. "2015–2020". */
   years?: string | null;
@@ -21,12 +30,6 @@ export const PRODUCTS = raw as Product[];
 const WA = "5511955798211";
 export const waLink = (text: string) =>
   `https://wa.me/${WA}?text=${encodeURIComponent(text)}`;
-export const brl = (n: number) =>
-  n.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    maximumFractionDigits: 0,
-  });
 export const CATS = ["Volantes", "Grades", "Faróis & Lanternas", "Acessórios"];
 export const brands = (products: Product[] = PRODUCTS) =>
   [...new Set(products.map((p) => p.brand).filter(Boolean))].sort();
@@ -67,6 +70,11 @@ type DbProduct = {
   shift_light?: string | null;
   compatibilidade?: string | null;
   price?: number | null;
+  card_price?: number | null;
+  promotional_price?: number | null;
+  promotional_price_starts_at?: string | null;
+  promotional_price_ends_at?: string | null;
+  price_demo?: boolean;
   ativo?: boolean;
 };
 
@@ -139,6 +147,11 @@ export function dbToProduct(row: DbProduct): Product {
         : fallback?.application || "Aplicação sob análise",
     compat,
     price: row.price ?? null,
+    cardPrice: row.card_price ?? null,
+    promoPrice: row.promotional_price ?? null,
+    promoStart: row.promotional_price_starts_at ?? null,
+    promoEnd: row.promotional_price_ends_at ?? null,
+    priceDemo: row.price_demo === true,
     notes: row.descricao || fallback?.notes || null,
     years: yearRange(row.ano_inicio, row.ano_fim),
   };
@@ -202,4 +215,79 @@ export function useCatalog() {
 
 export function useProducts() {
   return useCatalog().products;
+}
+
+/**
+ * Products with a promotion running right now. Re-evaluated every minute, so a
+ * promotion appears and disappears on its dates without a new deploy.
+ */
+export function usePromotions() {
+  const { products, loading } = useCatalog();
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(id);
+  }, []);
+  return {
+    loading,
+    promos: products.filter((p) => getPrecoVigente(p, now).emPromocao),
+  };
+}
+
+const slugOf = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+// Short names an ad link may use: /catalogo?categoria=volantes&marca=bmw
+const CATEGORY_ALIASES: Record<string, string> = {
+  volantes: "Volantes",
+  volante: "Volantes",
+  grades: "Grades",
+  grade: "Grades",
+  farois: "Faróis & Lanternas",
+  lanternas: "Faróis & Lanternas",
+  "farois-lanternas": "Faróis & Lanternas",
+  "farois-e-lanternas": "Faróis & Lanternas",
+  acessorios: "Acessórios",
+  demais: "Acessórios",
+};
+const BRAND_ALIASES: Record<string, string> = {
+  vw: "volkswagen",
+  mb: "mercedes",
+};
+
+/** A category from a URL value, in any case or as a short slug. */
+export function resolveCategory(value: string | null) {
+  if (!value) return "";
+  const s = slugOf(value);
+  return CATS.find((c) => slugOf(c) === s) || CATEGORY_ALIASES[s] || "";
+}
+
+/** A catalog brand from a URL value: "bmw", "mercedes" or "Mercedes-Benz". */
+export function resolveBrand(value: string | null, products: Product[]) {
+  if (!value) return "";
+  const s = BRAND_ALIASES[slugOf(value)] || slugOf(value);
+  const list = brands(products);
+  return (
+    list.find((b) => slugOf(b) === s) ||
+    list.find((b) => slugOf(b).startsWith(`${s}-`)) ||
+    ""
+  );
+}
+
+/** The product written into a build-time product page (no prices), so the page
+    renders before the catalog arrives. Only for the slug being viewed. */
+export function embeddedProduct(slug: string): Product | null {
+  if (typeof document === "undefined") return null;
+  try {
+    const raw = document.getElementById("ohc-product")?.textContent;
+    const product = raw ? (JSON.parse(raw) as Product) : null;
+    return product && product.slug === slug ? product : null;
+  } catch {
+    return null;
+  }
 }

@@ -1,9 +1,11 @@
 /* Navbar and full-screen mobile menu. */
 import { useEffect, useState, useRef } from "react";
 import { Link, useRoute } from "../lib/router";
-import { waLink } from "../lib/products";
+import { usePromotions } from "../lib/products";
+import { waWithRef } from "../lib/attribution";
+import { track } from "../lib/pixel";
 import { useCustomerAuth } from "../lib/customerAuth";
-const LINKS = [
+const LINKS: [string, string][] = [
   ["/catalogo?categoria=Volantes", "Volantes"],
   ["/catalogo?categoria=Grades", "Grades"],
   ["/compatibilidade", "Compatibilidade"],
@@ -23,6 +25,15 @@ export default function Nav({
   const [open, setOpen] = useState(false);
   const [solid, setSolid] = useState(!transparent);
   const { route } = useRoute();
+  // "Promoções" exists only while a promotion is running.
+  const { promos } = usePromotions();
+  const links: [string, string, number?][] = promos.length
+    ? [
+        ...LINKS.slice(0, 2),
+        ["/promocoes", "Promoções", promos.length],
+        ...LINKS.slice(2),
+      ]
+    : LINKS;
   const query = route.search.toString();
   const current = route.path + (query ? `?${query}` : "");
   useEffect(() => {
@@ -91,14 +102,15 @@ export default function Nav({
             className="hidden xl:flex gap-5 text-[13px] font-semibold"
             aria-label="Navegação"
           >
-            {LINKS.map(([h, l]) => (
+            {links.map(([h, l, n]) => (
               <Link
                 key={h}
                 href={h}
                 aria-current={current === h ? "page" : undefined}
-                className={`py-1.5 border-b-2 ${current === h ? "border-ohc-glow" : "border-transparent hover:text-white"}`}
+                className={`inline-flex items-center gap-1.5 py-1.5 border-b-2 ${current === h ? "border-ohc-glow" : "border-transparent hover:text-white"}`}
               >
                 {l}
+                {n ? <PromoCount n={n} /> : null}
               </Link>
             ))}
           </nav>
@@ -123,9 +135,10 @@ export default function Nav({
           </Link>
           <a
             className="ub-wa hidden shrink-0 xl:inline-flex"
-            href={waLink(
+            href={waWithRef(
               "Olá! Vim pelo site da OHC Motors e quero mais informações.",
             )}
+            onClick={() => track("Contact")}
             target="_blank"
             rel="noopener"
           >
@@ -178,29 +191,35 @@ export default function Nav({
           </button>
         </div>
         <nav className="mt-[8vh] grid" aria-label="Navegação móvel">
-          {[...LINKS, [accountHref, accountLabel]].map(([h, l]) => (
-            <Link
-              key={h}
-              href={h}
-              onClick={() => setOpen(false)}
-              aria-current={current === h ? "page" : undefined}
-              className="flex min-h-[64px] items-center justify-between gap-3 py-3 border-t border-ohc-line font-display text-[clamp(30px,8vw,48px)] tracking-wide last:border-b"
-            >
-              {l}
-              {current === h && (
-                <span
-                  aria-hidden="true"
-                  className="livery livery-rule w-10 rounded-sm"
-                />
-              )}
-            </Link>
-          ))}
+          {[...links, [accountHref, accountLabel] as [string, string]].map(
+            ([h, l, n]) => (
+              <Link
+                key={h}
+                href={h}
+                onClick={() => setOpen(false)}
+                aria-current={current === h ? "page" : undefined}
+                className="flex min-h-[64px] items-center justify-between gap-3 py-3 border-t border-ohc-line font-display text-[clamp(30px,8vw,48px)] tracking-wide last:border-b"
+              >
+                <span className="inline-flex items-center gap-3">
+                  {l}
+                  {n ? <PromoCount n={n} /> : null}
+                </span>
+                {current === h && (
+                  <span
+                    aria-hidden="true"
+                    className="livery livery-rule w-10 rounded-sm"
+                  />
+                )}
+              </Link>
+            ),
+          )}
         </nav>
         <a
           className="ub-wa mt-8 shrink-0"
-          href={waLink(
+          href={waWithRef(
             "Olá! Vim pelo site da OHC Motors e quero mais informações.",
           )}
+          onClick={() => track("Contact")}
           target="_blank"
           rel="noopener"
         >
@@ -211,5 +230,17 @@ export default function Nav({
         </p>
       </div>
     </>
+  );
+}
+
+/** Discreet count next to "Promoções". */
+function PromoCount({ n }: { n: number }) {
+  return (
+    <span
+      aria-label={`${n} em oferta`}
+      className="inline-grid min-w-5 place-items-center rounded-sm bg-ohc-red px-1 font-body text-[11px] font-bold leading-5 text-white"
+    >
+      {n}
+    </span>
   );
 }

@@ -1,0 +1,84 @@
+import { test, expect, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+const products = JSON.parse(readFileSync(new URL('../src/data/products.json', import.meta.url), 'utf8'));
+const day = 86400000;
+const iso = (offset: number) => new Date(Date.now() + offset).toISOString();
+const [A, B, C] = products.filter((p: any) => p.category === 'Volantes');
+
+// Synthetic catalog: A has a running promotion, B a regular price, C no price.
+function catalog(promo: { start?: string | null; end?: string | null; price?: number } | null) {
+ return products.map((p: any) => ({
+  sku: p.sku, slug: p.slug, nome_produto: p.name, marca: p.brand, categoria: p.category, ativo: true, imagem_principal: p.image,
+  price: p.sku === C.sku ? null : 3000,
+  card_price: p.sku === A.sku ? 3360 : null,
+  promotional_price: p.sku === A.sku && promo ? (promo.price ?? 2700) : null,
+  promotional_price_starts_at: p.sku === A.sku && promo ? promo.start ?? null : null,
+  promotional_price_ends_at: p.sku === A.sku && promo ? promo.end ?? null : null,
+ }));
+}
+async function serve(page: Page, promo: Parameters<typeof catalog>[0]) {
+ await page.route('**/api/catalog', (route) => route.fulfill({ json: { products: catalog(promo) } }));
+}
+
+test('a running promotion shows in the menu, on /promocoes and on the cards', async ({ page }) => {
+ await serve(page, { start: iso(-day), end: iso(5 * day) });
+ await page.goto('/promocoes');
+ await expect(page).toHaveURL(/\/promocoes$/);
+ const card = page.locator('article', { hasText: A.name }).first();
+ await expect(card.getByText('-10%')).toBeVisible();
+ await expect(card.getByText(/R\$\s3\.000,00/)).toBeVisible();
+ await expect(card.getByText(/R\$\s2\.700,00/)).toBeVisible();
+ await expect(card.getByText(/12x de R\$\s280,00/)).toBeVisible();
+ // Phones reach the menu through the hamburger; wide screens see the bar.
+ const open = page.getByRole('button', { name: 'Abrir menu' });
+ if (await open.isVisible()) await open.click();
+ await expect(page.getByRole('link', { name: /Promoções/ }).first()).toBeVisible();
+});
+
+test('without a running promotion there is no menu item and /promocoes goes to the catalog', async ({ page }) => {
+ for (const promo of [null, { end: iso(-day) }, { start: iso(day) }, { price: 3500 }]) {
+  await serve(page, promo);
+  await page.goto('/promocoes');
+  await expect(page).toHaveURL(/\/catalogo$/);
+  await expect(page.getByRole('link', { name: /Promoções/ })).toHaveCount(0);
+  await expect(page.getByText('-10%')).toHaveCount(0);
+  await page.unrouteAll();
+ }
+});
+
+test('product page: price above the fold, regular price without promo, "Consulte" without price', async ({ page }) => {
+ await serve(page, null);
+ await page.goto(`/produto/${B.slug}`);
+ const price = page.getByText(/R\$\s3\.000,00/).first();
+ await expect(price).toBeVisible();
+ await expect(page.getByText('ou em até 12x no cartão')).toBeVisible();
+ expect((await price.boundingBox())!.y).toBeLessThan(page.viewportSize()!.height);
+ await page.goto(`/produto/${C.slug}`);
+ await expect(page.getByText('Consulte no WhatsApp')).toBeVisible();
+ await expect(page.getByRole('link', { name: 'Comprar pelo WhatsApp' }).first()).toBeVisible();
+});
+
+test('the WhatsApp message carries product, code, current price and the ad reference', async ({ page }) => {
+ await serve(page, { end: iso(3 * day) });
+ await page.goto(`/produto/${A.slug}?utm_source=meta&utm_campaign=Volantes%20BMW&fbclid=synthetic`);
+ await expect(page.getByText(/R\$\s2\.700,00/).first()).toBeVisible();
+ const href = await page.getByRole('link', { name: 'Comprar pelo WhatsApp' }).first().getAttribute('href');
+ const text = decodeURIComponent(href!.split('text=')[1]);
+ expect(text).toContain(`${A.name} (código ${A.sku})`);
+ expect(text).toMatch(/por R\$\s2\.700,00 no PIX/);
+ expect(text).toContain('(ref: meta-volantes-bmw)');
+ // The reference survives navigation inside the visit.
+ await page.goto(`/produto/${B.slug}`);
+ await expect(page.getByText(/R\$\s3\.000,00/).first()).toBeVisible();
+ const next = await page.getByRole('link', { name: 'Comprar pelo WhatsApp' }).first().getAttribute('href');
+ expect(decodeURIComponent(next!)).toContain('(ref: meta-volantes-bmw)');
+});
+
+test('ad links may filter the catalog in short form and sort by price', async ({ page }) => {
+ await serve(page, null);
+ await page.goto('/catalogo?marca=bmw&categoria=volantes&ordem=preco-desc');
+ await expect(page.getByRole('button', { name: /^BMW/ })).toHaveAttribute('aria-pressed', 'true');
+ await expect(page.getByRole('button', { name: /^Volantes/ })).toHaveAttribute('aria-pressed', 'true');
+ await expect(page.getByLabel('Ordenar')).toHaveValue('preco-desc');
+ await expect(page).toHaveURL(/categoria=Volantes&marca=BMW&ordem=preco-desc/);
+});

@@ -3,7 +3,9 @@ import Nav from "../components/Nav";
 import Footer, { FloatingWA } from "../components/Footer";
 import LiveryTitle from "../components/LiveryTitle";
 import { useRoute } from "../lib/router";
-import { useProducts, waLink } from "../lib/products";
+import { useProducts } from "../lib/products";
+import { waWithRef } from "../lib/attribution";
+import { track } from "../lib/pixel";
 import { applySeo, compatibilityHead } from "../lib/seo";
 
 const STEPS = [
@@ -189,7 +191,8 @@ export default function Compatibilidade() {
             )}
             <a
               className="ub-wa mt-7"
-              href={waLink(message)}
+              href={waWithRef(message)}
+              onClick={() => track("Contact")}
               target="_blank"
               rel="noopener"
             >

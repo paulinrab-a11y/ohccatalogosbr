@@ -111,6 +111,16 @@ function normalizeProductInput(input = {}) {
   };
 }
 
+// Promotion dates come from date inputs (YYYY-MM-DD) and are São Paulo days:
+// the start at 00:00 and the end at 23:59:59 of that day (UTC-3, no DST).
+export function promoBoundary(value, edge) {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value))
+    return null;
+  const time = edge === "start" ? "00:00:00" : "23:59:59";
+  const iso = `${value}T${time}-03:00`;
+  return Number.isFinite(Date.parse(iso)) ? new Date(iso).toISOString() : null;
+}
+
 function normalizePrice(value) {
   if (value === "" || value === null || value === undefined) return null;
   const number = Number(value);
@@ -208,6 +218,13 @@ export async function saveProductAdmin(input, actor) {
 
   const price = normalizePrice(input.price);
   const promo = normalizePrice(input.promotional_price);
+  const promoStart = promoBoundary(input.promo_start, "start");
+  const promoEnd = promoBoundary(input.promo_end, "end");
+  if (promoStart && promoEnd && promoStart > promoEnd)
+    throw Object.assign(
+      new Error("O fim da promoção não pode ser antes do início."),
+      { status: 400 },
+    );
   if (price) {
     await rest("product_prices?on_conflict=sku", {
       method: "POST",
@@ -218,7 +235,11 @@ export async function saveProductAdmin(input, actor) {
       body: JSON.stringify({
         sku: product.sku,
         price,
+        card_price: normalizePrice(input.card_price),
         promotional_price: promo,
+        promotional_price_starts_at: promoStart,
+        promotional_price_ends_at: promoEnd,
+        published_on_site: cleanBoolean(input.published_on_site, false),
         price_currency: "BRL",
         active: cleanBoolean(input.price_active, false),
         source_document:

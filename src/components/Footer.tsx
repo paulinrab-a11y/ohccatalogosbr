@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "../lib/router";
 import LiveryTitle from "./LiveryTitle";
-import { waLink } from "../lib/products";
+import { waWithRef } from "../lib/attribution";
+import { track } from "../lib/pixel";
 export function FinalCTA() {
   return (
     <section className="py-12 md:py-20">
@@ -21,7 +22,8 @@ export function FinalCTA() {
         <div className="flex flex-wrap gap-3">
           <a
             className="ub-wa px-7 py-4 text-base"
-            href={waLink(
+            onClick={() => track("Contact")}
+            href={waWithRef(
               "Olá! Quero confirmar a compatibilidade de um produto OHC Motors.",
             )}
             target="_blank"
@@ -85,7 +87,8 @@ export default function Footer() {
           <ul className="grid gap-1.5">
             <li>
               <a
-                href={waLink("Olá! Vim pelo site da OHC Motors.")}
+                onClick={() => track("Contact")}
+                href={waWithRef("Olá! Vim pelo site da OHC Motors.")}
                 target="_blank"
                 rel="noopener"
               >
@@ -130,7 +133,8 @@ export function FloatingWA({ afterHero = false }: { afterHero?: boolean }) {
   }, [afterHero]);
   return (
     <a
-      href={waLink(
+      onClick={() => track("Contact")}
+      href={waWithRef(
         "Olá! Vim pelo site da OHC Motors e quero mais informações.",
       )}
       target="_blank"

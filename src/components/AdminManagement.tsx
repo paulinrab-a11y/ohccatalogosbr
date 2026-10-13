@@ -1,6 +1,9 @@
 import { resolveImage } from "../lib/products";
 import { useEffect, useMemo, useState } from "react";
 import { adminAction, adminManage, type AdminUser } from "../lib/adminApi";
+import PriceBlock, { DiscountBadge } from "./PriceBlock";
+import { getPrecoVigente } from "../lib/pricing";
+import type { Product } from "../lib/products";
 
 type FallbackProduct = {
   id: number;
@@ -33,7 +36,11 @@ type AdminProduct = FallbackProduct & {
   updated_at?: string;
   price_record?: {
     price?: number | null;
+    card_price?: number | null;
     promotional_price?: number | null;
+    promotional_price_starts_at?: string | null;
+    promotional_price_ends_at?: string | null;
+    published_on_site?: boolean | null;
     active?: boolean;
     source_document?: string | null;
   } | null;
@@ -409,8 +416,12 @@ function ProductEditor({
     shift_light: product?.shift_light || "",
     ativo: product?.ativo ?? true,
     price: product?.price_record?.price || "",
+    card_price: product?.price_record?.card_price || "",
     promotional_price: product?.price_record?.promotional_price || "",
+    promo_start: promoDay(product?.price_record?.promotional_price_starts_at),
+    promo_end: promoDay(product?.price_record?.promotional_price_ends_at),
     price_active: Boolean(product?.price_record?.active),
+    published_on_site: Boolean(product?.price_record?.published_on_site),
     source_document:
       product?.price_record?.source_document || "Painel administrativo OHC",
   }));
@@ -543,7 +554,7 @@ function ProductEditor({
                 placeholder="Conforme padrão atual do banco"
               />
             </Field>
-            <Field label="Preço">
+            <Field label="Preço no PIX">
               <input
                 type="number"
                 step="0.01"
@@ -552,7 +563,16 @@ function ProductEditor({
                 onChange={(e) => field("price", e.target.value)}
               />
             </Field>
-            <Field label="Preço promocional">
+            <Field label="Preço no cartão (total, até 12x, opcional)">
+              <input
+                type="number"
+                step="0.01"
+                className="admin-input"
+                value={form.card_price}
+                onChange={(e) => field("card_price", e.target.value)}
+              />
+            </Field>
+            <Field label="Preço promocional no PIX (opcional)">
               <input
                 type="number"
                 step="0.01"
@@ -561,6 +581,23 @@ function ProductEditor({
                 onChange={(e) => field("promotional_price", e.target.value)}
               />
             </Field>
+            <Field label="Promoção: início (opcional)">
+              <input
+                type="date"
+                className="admin-input"
+                value={form.promo_start}
+                onChange={(e) => field("promo_start", e.target.value)}
+              />
+            </Field>
+            <Field label="Promoção: fim (opcional, inclusive)">
+              <input
+                type="date"
+                className="admin-input"
+                value={form.promo_end}
+                onChange={(e) => field("promo_end", e.target.value)}
+              />
+            </Field>
+            <PricePreview form={form} />
           </div>
           <div className="mt-4 grid gap-4">
             <Field label="Descrição">
@@ -618,9 +655,14 @@ function ProductEditor({
               onChange={(v) => field("comandos_multifuncionais", v)}
             />
             <Check
-              label="Preço ativo"
+              label="Preço ativo (WhatsApp)"
               checked={form.price_active}
               onChange={(v) => field("price_active", v)}
+            />
+            <Check
+              label="Mostrar preço no site"
+              checked={form.published_on_site}
+              onChange={(v) => field("published_on_site", v)}
             />
           </div>
           <div className="mt-5 flex gap-3">
@@ -1399,4 +1441,61 @@ function fileToDataUrl(file: File) {
     reader.onload = () => resolve(String(reader.result || ""));
     reader.readAsDataURL(file);
   });
+}
+
+/** "2026-10-31" (São Paulo) for a date input, from a stored timestamp. */
+function promoDay(iso?: string | null) {
+  if (!iso) return "";
+  const t = Date.parse(iso);
+  if (!Number.isFinite(t)) return "";
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+  }).format(new Date(t));
+}
+
+/** How the price will look on the site, from what is typed in the form. */
+function PricePreview({ form }: { form: any }) {
+  const num = (v: unknown) => (Number(v) > 0 ? Number(v) : null);
+  const p: Product = {
+    sku: form.sku || "",
+    slug: "",
+    name: form.nome_produto || "Produto",
+    brand: form.marca || "",
+    category: form.categoria || "",
+    image: null,
+    features: [],
+    application: "",
+    compat: null,
+    notes: null,
+    price: num(form.price),
+    cardPrice: num(form.card_price),
+    promoPrice: num(form.promotional_price),
+    promoStart: form.promo_start ? `${form.promo_start}T00:00:00-03:00` : null,
+    promoEnd: form.promo_end ? `${form.promo_end}T23:59:59-03:00` : null,
+  };
+  const v = getPrecoVigente(p);
+  const ignored =
+    p.promoPrice != null && p.price != null && p.promoPrice >= p.price;
+  return (
+    <div className="rounded-lg border border-ohc-line bg-[#12151b] p-4 sm:col-span-2">
+      <p className="mb-3 text-[11px] font-bold uppercase tracking-[.16em] text-ohc-steel">
+        Prévia no site (agora)
+      </p>
+      <div className="flex items-start gap-3">
+        <DiscountBadge p={p} />
+        <PriceBlock p={p} size="page" />
+      </div>
+      <p className="mt-3 text-xs text-ohc-steel">
+        {!form.published_on_site
+          ? 'O preço só aparece no site com "Mostrar preço no site" marcado.'
+          : ignored
+            ? "O preço promocional precisa ser menor que o preço no PIX; do contrário é ignorado."
+            : v.emPromocao
+              ? "Promoção ativa agora."
+              : p.promoPrice
+                ? "Promoção fora do período: o site mostra o preço normal."
+                : "Sem promoção."}
+      </p>
+    </div>
+  );
 }
