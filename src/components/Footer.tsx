@@ -98,11 +98,11 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="https://instagram.com/ohcmotors"
+                href="https://www.instagram.com/ohcmotorsbr/"
                 target="_blank"
                 rel="noopener"
               >
-                Instagram @ohcmotors
+                Instagram @ohcmotorsbr
               </a>
             </li>
             <li>Estoque em São Paulo, SP (sem loja física)</li>
