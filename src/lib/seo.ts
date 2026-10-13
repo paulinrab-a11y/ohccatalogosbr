@@ -67,7 +67,10 @@ const KIND: Record<string, string> = {
   Grades: "Grade",
 };
 
-export function productDescription(product: Product) {
+// Compatibility is confirmed by the team on WhatsApp, never promised here.
+const CONFIRM = "Confirme a compatibilidade com o seu carro antes da compra.";
+
+function productLead(product: Product) {
   const type = productType(product);
   const finish = product.features.length
     ? ` com ${product.features.join(", ")}`
@@ -75,20 +78,23 @@ export function productDescription(product: Product) {
   const application = product.application
     ? ` para aplicação ${product.application}`
     : "";
-  // Compatibility is confirmed by the team on WhatsApp, never promised here.
-  // This sentence must survive the 300-character limit, so only the lead is
-  // shortened and notes are added only when they fit whole.
-  const required =
-    "Consulte preço, prazo e instalação pelo WhatsApp. Confirme a compatibilidade com o seu carro antes da compra.";
-  const lead = clean(`${product.name}: ${type}${finish}${application}.`);
-  const max = 300 - required.length - 1;
+  return clean(`${product.name}: ${type}${finish}${application}.`);
+}
+
+/** The "Sobre este produto" text. Notes have their own box on the page, so
+    they are not repeated here. */
+export function productDescription(product: Product) {
+  return `${productLead(product)} ${CONFIRM} Atendimento pelo WhatsApp, com envio para todo o Brasil.`;
+}
+
+/** Search snippet: at most 160 characters, which is what Google shows. Only
+    the lead is shortened; the compatibility sentence always survives. */
+export function productMetaDescription(product: Product) {
+  const lead = productLead(product);
+  const max = 160 - CONFIRM.length - 1;
   const head =
     lead.length > max ? `${lead.slice(0, max - 1).trimEnd()}…` : lead;
-  const text = `${head} ${required}`;
-  const notes = product.notes ? clean(product.notes) : "";
-  return notes && text.length + notes.length + 1 <= 300
-    ? `${text} ${notes}`
-    : text;
+  return `${head} ${CONFIRM}`;
 }
 
 export function productTitle(product: Product) {
@@ -121,11 +127,14 @@ function productSchema(product: Product) {
     "@type": "Product",
     name: product.name,
     sku: product.sku,
-    brand: { "@type": "Brand", name: product.brand || SITE_NAME },
     category: product.category,
-    description: productDescription(product),
+    description: productMetaDescription(product),
     url: productUrl(product),
   };
+  // The brand is who makes the part, not the car it fits: OHC Motors makes
+  // its wheels. For other parts the maker is not on record, so none is set.
+  if (product.category === "Volantes")
+    schema.brand = { "@type": "Brand", name: SITE_NAME };
   const image = absoluteImage(product.image);
   if (image) schema.image = [image];
   // The price charged now: the promotional one while a promotion runs.
@@ -140,7 +149,16 @@ function productSchema(product: Product) {
         ? { priceValidUntil: validoAte.toISOString().slice(0, 10) }
         : {}),
       availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
       seller: { "@type": "Organization", name: SITE_NAME },
+      // 7 days to regret the purchase, as the CDC grants and the site states.
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "BR",
+        returnPolicyCategory:
+          "https://schema.org/MerchantReturnFiniteReturnWindow",
+        merchantReturnDays: 7,
+      },
     };
   }
   return schema;
@@ -213,37 +231,41 @@ export function catalogHead(
 }
 
 export function productHead(product: Product): PageHead {
+  const { "@context": context, ...item } = productSchema(product);
   return {
     title: productTitle(product),
-    description: productDescription(product),
+    description: productMetaDescription(product),
     path: `/produto/${encodeURIComponent(product.slug)}`,
     image: absoluteImage(product.image),
     type: "product",
     schema: {
-      ...productSchema(product),
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Catálogo",
-            item: `${SITE_ORIGIN}/catalogo`,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: product.brand,
-            item: `${SITE_ORIGIN}/catalogo?marca=${encodeURIComponent(product.brand)}`,
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: product.name,
-            item: productUrl(product),
-          },
-        ],
-      },
+      "@context": context,
+      "@graph": [
+        item,
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Catálogo",
+              item: `${SITE_ORIGIN}/catalogo`,
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: product.brand,
+              item: `${SITE_ORIGIN}/catalogo?marca=${encodeURIComponent(product.brand)}`,
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: product.name,
+              item: productUrl(product),
+            },
+          ],
+        },
+      ],
     },
   };
 }
