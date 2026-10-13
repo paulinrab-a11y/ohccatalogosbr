@@ -100,3 +100,13 @@ test('catalog cards stay lean: no fitment plate, aligned rows, wheels before acc
   if (firstOther >= 0) expect(cats.slice(firstOther)).not.toContain('Volantes');
  }
 });
+
+test('a slow catalog shows card placeholders and the page does not jump when it arrives', async ({ page }) => {
+ await page.route('**/api/catalog', async (route) => { await new Promise((r) => setTimeout(r, 1200)); await route.fulfill({ json: { products: catalog(null) } }); });
+ await page.addInitScript(() => { (window as any).__cls = 0; new PerformanceObserver((l) => { for (const e of l.getEntries() as any[]) if (!e.hadRecentInput) (window as any).__cls += e.value; }).observe({ type: 'layout-shift', buffered: true }); });
+ await page.goto('/catalogo');
+ await expect(page.getByTestId('catalog-skeleton')).toBeVisible();
+ await expect(page.locator('main article').first()).toBeVisible();
+ await expect(page.getByTestId('catalog-skeleton')).toHaveCount(0);
+ expect(await page.evaluate(() => (window as any).__cls)).toBeLessThan(0.1);
+});

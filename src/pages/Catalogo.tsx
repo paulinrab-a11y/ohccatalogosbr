@@ -212,11 +212,36 @@ export default function Catalogo() {
               </select>
             </div>
           </div>
-          {!list.length && (
+          {/* While the catalog loads, card-shaped placeholders hold the space
+              so the footer does not jump when the products arrive. */}
+          {loading && !list.length && (
+            <div
+              className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              aria-hidden="true"
+              data-testid="catalog-skeleton"
+            >
+              {Array.from({ length: 8 }, (_, i) => (
+                <div key={i} className="decal">
+                  <div className="aspect-square bg-[#0e1116]" />
+                  <div className="grid gap-2 p-3.5 sm:p-4">
+                    <div className="h-4 w-4/5 rounded-sm bg-[#1b2029]" />
+                    <div className="h-3 w-1/2 rounded-sm bg-[#1b2029]" />
+                    <div className="mt-6 h-6 w-3/5 rounded-sm bg-[#1b2029]" />
+                  </div>
+                  <div className="min-h-11 border-t border-ohc-line" />
+                </div>
+              ))}
+            </div>
+          )}
+          {loading && !list.length && (
+            <p className="sr-only" role="status">
+              Carregando catálogo…
+            </p>
+          )}
+          {!loading && !list.length && (
             <div className="decal p-6 text-[#c9d0d8] sm:p-10">
-              {loading
-                ? "Carregando catálogo…"
-                : "Nenhum produto com esses filtros. Limpe a busca ou pergunte à equipe no WhatsApp."}
+              Nenhum produto com esses filtros. Limpe a busca ou pergunte à
+              equipe no WhatsApp.
             </div>
           )}
           {sorted && (
