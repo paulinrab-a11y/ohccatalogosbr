@@ -34,3 +34,10 @@ test('closed FAQ answers are hidden from assistive technology', async ({ page })
  await second.click();
  await expect(panel).not.toHaveAttribute('inert', '');
 });
+test('the photo field uses the site button and says when photos were chosen', async ({ page }) => {
+ await page.goto('/compatibilidade');
+ const pick = page.locator('label[for="photos"]', { hasText: 'Escolher fotos' });
+ await expect(pick).toBeVisible();
+ await page.getByLabel('Fotos técnicas').setInputFiles('e2e/fixtures/photo.png');
+ await expect(page.locator('label[for="photos"]', { hasText: 'Trocar fotos' })).toBeVisible();
+});
