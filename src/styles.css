@@ -224,16 +224,6 @@
   .plate dd {
     @apply mt-0.5 text-[14px] font-semibold text-ohc-text;
   }
-  /* Card variant: label left, value right, one row each. */
-  .plate-rows > div {
-    @apply flex items-baseline justify-between gap-3 px-2.5 py-1.5;
-  }
-  .plate-rows dt {
-    @apply shrink-0;
-  }
-  .plate-rows dd {
-    @apply mt-0 min-w-0 text-right;
-  }
   .plate dd.pending {
     white-space: nowrap;
     @apply text-[#afc8ff];
@@ -280,6 +270,20 @@
   }
   .chip[aria-pressed="true"] small {
     color: #c9d0d8;
+  }
+  /* Wide screens: the catalog filters read as a quiet list; only the
+     selected one keeps the keyline and the lit stripe. */
+  @media (min-width: 48rem) {
+    .facets .chip {
+      @apply min-h-9 justify-between px-3;
+      box-shadow: none;
+    }
+    .facets .chip:hover {
+      box-shadow: inset 0 0 0 1px #2b313b;
+    }
+    .facets .chip[aria-pressed="true"] {
+      box-shadow: inset 0 0 0 1px #214fa1;
+    }
   }
   /* Phones: one swipeable row instead of a wall of filters. */
   @media (max-width: 47.99rem) {
