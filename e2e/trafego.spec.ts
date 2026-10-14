@@ -93,6 +93,8 @@ test('product page on wide screens: photo, price and buy button on the first scr
  const buy = (await page.getByRole('link', { name: 'Comprar pelo WhatsApp' }).first().boundingBox())!;
  expect(photo.y).toBeLessThan(200);
  expect(buy.y + buy.height).toBeLessThan(height);
+});
+
 test('catalog cards stay lean: no fitment plate, aligned rows, wheels before accessories in each brand', async ({ page }) => {
  await serve(page, null);
  await page.goto('/catalogo');
