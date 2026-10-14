@@ -83,6 +83,18 @@ test('ad links may filter the catalog in short form and sort by price', async ({
  await expect(page).toHaveURL(/categoria=Volantes&marca=BMW&ordem=preco-desc/);
 });
 
+test('product page on wide screens: photo, price and buy button on the first screen', async ({ page, isMobile }) => {
+ test.skip(isMobile, 'phones keep the livery stripe above the photo');
+ await serve(page, null);
+ await page.goto(`/produto/${B.slug}`);
+ await expect(page.getByText(/R\$\s3\.000,00/).first()).toBeVisible();
+ const height = page.viewportSize()!.height;
+ const photo = (await page.getByRole('img', { name: B.name }).first().boundingBox())!;
+ const buy = (await page.getByRole('link', { name: 'Comprar pelo WhatsApp' }).first().boundingBox())!;
+ expect(photo.y).toBeLessThan(200);
+ expect(buy.y + buy.height).toBeLessThan(height);
+});
+
 test('catalog cards stay lean: no fitment plate, aligned rows, wheels before accessories in each brand', async ({ page }) => {
  await serve(page, null);
  await page.goto('/catalogo');
