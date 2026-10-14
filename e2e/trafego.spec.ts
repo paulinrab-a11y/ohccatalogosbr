@@ -90,6 +90,8 @@ test('home featured grid fills whole rows, curated picks first', async ({ page, 
  const section = page.locator('section', { has: page.getByRole('heading', { name: 'Em destaque' }) });
  await expect(section.locator('article').first()).toBeVisible();
  await expect(section.locator('article')).toHaveCount(8);
+});
+
 test('catalog cards stay lean: no fitment plate, aligned rows, wheels before accessories in each brand', async ({ page }) => {
  await serve(page, null);
  await page.goto('/catalogo');
