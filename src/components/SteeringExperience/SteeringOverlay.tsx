@@ -118,9 +118,12 @@ export default function SteeringOverlay({
           <p className="mt-2 text-[13px] sm:text-sm text-ohc-steel">{s}</p>
         </div>
       ))}
+      {/* The closing shot belongs to the scroll story. Static (reduced motion or
+          no WebGL) the opening already carries the car picker, so the closing
+          is left out instead of landing on top of it. */}
       <div
         ref={outro}
-        className={`absolute inset-x-5 bottom-[10svh] sm:inset-x-12 sm:bottom-[12vh] flex flex-col items-start gap-4 ${staticMode ? "opacity-100 pointer-events-auto" : "opacity-0"}`}
+        className={`absolute inset-x-5 bottom-[10svh] sm:inset-x-12 sm:bottom-[12vh] flex flex-col items-start gap-4 ${staticMode ? "hidden" : "opacity-0"}`}
       >
         <h3 className="font-display leading-none text-[clamp(44px,10vw,110px)]">
           Feito pela OHC

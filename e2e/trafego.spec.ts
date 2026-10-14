@@ -90,4 +90,30 @@ test('home featured grid fills whole rows, curated picks first', async ({ page, 
  const section = page.locator('section', { has: page.getByRole('heading', { name: 'Em destaque' }) });
  await expect(section.locator('article').first()).toBeVisible();
  await expect(section.locator('article')).toHaveCount(8);
+test('catalog cards stay lean: no fitment plate, aligned rows, wheels before accessories in each brand', async ({ page }) => {
+ await serve(page, null);
+ await page.goto('/catalogo');
+ const sections = page.locator('main section');
+ await expect(sections.first().locator('article').first()).toBeVisible();
+ await expect(page.locator('main article dl')).toHaveCount(0);
+ // Cards sharing a row share their top and their height.
+ const boxes = await sections.first().locator('article').evaluateAll((els) => els.slice(0, 2).map((e) => { const r = e.getBoundingClientRect(); return [Math.round(r.top), Math.round(r.height)]; }));
+ expect(boxes[0]).toEqual(boxes[1]);
+ const category = new Map(products.map((p: any) => [p.name, p.category]));
+ for (const section of await sections.all()) {
+  const names = await section.locator('article h3').allTextContents();
+  const cats = names.map((n) => category.get(n.trim()));
+  const firstOther = cats.findIndex((c) => c !== 'Volantes');
+  if (firstOther >= 0) expect(cats.slice(firstOther)).not.toContain('Volantes');
+ }
+});
+
+test('a slow catalog shows card placeholders and the page does not jump when it arrives', async ({ page }) => {
+ await page.route('**/api/catalog', async (route) => { await new Promise((r) => setTimeout(r, 1200)); await route.fulfill({ json: { products: catalog(null) } }); });
+ await page.addInitScript(() => { (window as any).__cls = 0; new PerformanceObserver((l) => { for (const e of l.getEntries() as any[]) if (!e.hadRecentInput) (window as any).__cls += e.value; }).observe({ type: 'layout-shift', buffered: true }); });
+ await page.goto('/catalogo');
+ await expect(page.getByTestId('catalog-skeleton')).toBeVisible();
+ await expect(page.locator('main article').first()).toBeVisible();
+ await expect(page.getByTestId('catalog-skeleton')).toHaveCount(0);
+ expect(await page.evaluate(() => (window as any).__cls)).toBeLessThan(0.1);
 });

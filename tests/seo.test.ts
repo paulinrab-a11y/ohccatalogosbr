@@ -1,18 +1,41 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { catalogSeoContext, productDescription } from '../src/lib/seo.ts';
+import { catalogSeoContext, productDescription, productHead, productMetaDescription } from '../src/lib/seo.ts';
 
 const products = JSON.parse(readFileSync(new URL('../src/data/products.json', import.meta.url), 'utf8'));
 
 test('product description never promises compatibility, manufacturing or sport styling', () => {
  for (const p of products) {
-  const text = productDescription({ ...p, features: p.features || [] });
-  assert.ok(text.includes('Confirme a compatibilidade com o seu carro antes da compra.'), p.sku);
-  assert.doesNotMatch(text, /fabricad|volante esportivo/i, p.sku);
-  for (const vehicle of p.compat || []) assert.ok(!text.includes(`Compatível com ${vehicle}`), p.sku);
-  assert.ok(text.length <= 300, p.sku);
+  const product = { ...p, features: p.features || [] };
+  for (const text of [productDescription(product), productMetaDescription(product)]) {
+   assert.ok(text.includes('Confirme a compatibilidade com o seu carro antes da compra.'), p.sku);
+   assert.doesNotMatch(text, /fabricad|volante esportivo/i, p.sku);
+   for (const vehicle of p.compat || []) assert.ok(!text.includes(`Compatível com ${vehicle}`), p.sku);
+  }
+  // What Google shows in results; longer text is cut mid-sentence.
+  assert.ok(productMetaDescription(product).length <= 160, p.sku);
+  // Notes have their own box on the page; the description must not repeat them.
+  if (p.notes) assert.ok(!productDescription(product).includes(p.notes), p.sku);
  }
+});
+
+test('product JSON-LD: maker as brand, breadcrumb beside the product, new item with 7-day returns', () => {
+ const wheel = products.find((p: any) => p.category === 'Volantes');
+ const grille = products.find((p: any) => p.category === 'Grades');
+ const graph = (p: any, price?: number) => (productHead({ ...p, features: p.features || [], price: price ?? null }).schema as any)['@graph'];
+ const [item, crumbs] = graph(wheel, 2000);
+ assert.equal(item['@type'], 'Product');
+ assert.deepEqual(item.brand, { '@type': 'Brand', name: 'OHC Motors' });
+ assert.equal(item.breadcrumb, undefined);
+ assert.equal(crumbs['@type'], 'BreadcrumbList');
+ assert.equal(crumbs.itemListElement.length, 3);
+ assert.equal(item.offers.price, 2000);
+ assert.equal(item.offers.itemCondition, 'https://schema.org/NewCondition');
+ assert.equal(item.offers.hasMerchantReturnPolicy.merchantReturnDays, 7);
+ // Not a car maker as brand, and no invented maker for other parts.
+ assert.equal(graph(grille)[0].brand, undefined);
+ assert.equal(graph(wheel)[0].offers, undefined);
 });
 
 test('catalog canonical keeps only known category and brand, never tracking or free text', () => {

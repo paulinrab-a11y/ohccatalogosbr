@@ -1,20 +1,14 @@
-/* Product card: a flat decal panel with the real photo, the name, the fitment
-   plate and the current price. The whole card opens the product page; WhatsApp
-   is a secondary shortcut. No tilt or spotlight. */
+/* Product card: a flat decal panel with the real photo, the name, one quiet
+   line of fitment and the current price. Every card in a row lines up: the
+   name takes what it needs, fitment is held to two lines and the price sits
+   on the bottom edge. The whole card opens the product page, where the full
+   fitment plate and the code live; WhatsApp is a secondary shortcut. */
 import { Link } from "../lib/router";
-import { small, waLink, type Product } from "../lib/products";
+import { fitmentLine, small, waLink, type Product } from "../lib/products";
 import { getPrecoVigente } from "../lib/pricing";
 import { productMessage } from "../lib/attribution";
 import { productParams, track } from "../lib/pixel";
-import FitmentPlate from "./FitmentPlate";
 import PriceBlock, { DiscountBadge } from "./PriceBlock";
-
-/** Long chassis lists ("F15/F16/F20/…") read as the first three plus a count. */
-function shortApplication(application: string) {
-  const codes = application.split("/").map((c) => c.trim());
-  if (codes.length <= 3) return application;
-  return `${codes.slice(0, 3).join("/")} +${codes.length - 3}`;
-}
 
 export default function ProductCard({
   p,
@@ -24,6 +18,7 @@ export default function ProductCard({
   compact?: boolean;
 }) {
   const price = getPrecoVigente(p).preco;
+  const fitment = fitmentLine(p);
   return (
     <article className="decal group flex h-full min-w-0 flex-col">
       <Link
@@ -43,28 +38,24 @@ export default function ProductCard({
               className="h-full w-full object-contain p-[7%] transition-transform duration-150 group-hover:scale-[1.03]"
             />
           ) : (
-            <div className="grid h-full place-items-center font-display text-xl tracking-widest text-[#5b6572]">
+            <div className="grid h-full place-items-center font-display text-xl tracking-widest text-[#8b95a3]">
               Foto em breve
             </div>
           )}
           <DiscountBadge p={p} className="absolute left-2.5 top-2.5" />
         </div>
-        <div className="flex flex-1 flex-col gap-2 p-3.5 sm:p-4">
-          <h3 className="font-body text-[14px] font-bold leading-snug [overflow-wrap:anywhere] sm:text-[15px]">
+        <div className="flex flex-1 flex-col p-3.5 sm:p-4">
+          <h3 className="font-body text-[14px] font-bold leading-snug text-pretty [overflow-wrap:break-word] sm:text-[15px]">
             {p.name}
           </h3>
-          {!compact && (
-            <FitmentPlate
-              p={p}
-              application={shortApplication(p.application)}
-              showCode={false}
-              variant="rows"
-              className="[--plate-bg:#12151b] [&_dd]:text-[13px]"
-            />
+          {!compact && fitment && (
+            <p className="mt-1 line-clamp-2 text-[12px] font-semibold leading-snug text-ohc-steel">
+              <span className="sr-only">Aplicação: </span>
+              {fitment}
+            </p>
           )}
-          <div className="mt-auto border-t border-ohc-line pt-2.5">
+          <div className="mt-auto pt-3">
             <PriceBlock p={p} />
-            <p className="data-band mt-1.5">{p.sku}</p>
           </div>
         </div>
       </Link>
@@ -75,7 +66,7 @@ export default function ProductCard({
           onClick={() => track("Contact", productParams(p.sku, price))}
           target="_blank"
           rel="noopener"
-          aria-label={`Pedir ${p.name} pelo WhatsApp`}
+          aria-label={`Pedir no WhatsApp: ${p.name}`}
         >
           Pedir no WhatsApp
           <span aria-hidden="true">→</span>

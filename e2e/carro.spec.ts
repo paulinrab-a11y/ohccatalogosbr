@@ -28,3 +28,14 @@ test('the picker needs a brand before it submits', async ({ page }) => {
   const button = page.getByRole('button', { name: 'Ver volantes' }).first();
   await expect(button).toBeDisabled();
 });
+
+test('reduced motion: the static hero keeps the car picker clear of other text', async ({ page }) => {
+ await page.emulateMedia({ reducedMotion: 'reduce' });
+ await page.goto('/');
+ const brand = page.getByRole('combobox').first();
+ await expect(brand).toBeVisible();
+ await expect(page.getByText('Feito pela OHC')).toBeHidden();
+ // Whatever sits on the picker's centre is the picker itself, not a heading on top of it.
+ const onTop = await brand.evaluate((el) => { const r = el.getBoundingClientRect(); const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!hit && (el === hit || el.contains(hit)); });
+ expect(onTop).toBe(true);
+});
