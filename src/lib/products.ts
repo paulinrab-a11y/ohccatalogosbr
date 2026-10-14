@@ -291,3 +291,33 @@ export function embeddedProduct(slug: string): Product | null {
     return null;
   }
 }
+
+/** Long chassis lists ("F15/F16/F20/…") read as the first three plus a count. */
+function shortApplication(application: string) {
+  const codes = application.split("/").map((c) => c.trim());
+  if (codes.length <= 3) return application;
+  return `${codes.slice(0, 3).join("/")} +${codes.length - 3}`;
+}
+
+/** One quiet line of fitment for cards: "F15/F16/F20 +22 · 2015–2020".
+    Empty while the application is still under review. */
+export function fitmentLine(p: Pick<Product, "application" | "years">) {
+  const application = p.application?.trim();
+  const known = application && !/sob análise/i.test(application);
+  return [known ? shortApplication(application) : "", p.years || ""]
+    .filter(Boolean)
+    .join(" · ");
+}
+
+/** Inside a brand: wheels first, then the other categories in menu order,
+    then by name, so the same catalog always reads the same way. */
+export function byCategoryThenName(a: Product, b: Product) {
+  const rank = (p: Product) => {
+    const i = CATS.indexOf(p.category);
+    return i < 0 ? CATS.length : i;
+  };
+  return (
+    rank(a) - rank(b) ||
+    a.name.localeCompare(b.name, "pt-BR", { numeric: true })
+  );
+}
