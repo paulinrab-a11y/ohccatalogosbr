@@ -160,7 +160,7 @@ export default function Produto() {
               className="aspect-[4/3] w-full bg-[#0e1116] object-contain p-[4%] md:aspect-square md:p-[6%]"
             />
           ) : (
-            <div className="grid aspect-[4/3] place-items-center font-display text-3xl text-[#3A4350] md:aspect-square">
+            <div className="grid aspect-[4/3] place-items-center font-display text-3xl text-[#8b95a3] md:aspect-square">
               Foto em breve
             </div>
           )}

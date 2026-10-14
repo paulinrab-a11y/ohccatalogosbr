@@ -63,9 +63,9 @@ export default function Footer() {
           </p>
         </div>
         <div>
-          <h4 className="mb-3 font-body text-[13px] font-bold text-ohc-text">
+          <h2 className="mb-3 font-body text-[13px] font-bold text-ohc-text">
             Navegar
-          </h4>
+          </h2>
           <ul className="grid gap-1.5">
             <li>
               <Link href="/catalogo">Catálogo completo</Link>
@@ -82,9 +82,9 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h4 className="mb-3 font-body text-[13px] font-bold text-ohc-text">
+          <h2 className="mb-3 font-body text-[13px] font-bold text-ohc-text">
             Atendimento
-          </h4>
+          </h2>
           <ul className="grid gap-1.5">
             <li>
               <a
