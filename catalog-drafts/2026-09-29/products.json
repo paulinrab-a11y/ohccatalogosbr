@@ -1,0 +1,213 @@
+{
+  "lote": "2026-09-29",
+  "issue": 6,
+  "products": [
+    {
+      "sku": "1.01.L01.00022",
+      "nome_produto": null,
+      "categoria": "Volantes",
+      "marca": null,
+      "material": null,
+      "recursos": null,
+      "compatibilidade": null,
+      "preco": null,
+      "status": "aguardando_nome",
+      "ativo": false,
+      "publicado": false,
+      "aprovado_administrador": false,
+      "plug_and_play_confirmado": false,
+      "resultado_externo": "analise_necessaria",
+      "imagem": {
+        "arquivo": "images/1.01.L01.00022.png",
+        "arquivo_recebido": "1.01.L01.00022.png",
+        "sha256": "8df87bbc7abbff43b83862df38ebdb7a566d3944a51e04848bb25d6047c1fcef",
+        "largura": 1254,
+        "altura": 1254
+      }
+    },
+    {
+      "sku": "1.01.L09.00001",
+      "nome_produto": null,
+      "categoria": "Volantes",
+      "marca": null,
+      "material": null,
+      "recursos": null,
+      "compatibilidade": null,
+      "preco": null,
+      "status": "aguardando_nome",
+      "ativo": false,
+      "publicado": false,
+      "aprovado_administrador": false,
+      "plug_and_play_confirmado": false,
+      "resultado_externo": "analise_necessaria",
+      "imagem": {
+        "arquivo": "images/1.01.L09.00001.png",
+        "arquivo_recebido": "1.01.L09.00001.png",
+        "sha256": "bf017bb22c97f99dedb0f394baab26a6145832a35efbecccc7ddd15bd1e43e9e",
+        "largura": 1254,
+        "altura": 1254
+      }
+    },
+    {
+      "sku": "1.01.L09.00004",
+      "nome_produto": null,
+      "categoria": "Volantes",
+      "marca": null,
+      "material": null,
+      "recursos": null,
+      "compatibilidade": null,
+      "preco": null,
+      "status": "aguardando_nome",
+      "ativo": false,
+      "publicado": false,
+      "aprovado_administrador": false,
+      "plug_and_play_confirmado": false,
+      "resultado_externo": "analise_necessaria",
+      "imagem": {
+        "arquivo": "images/1.01.L09.00004.png",
+        "arquivo_recebido": "1.01.L09.00004.png",
+        "sha256": "bdddb9320fe447754f65423a77eb2dbd7dc8de759d16052213d7711a7e26eec0",
+        "largura": 1254,
+        "altura": 1254
+      }
+    },
+    {
+      "sku": "1.01.M04.00003",
+      "nome_produto": null,
+      "categoria": "Volantes",
+      "marca": null,
+      "material": null,
+      "recursos": null,
+      "compatibilidade": null,
+      "preco": null,
+      "status": "aguardando_nome",
+      "ativo": false,
+      "publicado": false,
+      "aprovado_administrador": false,
+      "plug_and_play_confirmado": false,
+      "resultado_externo": "analise_necessaria",
+      "imagem": {
+        "arquivo": "images/1.01.M04.00003.png",
+        "arquivo_recebido": "1.01.M04.00003.png",
+        "sha256": "c85784b0f3758c68985d153acdd3dbef457f697969dced68b1bc9bd7fe3698ae",
+        "largura": 1254,
+        "altura": 1254
+      }
+    },
+    {
+      "sku": "1.02.L01.00004",
+      "nome_produto": null,
+      "categoria": "Volantes",
+      "marca": null,
+      "material": null,
+      "recursos": null,
+      "compatibilidade": null,
+      "preco": null,
+      "status": "aguardando_nome",
+      "ativo": false,
+      "publicado": false,
+      "aprovado_administrador": false,
+      "plug_and_play_confirmado": false,
+      "resultado_externo": "analise_necessaria",
+      "imagem": {
+        "arquivo": "images/1.02.L01.00004.png",
+        "arquivo_recebido": "1.02.L01.00004.png",
+        "sha256": "490d4d7203a9ab30521ec24abbab32d9a66c99b8f14e628848968eb632e3d6c2",
+        "largura": 1254,
+        "altura": 1254
+      }
+    },
+    {
+      "sku": "1.02.L01.00011",
+      "nome_produto": null,
+      "categoria": "Volantes",
+      "marca": null,
+      "material": null,
+      "recursos": null,
+      "compatibilidade": null,
+      "preco": null,
+      "status": "aguardando_nome",
+      "ativo": false,
+      "publicado": false,
+      "aprovado_administrador": false,
+      "plug_and_play_confirmado": false,
+      "resultado_externo": "analise_necessaria",
+      "imagem": {
+        "arquivo": "images/1.02.L01.00011.png",
+        "arquivo_recebido": "1.02.L01.00011.png",
+        "sha256": "c08608853ac4a66b6395e2d7ed6778ef6838c587c87adabf4af153dadba027e8",
+        "largura": 1254,
+        "altura": 1254
+      }
+    },
+    {
+      "sku": "1.12.F01.00009",
+      "nome_produto": null,
+      "categoria": "Volantes",
+      "marca": null,
+      "material": null,
+      "recursos": null,
+      "compatibilidade": null,
+      "preco": null,
+      "status": "aguardando_nome",
+      "ativo": false,
+      "publicado": false,
+      "aprovado_administrador": false,
+      "plug_and_play_confirmado": false,
+      "resultado_externo": "analise_necessaria",
+      "imagem": {
+        "arquivo": "images/1.12.F01.00009.png",
+        "arquivo_recebido": "1.12.F01.00009.png",
+        "sha256": "abce2dad964e67ddd556c8fc61977b2f9730be23b54631b7518a0e7ab7e53a50",
+        "largura": 1254,
+        "altura": 1254
+      }
+    },
+    {
+      "sku": "3.02.M05.00009",
+      "nome_produto": null,
+      "categoria": "Volantes",
+      "marca": null,
+      "material": null,
+      "recursos": null,
+      "compatibilidade": null,
+      "preco": null,
+      "status": "aguardando_nome",
+      "ativo": false,
+      "publicado": false,
+      "aprovado_administrador": false,
+      "plug_and_play_confirmado": false,
+      "resultado_externo": "analise_necessaria",
+      "imagem": {
+        "arquivo": "images/3.02.M05.00009.png",
+        "arquivo_recebido": "3.02.M05.00009.png",
+        "sha256": "d7ea0acede5e51f7051d5600bdb9451603cbfe6c42239f5607522e4aeb7b47be",
+        "largura": 1254,
+        "altura": 1254
+      }
+    },
+    {
+      "sku": "1.01.L09.00006",
+      "nome_produto": null,
+      "categoria": "Volantes",
+      "marca": null,
+      "material": null,
+      "recursos": null,
+      "compatibilidade": null,
+      "preco": null,
+      "status": "aguardando_nome",
+      "ativo": false,
+      "publicado": false,
+      "aprovado_administrador": false,
+      "plug_and_play_confirmado": false,
+      "resultado_externo": "analise_necessaria",
+      "imagem": {
+        "arquivo": "images/1.01.L09.00006.png",
+        "arquivo_recebido": "SKU 1.01.L09.00006.png",
+        "sha256": "af9f64783b52596803a4049347ede770afc71b7c6e7a088478d7bcf726a904e1",
+        "largura": 1254,
+        "altura": 1254
+      }
+    }
+  ]
+}
