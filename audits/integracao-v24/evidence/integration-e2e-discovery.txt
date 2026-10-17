@@ -1,0 +1,13 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+Listing tests:
+  [desktop] › site.spec.ts:9:1 › catalog, original product image, detail and compatibility selection
+  [desktop] › site.spec.ts:17:1 › synthetic photo submission creates protocol and WhatsApp link without sending a message
+  [desktop] › site.spec.ts:29:1 › mobile menu, responsive width and browser back navigation
+  [desktop] › site.spec.ts:33:1 › unknown product and unknown route fail safely
+  [desktop] › site.spec.ts:37:1 › direct admin navigation redirects unauthenticated visitor to login
+  [mobile] › site.spec.ts:9:1 › catalog, original product image, detail and compatibility selection
+  [mobile] › site.spec.ts:17:1 › synthetic photo submission creates protocol and WhatsApp link without sending a message
+  [mobile] › site.spec.ts:29:1 › mobile menu, responsive width and browser back navigation
+  [mobile] › site.spec.ts:33:1 › unknown product and unknown route fail safely
+  [mobile] › site.spec.ts:37:1 › direct admin navigation redirects unauthenticated visitor to login
+Total: 10 tests in 1 file

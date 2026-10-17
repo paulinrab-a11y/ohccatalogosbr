@@ -1,0 +1,10 @@
+{
+  "date": "2026-09-22",
+  "vercel": {"project":"ohc-motors-integrado", "configured_framework":"nextjs", "node":"24", "production_deployment":"dpl_3KPtL623U8cTfgbYpATkuG7NvypH", "state":"READY", "source_match_to_v24":false},
+  "supabase": {"public_tables":13,"rls_enabled_tables":13,"public_select_tables":2,"private_tables_without_direct_read":11,"public_schema_functions_inspected":19,"security_definer_functions_before_changes":0,"public_anon_authenticated_rpc_execute":false,"storage_policies":0,"private_request_bucket":true,"private_bucket_max_bytes":5242880,"private_bucket_types":["image/jpeg","image/png","image/webp"],"site_assets_bucket_public":true,"site_assets_bucket_types":["image/webp","image/svg+xml"],"approved_visible_rows_in_legacy_base":0},
+  "advisors": ["pg_net in public schema", "leaked-password protection disabled", "7 RLS tables without policies: direct deny is intended"],
+  "edge_function": {"name":"ohc-compatibility","version":25,"verify_jwt":true,"source_inspected":true,"new_source_deployed":false},
+  "browser": {"local":"ERR_BLOCKED_BY_CLIENT", "published":"automatic approval review could not complete because of usage limit", "visual_verified":false},
+  "production_mutations":0,
+  "notes":"Metadata/configuration inspection is not an end-to-end security test. No customer row contents were exported. Header evidence is stored separately."
+}

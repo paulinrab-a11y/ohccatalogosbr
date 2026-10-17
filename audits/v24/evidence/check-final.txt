@@ -1,0 +1,90 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 check
+> npm run typecheck && npm run lint && npm run format:check && npm run unused && npm test && npm run build && npm run security:scan
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 typecheck
+> tsc --noEmit
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 lint
+> biome lint src
+
+Checked 41 files in 8ms. No fixes applied.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 format:check
+> biome format src
+
+Checked 41 files in 8ms. No fixes applied.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 unused
+> knip
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 test
+> node --import tsx --test tests/*.test.ts
+
+✔ live grants/policies reproduced locally: anon + users A/B cannot CRUD private rows (3045.533585ms)
+✔ session predicate rejects wrong owner, expired and deleted sessions; execute restricted (1624.099965ms)
+✔ actual database limiter accepts 60 and rejects the 61st request across callers (1229.362755ms)
+✔ edge rejects anonymous direct admin calls and methods before any database operation (7.902068ms)
+✔ edge checks provider identity and current session, rejects forged metadata, invalid/expired/revoked tokens (15.206288ms)
+✔ edge bounds JSON bodies and rejects malformed JSON, arrays, wrong MIME (299.119179ms)
+✔ edge rejects spoofed uploads, bad size, too many files and oversized base64 before DB (39.853659ms)
+✔ edge returns shared limiter 429 and Retry-After without writing a request (1.698797ms)
+✔ edge ignores mass assignment and derives actor from validated backend identity (2.412362ms)
+✔ edge errors are redacted, private responses no-store; cleanup failure cannot duplicate accepted request (4.406916ms)
+✔ navigation rejects external, protocol-relative, control and unregistered destinations (1.180077ms)
+✔ compatibility keeps the actual catalog SKU and business message (0.57153ms)
+✔ compatibility rejects invalid types, years, unexpected privileges and oversized text (0.621356ms)
+✔ telemetry drops PII, tokens, queries, request bodies and original messages (0.402806ms)
+✔ 65 original products retain resolvable local original images (4.74181ms)
+✔ deployment headers protect content without swallowing backend or model paths (0.329126ms)
+✔ actual Sentry client captures error through privacy filter into a local fake transport (8.53419ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6216.424808
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 build
+> vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 1475 modules transformed.
+rendering chunks...
+[plugin vite:reporter] 
+(!) /workspace/scratch/80c05b4de250/audit-v24/ohc/node_modules/gsap/index.js is dynamically imported by /workspace/scratch/80c05b4de250/audit-v24/ohc/src/components/SteeringExperience/useScrollProgress.ts but also statically imported by /workspace/scratch/80c05b4de250/audit-v24/ohc/src/components/SplitText.tsx, dynamic import will not move module into another chunk.
+
+computing gzip size...
+dist/index.html                          1.11 kB │ gzip:   0.57 kB
+dist/assets/index-CzRMFhvb.css          33.31 kB │ gzip:   7.87 kB
+dist/assets/LightRays-2Qs3Gu8h.js        5.13 kB │ gzip:   2.18 kB
+dist/assets/lenis-D7cjh7zN.js           19.94 kB │ gzip:   5.78 kB
+dist/assets/ScrollTrigger-BUUH0zBK.js   44.02 kB │ gzip:  18.28 kB
+dist/assets/index-DyuN6hl9.js          133.45 kB │ gzip:  39.39 kB
+dist/assets/index-kdWBF6_b.js          421.74 kB │ gzip: 137.91 kB
+dist/assets/SteeringScene-DT-VCBOu.js  956.30 kB │ gzip: 263.48 kB
+✓ built in 6.42s
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ohc-motors@2.0.0 security:scan
+> node scripts/scan-secrets.mjs
+
+{
+  "scanned": 284,
+  "history_blobs": 156,
+  "findings": [],
+  "limits": "Pattern-based inspection, not proof of absence; binaries excluded; no secret values logged."
+}
