@@ -14,10 +14,13 @@ test('the car picker opens the filtered catalog and the catalog remembers the ca
   await expect(page).toHaveURL(/\/catalogo\?marca=BMW&q=M3$/);
   await expect(page.getByRole('button', { name: 'BMW 27' }).or(page.getByRole('button', { name: /^BMW/ }))).toHaveAttribute('aria-pressed', 'true');
 
-  // Next visit: the catalog offers the saved car when no filter is set.
+  // Next visit: the catalog's "Serve no meu carro?" form comes back filled in,
+  // asking only for the year.
   await page.goto('/catalogo');
-  await page.getByRole('button', { name: /Seu carro: BMW M3/ }).click();
-  await expect(page).toHaveURL(/marca=BMW/);
+  const fit = page.getByRole('form', { name: 'Serve no meu carro?' });
+  await expect(fit.getByLabel('Marca')).toHaveValue('BMW');
+  await expect(fit.getByLabel('Modelo')).toHaveValue('M3');
+  await expect(fit.getByLabel('Ano')).toHaveValue('');
   // And the home picker comes back filled in.
   await page.goto('/');
   await expect(page.getByLabel('Marca').last()).toHaveValue('BMW');

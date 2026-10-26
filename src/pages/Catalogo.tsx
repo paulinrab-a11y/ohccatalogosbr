@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Nav from "../components/Nav";
 import Footer, { FloatingWA } from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 import LiveryTitle from "../components/LiveryTitle";
 import { useRoute } from "../lib/router";
-import { carLabel, readCar, type MyCar } from "../lib/myCar";
+import { carComplete, carLabel, useMyCar } from "../lib/myCar";
+import { fitOf, fitSentence, useFit } from "../lib/fit";
+import CarFit from "../components/CarFit";
 import {
   CATS,
   byCategoryThenName,
@@ -56,10 +58,32 @@ export default function Catalogo() {
     const o = route.search.get("ordem");
     return o === "preco-asc" || o === "preco-desc" ? o : "";
   });
-  // The car saved on the home page; offered here when no filter is set.
-  const [car, setCar] = useState<MyCar | null>(null);
-  useEffect(() => setCar(readCar()), []);
-  const carActive = car && brand === car.brand && q === car.model;
+  // The visitor's car: once brand, model and year are known, every card says
+  // whether it fits, and the list can show only what fits.
+  const car = useMyCar();
+  const { fit, loading: fitLoading } = useFit(car);
+  const [onlyFit, setOnlyFit] = useState(false);
+  const carKey = carComplete(car) ? carLabel(car) : "";
+  const firstCar = useRef(true);
+  useEffect(() => {
+    // A car named here (not the one remembered from before) jumps to its brand.
+    if (firstCar.current) {
+      firstCar.current = false;
+      return;
+    }
+    if (carKey && car) {
+      setBrand(resolveBrand(car.brand, products) || car.brand);
+      setQ("");
+      setOnlyFit(true);
+    }
+  }, [carKey]);
+  const fits = (sku: string) => {
+    const status = fitOf(fit, sku).status;
+    return status === "serve" || status === "condicoes";
+  };
+  const fitCount = fit ? products.filter((p) => fits(p.sku)).length : 0;
+  // Nothing confirmed for the car: show the whole catalog, never an empty page.
+  const filterFit = onlyFit && fitCount > 0;
   // Filters live in the URL so reload, back and shared links keep them.
   // replaceState avoids a history entry (and a remount) per click or keystroke.
   useEffect(() => {
@@ -85,9 +109,10 @@ export default function Catalogo() {
         (p) =>
           (!cat || p.category === cat) &&
           (!brand || p.brand === brand) &&
-          matches(p, q),
+          matches(p, q) &&
+          (!filterFit || fits(p.sku)),
       ),
-    [products, cat, brand, q],
+    [products, cat, brand, q, filterFit, fit],
   );
   // Sorted by the price charged now; products without a price go last.
   const sorted = useMemo(() => {
@@ -116,21 +141,40 @@ export default function Catalogo() {
         titleClass="text-[clamp(48px,11vw,84px)]"
       />
       <header className="wrap">
-        {car && !carActive && (
-          <button
-            type="button"
-            onClick={() => {
-              setBrand(car.brand);
-              setQ(car.model);
-            }}
-            className="decal mt-3 flex min-h-12 w-full items-center justify-between gap-3 px-4 text-left text-sm sm:w-auto"
+        <section
+          aria-labelledby="meu-carro"
+          className="decal mt-3 grid gap-3 p-4 sm:p-5"
+        >
+          <h2
+            id="meu-carro"
+            className="font-display text-[26px] leading-none tracking-wide"
           >
-            <span>
-              Seu carro: <b>{carLabel(car)}</b>
-            </span>
-            <span className="font-bold text-[#afc8ff]">Mostrar</span>
-          </button>
-        )}
+            Serve no meu carro?
+          </h2>
+          <CarFit car={car} fit={fit} loading={fitLoading} />
+          {fit && (
+            <div className="flex flex-wrap items-center gap-3">
+              {fitCount > 0 && (
+                <button
+                  type="button"
+                  aria-pressed={onlyFit}
+                  onClick={() => setOnlyFit((v) => !v)}
+                  className="chip"
+                >
+                  Só o que serve no meu carro
+                  <small>{fitCount}</small>
+                </button>
+              )}
+              {fitCount === 0 && (
+                <p className="text-sm text-[#c9d0d8]">
+                  A base do site ainda não tem volante confirmado para esse
+                  carro. A equipe confirma pelo WhatsApp com fotos do volante
+                  atual.
+                </p>
+              )}
+            </div>
+          )}
+        </section>
       </header>
       <div className="wrap grid grid-cols-[minmax(0,1fr)] gap-6 py-6 md:grid-cols-[200px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)] md:gap-10 md:py-10">
         <aside className="facets min-w-0 md:sticky md:top-24 md:max-h-[calc(100svh-7rem)] md:self-start md:overflow-y-auto md:pr-1">
@@ -247,7 +291,12 @@ export default function Catalogo() {
           {sorted && (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {sorted.map((p) => (
-                <ProductCard key={p.sku} p={p} />
+                <ProductCard
+                  key={p.sku}
+                  p={p}
+                  fit={fit ? fitOf(fit, p.sku) : undefined}
+                  carLine={fitSentence(car, fit, p.sku)}
+                />
               ))}
             </div>
           )}
@@ -262,7 +311,12 @@ export default function Catalogo() {
                   </h2>
                   <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {groups[b].map((p) => (
-                      <ProductCard key={p.sku} p={p} />
+                      <ProductCard
+                        key={p.sku}
+                        p={p}
+                        fit={fit ? fitOf(fit, p.sku) : undefined}
+                        carLine={fitSentence(car, fit, p.sku)}
+                      />
                     ))}
                   </div>
                 </section>
