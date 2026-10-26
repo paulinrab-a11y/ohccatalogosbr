@@ -41,3 +41,13 @@ test('the photo field uses the site button and says when photos were chosen', as
  await page.getByLabel('Fotos técnicas').setInputFiles('e2e/fixtures/photo.png');
  await expect(page.locator('label[for="photos"]', { hasText: 'Trocar fotos' })).toBeVisible();
 });
+test('the compatibility page shows the team tips before the form', async ({ page }) => {
+ await page.goto('/compatibilidade');
+ const tips = page.getByRole('region', { name: 'Dicas da equipe' });
+ await expect(tips).toBeVisible();
+ await expect(tips.getByText(/3 ou 4 fios/)).toBeVisible();
+ await expect(tips.getByText(/módulo codificador/)).toBeVisible();
+ const tipsBox = (await tips.boundingBox())!;
+ const form = (await page.getByRole('heading', { name: 'Solicitar análise' }).boundingBox())!;
+ expect(tipsBox.y).toBeLessThan(form.y);
+});
