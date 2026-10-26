@@ -17,6 +17,27 @@ const STEPS = [
   ],
 ];
 
+// What the team keeps telling customers on WhatsApp (bot knowledge base,
+// approved by the owner on 22/10/2026). Facts only; never a promise of fit.
+const TIPS = [
+  [
+    "Mercedes-Benz",
+    "O volante original pode ter 3 ou 4 fios no conector. Mande uma foto do plug: os de 4 fios usam os nossos modelos CAN.",
+  ],
+  [
+    "Audi",
+    "A equipe confirma o modelo pela foto do volante original. Mande a frente e os comandos.",
+  ],
+  [
+    "Botões que o carro não tem",
+    "Botões de funções que o seu carro não tem de fábrica (start-stop, paddle shift) ficam só como estética. Fazê-los funcionar pode exigir módulo e atualização de software, sem garantia.",
+  ],
+  [
+    "Depois da instalação",
+    "Se algum botão não responder, às vezes é preciso um módulo codificador. Fale com a equipe pelo WhatsApp com o seu protocolo.",
+  ],
+];
+
 type PreparedImage = {
   name: string;
   content_type: string;
@@ -241,6 +262,20 @@ export default function Compatibilidade() {
             </li>
           ))}
         </ol>
+
+        <section aria-labelledby="dicas" className="mt-12 max-w-[760px]">
+          <h2 id="dicas" className="text-[34px]">
+            Dicas da equipe
+          </h2>
+          <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+            {TIPS.map(([t, d]) => (
+              <div key={t} className="decal p-4">
+                <dt className="font-body text-sm font-bold">{t}</dt>
+                <dd className="mt-1 text-sm text-[#c9d0d8]">{d}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
 
         <h2 className="mb-5 mt-14 text-[34px]">Solicitar análise</h2>
         <form className="grid max-w-[760px] gap-4" onSubmit={submit}>
