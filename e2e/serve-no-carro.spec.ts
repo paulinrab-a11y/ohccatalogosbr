@@ -42,7 +42,7 @@ test('the product page answers for the remembered car and the buy message carrie
  await expect(section.getByText('Serve com condições')).toBeVisible();
  await expect(section.getByText('Precisa de módulo.')).toBeVisible();
  const href = await page.getByRole('link', { name: 'Comprar pelo WhatsApp' }).first().getAttribute('href');
- expect(decodeURIComponent(href!)).toContain('Meu carro: BMW 320i 2015 (chassi F30); pelo site, serve com condições.');
+ expect(decodeURIComponent(href!)).toContain('Meu carro: BMW 320i 2015 (chassi F30); pelo site, serve com condições: Precisa de módulo.');
 });
 
 test('a car the base does not know keeps the whole catalog; a service failure shows no seals', async ({ page }) => {

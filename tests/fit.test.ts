@@ -51,6 +51,8 @@ test('the WhatsApp message carries the car and what the site said about it', () 
  assert.equal(line, 'Meu carro: BMW 320i 2015 (chassi F30); pelo site, serve no meu carro.');
  assert.equal(fitSentence(car, fit, 'outro'), 'Meu carro: BMW 320i 2015 (chassi F30); queria confirmar se serve.');
  assert.equal(fitSentence({ brand: 'BMW', model: '320i' }, fit, '1.02.B02.00062'), '');
+ const amarok = parseFit({ chassis: null, products: [{ sku: 'GTI', status: 'compativel_com_condicoes', conditions: 'Exige codificação feita por especialista.' }] });
+ assert.equal(fitSentence({ brand: 'Volkswagen', model: 'Amarok', year: 2022 }, amarok, 'GTI'), 'Meu carro: Volkswagen Amarok 2022; pelo site, serve com condições: Exige codificação feita por especialista.');
  const text = productMessage({ name: 'BMW M3 - Carbono', sku: '1.02.B02.00062' }, 1900, null, line).replace(/\s/g, ' ');
  assert.equal(text, 'Olá! Tenho interesse no BMW M3 - Carbono (código 1.02.B02.00062), que vi no site por R$ 1.900,00 no PIX. Meu carro: BMW 320i 2015 (chassi F30); pelo site, serve no meu carro. Pode me ajudar?');
 });

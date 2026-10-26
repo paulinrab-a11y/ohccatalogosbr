@@ -104,11 +104,16 @@ export function useFit(car: MyCar | null) {
 export function fitSentence(car: MyCar | null, fit: Fit | null, sku: string) {
   if (!carComplete(car)) return "";
   const chassis = fit?.chassis ? ` (chassi ${fit.chassis})` : "";
+  const item = fitOf(fit, sku);
+  // The condition rides along, so the team (and the WhatsApp robot) can name it.
+  const condition = item.conditions
+    ? `: ${item.conditions.replace(/\.$/, "")}`
+    : "";
   const which = {
     serve: "pelo site, serve no meu carro",
-    condicoes: "pelo site, serve com condições",
+    condicoes: `pelo site, serve com condições${condition}`,
     nao: "pelo site, não serve; queria ver outra opção",
     confirmar: "queria confirmar se serve",
-  }[fitOf(fit, sku).status];
+  }[item.status];
   return `Meu carro: ${carLabel(car)}${chassis}; ${which}.`;
 }
