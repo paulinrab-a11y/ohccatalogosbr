@@ -29,3 +29,10 @@ test('ad links may name category and brand in short lowercase form', async () =>
  assert.equal(resolveBrand('vw', list), 'Volkswagen');
  assert.equal(resolveBrand('inexistente', list), '');
 });
+
+test('the general WhatsApp greeting carries the car when there is one', async () => {
+ const { greeting } = await import('../src/lib/myCar.ts');
+ assert.equal(greeting(null), 'Olá! Vim pelo site da OHC Motors e quero mais informações.');
+ assert.equal(greeting({ brand: 'BMW', model: '320i', year: 2015 }), 'Olá! Vim pelo site da OHC Motors e quero mais informações. Meu carro: BMW 320i 2015.');
+ assert.equal(greeting({ brand: 'Audi', model: '' }, 'Olá!'), 'Olá! Meu carro: Audi.');
+});
