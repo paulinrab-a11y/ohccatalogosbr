@@ -9,13 +9,21 @@ import { getPrecoVigente } from "../lib/pricing";
 import { productMessage } from "../lib/attribution";
 import { productParams, track } from "../lib/pixel";
 import PriceBlock, { DiscountBadge } from "./PriceBlock";
+import { FitSeal } from "./CarFit";
+import type { FitItem } from "../lib/fit";
 
 export default function ProductCard({
   p,
   compact = false,
+  fit,
+  carLine = "",
 }: {
   p: Product;
   compact?: boolean;
+  /** "Serve no meu carro?" answer, when the visitor named the car. */
+  fit?: FitItem;
+  /** The car sentence the WhatsApp message carries. */
+  carLine?: string;
 }) {
   const price = getPrecoVigente(p).preco;
   const fitment = fitmentLine(p);
@@ -54,6 +62,7 @@ export default function ProductCard({
               {fitment}
             </p>
           )}
+          {fit && <FitSeal status={fit.status} className="mt-2 w-fit" />}
           <div className="mt-auto pt-3">
             <PriceBlock p={p} />
           </div>
@@ -62,7 +71,7 @@ export default function ProductCard({
       {!compact && (
         <a
           className="flex min-h-11 items-center gap-1.5 whitespace-nowrap border-t border-ohc-line px-3.5 text-[12px] font-bold sm:gap-2 sm:text-[13px] text-[#3fd97a] hover:text-[#6ff09d] sm:px-4"
-          href={waLink(productMessage(p, price))}
+          href={waLink(productMessage(p, price, undefined, carLine))}
           onClick={() => track("Contact", productParams(p.sku, price))}
           target="_blank"
           rel="noopener"

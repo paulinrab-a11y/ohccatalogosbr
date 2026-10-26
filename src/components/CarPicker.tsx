@@ -31,7 +31,12 @@ export default function CarPicker({
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!brand) return;
-    const car = { brand, model: model.trim() };
+    const prev = readCar();
+    // Same car as before: keep the year it was saved with.
+    const car =
+      prev?.year && prev.brand === brand && prev.model === model.trim()
+        ? { brand, model: model.trim(), year: prev.year }
+        : { brand, model: model.trim() };
     saveCar(car);
     if (reduced()) return go(carCatalogHref(car));
     setPainting(true);

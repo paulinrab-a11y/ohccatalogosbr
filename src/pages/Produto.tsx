@@ -16,6 +16,9 @@ import { getPrecoVigente } from "../lib/pricing";
 import { productMessage } from "../lib/attribution";
 import { productParams, track } from "../lib/pixel";
 import { applySeo, productDescription, productHead } from "../lib/seo";
+import { carComplete, useMyCar } from "../lib/myCar";
+import { fitOf, fitSentence, useFit } from "../lib/fit";
+import CarFit, { FitAnswer } from "../components/CarFit";
 // Singular label for the livery header ("Volante" / "BMW").
 const KIND: Record<string, string> = {
   Volantes: "Volante",
@@ -46,12 +49,20 @@ function WhatsAppIcon() {
 }
 
 /** The one action that matters on this page; the sticky copy reuses it. */
-function BuyLink({ p, className }: { p: Product; className: string }) {
+function BuyLink({
+  p,
+  className,
+  carLine = "",
+}: {
+  p: Product;
+  className: string;
+  carLine?: string;
+}) {
   const price = getPrecoVigente(p).preco;
   return (
     <a
       className={className}
-      href={waLink(productMessage(p, price))}
+      href={waLink(productMessage(p, price, undefined, carLine))}
       onClick={() => track("Contact", productParams(p.sku, price))}
       target="_blank"
       rel="noopener"
@@ -83,6 +94,8 @@ export default function Produto() {
   const [picked, setImg] = useState("");
   const img = picked || p?.image || "";
   const buy = useRef<HTMLDivElement>(null);
+  const car = useMyCar();
+  const { fit, loading: fitLoading } = useFit(car);
   const [sticky, setSticky] = useState(false);
   useEffect(() => {
     setImg("");
@@ -217,6 +230,7 @@ export default function Produto() {
           <div ref={buy} className="mt-5">
             <BuyLink
               p={p}
+              carLine={fitSentence(car, fit, p.sku)}
               className="btn btn-blue min-h-14 w-full text-base sm:w-auto sm:px-8"
             />
           </div>
@@ -225,6 +239,18 @@ export default function Produto() {
             <h2 id="serve" className="text-[32px] leading-none">
               Serve no seu carro?
             </h2>
+            <div className="mt-3">
+              <CarFit
+                car={car}
+                fit={fit}
+                loading={fitLoading}
+                defaultBrand={p.brand}
+                narrow
+              />
+              {carComplete(car) && fit && (
+                <FitAnswer item={fitOf(fit, p.sku)} />
+              )}
+            </div>
             {p.compat ? (
               <ul className="mt-3 grid gap-1.5 text-[15px] font-semibold sm:grid-cols-2">
                 {p.compat.map((c) => (
@@ -316,7 +342,11 @@ export default function Produto() {
         className={`fixed inset-x-0 bottom-0 z-30 border-t border-ohc-line bg-ohc-bg px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] transition-transform duration-200 md:hidden ${sticky ? "translate-y-0" : "pointer-events-none translate-y-full"}`}
         {...(!sticky ? { inert: "" } : {})}
       >
-        <BuyLink p={p} className="btn btn-blue min-h-12 w-full text-base" />
+        <BuyLink
+          p={p}
+          carLine={fitSentence(car, fit, p.sku)}
+          className="btn btn-blue min-h-12 w-full text-base"
+        />
       </div>
     </>
   );

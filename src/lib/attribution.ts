@@ -60,12 +60,16 @@ export function productMessage(
   product: { name: string; sku: string },
   price: number | null,
   ref: Ref | null = storedRef(),
+  car = "",
 ) {
   const seen =
     price != null
-      ? `que vi no site por ${formatBRL(price)} no PIX. Pode me ajudar?`
-      : "que vi no site. Pode me passar o preço?";
-  return `Olá! Tenho interesse no ${product.name} (código ${product.sku}), ${seen}${refTag(ref)}`;
+      ? `que vi no site por ${formatBRL(price)} no PIX.`
+      : "que vi no site.";
+  // The car and the fit answer ride along, so the team can go straight to the
+  // payment link instead of asking for them again.
+  const ask = price != null ? "Pode me ajudar?" : "Pode me passar o preço?";
+  return `Olá! Tenho interesse no ${product.name} (código ${product.sku}), ${seen}${car ? ` ${car}` : ""} ${ask}${refTag(ref)}`;
 }
 
 /** WhatsApp link with a free text plus the campaign reference, if any. */
