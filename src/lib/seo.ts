@@ -1,4 +1,5 @@
 import {
+  shortApplication,
   PRODUCTS,
   resolveBrand,
   resolveCategory,
@@ -75,8 +76,10 @@ function productLead(product: Product) {
   const finish = product.features.length
     ? ` com ${product.features.join(", ")}`
     : "";
+  // Long chassis lists read short ("F15/F16/F20 +22"); the full list is on
+  // the page, in the fitment plate.
   const application = product.application
-    ? ` para aplicação ${product.application}`
+    ? ` para aplicação ${shortApplication(product.application)}`
     : "";
   return clean(`${product.name}: ${type}${finish}${application}.`);
 }

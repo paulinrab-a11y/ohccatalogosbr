@@ -30,7 +30,10 @@ export default function FitmentPlate({
           }
         >
           <dt>{label}</dt>
-          <dd className={value ? "" : "pending"}>{value || "a confirmar"}</dd>
+          <dd className={value ? "" : "pending"}>
+            {/* Long chassis lists break after a slash, never inside a code. */}
+            {value ? value.replace(/\//g, "/\u200b") : "a confirmar"}
+          </dd>
         </div>
       ))}
     </dl>
