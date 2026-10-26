@@ -30,6 +30,10 @@
       "destination": "/"
     },
     {
+      "source": "/sobre",
+      "destination": "/"
+    },
+    {
       "source": "/admin",
       "destination": "/"
     },

@@ -9,11 +9,11 @@ import { track } from "../lib/pixel";
 import { applySeo, compatibilityHead } from "../lib/seo";
 
 const STEPS = [
-  ["Informe o carro", "Marca, modelo, ano e, se souber, geração/chassi."],
+  ["Informe o carro", "Marca, modelo e ano. Geração ou chassi, se souber."],
   ["Envie as fotos", "Frente, traseira/encaixe e comandos do volante atual."],
   [
     "Receba o protocolo",
-    "A consulta entra na fila OHC antes de abrir o WhatsApp.",
+    "Com o número, a equipe acha a sua consulta no WhatsApp.",
   ],
 ];
 
@@ -241,9 +241,9 @@ export default function Compatibilidade() {
       />
       <div className="wrap pb-12 md:pb-16">
         <p className="mt-4 max-w-[65ch] text-[#c9d0d8]">
-          A análise agora é registrada no sistema OHC e recebe um protocolo.
-          Depois do envio, você continua o atendimento no WhatsApp com esse
-          código.
+          Uma pessoa da equipe confere se o volante serve no seu carro antes de
+          qualquer pagamento. Você recebe um número de protocolo na hora e
+          continua o atendimento no WhatsApp com ele.
         </p>
         {/* The order matters here, so the steps keep their numbers. */}
         <ol className="mt-10 grid border-t border-ohc-line md:grid-cols-3">
