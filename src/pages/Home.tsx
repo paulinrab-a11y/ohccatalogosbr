@@ -3,6 +3,7 @@ import Nav from "../components/Nav";
 import ProductCard from "../components/ProductCard";
 import CarPicker from "../components/CarPicker";
 import PurchaseSteps from "../components/PurchaseSteps";
+import Gallery from "../components/Gallery";
 import FAQ from "../components/FAQ";
 import Footer, { FinalCTA, FloatingWA } from "../components/Footer";
 import SteeringExperience from "../components/SteeringExperience";
@@ -267,6 +268,9 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* Galeria: produtos instalados, movida pelo scroll */}
+        <Gallery />
 
         {/* Busque pelo seu carro */}
         <section className="border-y border-ohc-line bg-ohc-bg2">
