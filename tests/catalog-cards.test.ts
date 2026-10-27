@@ -14,3 +14,10 @@ test('inside a brand, wheels come first and names follow natural order', () => {
  const list = [p('Paddle Shift Audi R8', 'Acessórios'), p('Audi R8 - Couro', 'Volantes'), p('Grade X', 'Grades'), p('Audi B9 - Couro', 'Volantes'), p('Sem categoria', 'Outros')];
  assert.deepEqual(list.sort(byCategoryThenName).map((x) => x.name), ['Audi B9 - Couro', 'Audi R8 - Couro', 'Grade X', 'Paddle Shift Audi R8', 'Sem categoria']);
 });
+
+test('the product page keeps car names and drops bare chassis lists and supplier notes', async () => {
+ const { compatLines } = await import('../src/lib/products.ts');
+ assert.deepEqual(compatLines({ compat: ['F15/F16/F20/F30. Ano nao informado pelo fabricante: F34/F39'] }), []);
+ assert.deepEqual(compatLines({ compat: ['BMW Série 3', 'Volkswagen Golf MK7 (2013 a 2019)', 'G20/G21'] }), ['BMW Série 3', 'Volkswagen Golf MK7 (2013 a 2019)']);
+ assert.deepEqual(compatLines({ compat: null }), []);
+});

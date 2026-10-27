@@ -293,7 +293,7 @@ export function embeddedProduct(slug: string): Product | null {
 }
 
 /** Long chassis lists ("F15/F16/F20/…") read as the first three plus a count. */
-function shortApplication(application: string) {
+export function shortApplication(application: string) {
   const codes = application.split("/").map((c) => c.trim());
   if (codes.length <= 3) return application;
   return `${codes.slice(0, 3).join("/")} +${codes.length - 3}`;
@@ -320,4 +320,20 @@ export function byCategoryThenName(a: Product, b: Product) {
     rank(a) - rank(b) ||
     a.name.localeCompare(b.name, "pt-BR", { numeric: true })
   );
+}
+
+/** The "serve em" lines worth showing on the product page: car names and
+    generations ("BMW Série 3", "Golf MK7 (2013 a 2019)"). Bare chassis lists
+    already appear in the fitment plate, and supplier notes such as "Ano nao
+    informado pelo fabricante" are internal, so both are left out. */
+export function compatLines(p: Pick<Product, "compat">) {
+  return (p.compat || [])
+    .map((line) =>
+      line.replace(/\.?\s*ano n[aã]o informado pelo fabricante.*$/i, "").trim(),
+    )
+    .filter(
+      (line) =>
+        line &&
+        !/^[a-z0-9]{2,5}(\s*\/\s*[a-z0-9]{2,5})+(\s*\+\d+)?$/i.test(line),
+    );
 }

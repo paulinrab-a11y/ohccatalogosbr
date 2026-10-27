@@ -6,6 +6,7 @@ import FitmentPlate from "../components/FitmentPlate";
 import PriceBlock, { DiscountBadge } from "../components/PriceBlock";
 import { Link, useRoute } from "../lib/router";
 import {
+  compatLines,
   embeddedProduct,
   useCatalog,
   small,
@@ -19,6 +20,7 @@ import { applySeo, productDescription, productHead } from "../lib/seo";
 import { carComplete, useMyCar } from "../lib/myCar";
 import { fitOf, fitSentence, useFit } from "../lib/fit";
 import CarFit, { FitAnswer } from "../components/CarFit";
+import PurchaseSteps from "../components/PurchaseSteps";
 // Singular label for the livery header ("Volante" / "BMW").
 const KIND: Record<string, string> = {
   Volantes: "Volante",
@@ -72,12 +74,6 @@ function BuyLink({
     </a>
   );
 }
-
-const TRUST = [
-  "Fabricação própria OHC Motors",
-  "Garantia de 90 dias contra defeito",
-  "Envio para todo o Brasil",
-];
 
 export default function Produto() {
   const { products, loading } = useCatalog();
@@ -251,9 +247,9 @@ export default function Produto() {
                 <FitAnswer item={fitOf(fit, p.sku)} />
               )}
             </div>
-            {p.compat ? (
+            {compatLines(p).length ? (
               <ul className="mt-3 grid gap-1.5 text-[15px] font-semibold sm:grid-cols-2">
-                {p.compat.map((c) => (
+                {compatLines(p).map((c) => (
                   <li
                     key={c}
                     className="before:mr-2.5 before:inline-block before:h-1.5 before:w-3 before:bg-ohc-blue before:align-middle"
@@ -263,9 +259,12 @@ export default function Produto() {
                 ))}
               </ul>
             ) : (
-              <p className="mt-3 text-[15px] text-[#c9d0d8]">
-                Depende da geração e dos comandos do seu carro.
-              </p>
+              // Only while the site has no answer for the visitor's car.
+              !(carComplete(car) && fit) && (
+                <p className="mt-3 text-[15px] text-[#c9d0d8]">
+                  Depende da geração e dos comandos do seu carro.
+                </p>
+              )
             )}
             <FitmentPlate
               p={p}
@@ -278,18 +277,7 @@ export default function Produto() {
               Confirmar a compatibilidade com a equipe
             </Link>
           </section>
-
-          <ul className="mt-6 grid gap-2 text-[15px] font-semibold">
-            {TRUST.map((t) => (
-              <li key={t} className="flex items-center gap-3">
-                <span
-                  aria-hidden="true"
-                  className="livery livery-rule w-6 shrink-0 rounded-sm"
-                />
-                {t}
-              </li>
-            ))}
-          </ul>
+          <PurchaseSteps className="decal mt-6 p-4 sm:p-5" />
 
           <dl className="mt-8 grid grid-cols-[110px_minmax(0,1fr)] sm:grid-cols-[130px_minmax(0,1fr)] [&>dd]:[overflow-wrap:anywhere] border-t border-ohc-line text-[14px] [&>dt]:py-3.5 [&>dd]:py-3.5 [&>dt]:border-b [&>dd]:border-b [&>dt]:border-ohc-line [&>dd]:border-ohc-line [&>dt]:text-[13px] [&>dt]:font-semibold [&>dt]:text-ohc-steel">
             <dt>Acabamento</dt>
@@ -300,7 +288,8 @@ export default function Produto() {
               <>
                 <dt>Entrega</dt>
                 <dd>
-                  O volante vai completo, com airbag, pronto para instalar.
+                  O volante vai completo, com os comandos e o acabamento do
+                  modelo, pronto para instalar.
                 </dd>
               </>
             )}
