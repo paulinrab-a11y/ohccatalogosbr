@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { Link, useRoute } from "../lib/router";
 import { usePromotions } from "../lib/products";
 import { waWithRef } from "../lib/attribution";
+import { greeting, useMyCar } from "../lib/myCar";
 import { track } from "../lib/pixel";
 import { useCustomerAuth } from "../lib/customerAuth";
 const LINKS: [string, string][] = [
@@ -16,6 +17,7 @@ export default function Nav({
 }: {
   transparent?: boolean;
 }) {
+  const car = useMyCar();
   const customer = useCustomerAuth();
   const accountLabel = customer.user ? "Minha conta" : "Entrar / Criar conta";
   const accountHref = customer.user ? "/minha-conta" : "/conta";
@@ -135,9 +137,7 @@ export default function Nav({
           </Link>
           <a
             className="ub-wa hidden shrink-0 xl:inline-flex"
-            href={waWithRef(
-              "Olá! Vim pelo site da OHC Motors e quero mais informações.",
-            )}
+            href={waWithRef(greeting(car))}
             onClick={() => track("Contact")}
             target="_blank"
             rel="noopener"
@@ -216,9 +216,7 @@ export default function Nav({
         </nav>
         <a
           className="ub-wa mt-8 shrink-0"
-          href={waWithRef(
-            "Olá! Vim pelo site da OHC Motors e quero mais informações.",
-          )}
+          href={waWithRef(greeting(car))}
           onClick={() => track("Contact")}
           target="_blank"
           rel="noopener"

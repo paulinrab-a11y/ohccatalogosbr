@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { Link } from "../lib/router";
 import LiveryTitle from "./LiveryTitle";
 import { waWithRef } from "../lib/attribution";
+import { greeting, useMyCar } from "../lib/myCar";
 import { track } from "../lib/pixel";
 export function FinalCTA() {
+  const car = useMyCar();
   return (
     <section className="py-12 md:py-20">
       {/* The same stripe that opens the page closes it. */}
@@ -24,7 +26,10 @@ export function FinalCTA() {
             className="ub-wa px-7 py-4 text-base"
             onClick={() => track("Contact")}
             href={waWithRef(
-              "Olá! Quero confirmar a compatibilidade de um produto OHC Motors.",
+              greeting(
+                car,
+                "Olá! Quero confirmar a compatibilidade de um produto OHC Motors.",
+              ),
             )}
             target="_blank"
             rel="noopener"
@@ -124,6 +129,7 @@ export default function Footer() {
 /** On the home page the button waits until the visitor scrolls past the
     hero, so it never covers the car picker in the first screen. */
 export function FloatingWA({ afterHero = false }: { afterHero?: boolean }) {
+  const car = useMyCar();
   const [shown, setShown] = useState(!afterHero);
   useEffect(() => {
     if (!afterHero) return;
@@ -138,9 +144,7 @@ export function FloatingWA({ afterHero = false }: { afterHero?: boolean }) {
   return (
     <a
       onClick={() => track("Contact")}
-      href={waWithRef(
-        "Olá! Vim pelo site da OHC Motors e quero mais informações.",
-      )}
+      href={waWithRef(greeting(car))}
       target="_blank"
       rel="noopener"
       aria-label="Falar no WhatsApp"

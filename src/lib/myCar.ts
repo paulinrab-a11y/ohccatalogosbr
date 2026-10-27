@@ -73,3 +73,12 @@ export function carCatalogHref(car: MyCar) {
 
 export const carLabel = (car: MyCar) =>
   [car.brand, car.model, car.year].filter(Boolean).join(" ");
+
+/** The general WhatsApp greeting, with the car when the visitor named one, so
+    the team does not have to ask for it. */
+export function greeting(
+  car: MyCar | null,
+  base = "Olá! Vim pelo site da OHC Motors e quero mais informações.",
+) {
+  return car?.brand ? `${base} Meu carro: ${carLabel(car)}.` : base;
+}
