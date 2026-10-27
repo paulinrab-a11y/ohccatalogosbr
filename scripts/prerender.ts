@@ -16,6 +16,7 @@ import { dbToProduct, PRODUCTS, small, type Product } from "../src/lib/products"
 import {
   catalogHead,
   compatibilityHead,
+  aboutHead,
   homeHead,
   injectHead,
   productHead,
@@ -68,6 +69,7 @@ await defaultShareImage(DIST);
 write("index.html", injectHead(template, { ...homeHead, canonical: false }));
 write("catalogo.html", injectHead(template, catalogHead(new URLSearchParams(), list)));
 write("compatibilidade.html", injectHead(template, compatibilityHead));
+write("sobre.html", injectHead(template, aboutHead));
 let count = 0;
 for (const product of list) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(product.slug)) continue;

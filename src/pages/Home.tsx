@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import ProductCard from "../components/ProductCard";
 import CarPicker from "../components/CarPicker";
+import PurchaseSteps from "../components/PurchaseSteps";
 import FAQ from "../components/FAQ";
 import Footer, { FinalCTA, FloatingWA } from "../components/Footer";
 import SteeringExperience from "../components/SteeringExperience";
@@ -78,7 +79,14 @@ export default function Home() {
         getPrecoVigente(p).preco != null &&
         !curated.includes(p),
     ),
-  ].slice(0, 8);
+  ]
+    // Priced items lead: a card that says "Consulte" is a weaker first look.
+    .sort(
+      (a, b) =>
+        Number(getPrecoVigente(b).preco != null) -
+        Number(getPrecoVigente(a).preco != null),
+    )
+    .slice(0, 8);
   return (
     <>
       <div className="relative">
@@ -221,6 +229,27 @@ export default function Home() {
           </dl>
         </section>
 
+        {/* Como comprar: o site começa o pedido, o WhatsApp fecha */}
+        <section
+          aria-labelledby="como-comprar-home"
+          className="wrap grid gap-8 pb-20 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-start md:gap-12 md:pb-28"
+        >
+          <div>
+            <h2
+              id="como-comprar-home"
+              className="text-[clamp(36px,8vw,64px)] md:text-[clamp(40px,4.6vw,72px)]"
+            >
+              Como comprar
+            </h2>
+            <p className="mt-3 max-w-[44ch] text-[#c9d0d8]">
+              Você escolhe o volante aqui no site e fecha com uma pessoa da
+              equipe no WhatsApp. Nada é cobrado antes de a equipe conferir a
+              aplicação no seu carro.
+            </p>
+          </div>
+          <PurchaseSteps heading={false} className="decal p-4 sm:p-6" />
+        </section>
+
         {/* Catálogo + números */}
         <section id="catalogo" className="wrap py-20 md:py-32">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -244,11 +273,12 @@ export default function Home() {
           <div className="wrap grid gap-8 py-16 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-center md:gap-12 md:py-24">
             <div>
               <h2 className="text-[clamp(36px,8vw,64px)] md:text-[clamp(40px,4.6vw,72px)]">
-                Busque pelo modelo ou chassi
+                Serve no seu carro?
               </h2>
               <p className="mt-3 max-w-[48ch] text-[#c9d0d8]">
-                Escreva o modelo (M3, Mustang, Classe C) ou o código do chassi
-                (F30, W205). O site guarda o seu carro para a próxima visita.
+                Informe marca, modelo e ano. O catálogo marca cada volante que
+                serve, e a mensagem para o WhatsApp já vai com o seu carro. O
+                site guarda o carro para a próxima visita.
               </p>
             </div>
             <CarPicker />

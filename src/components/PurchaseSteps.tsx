@@ -26,18 +26,27 @@ const GUARANTEES = [
 
 export default function PurchaseSteps({
   className = "",
+  heading = true,
 }: {
   className?: string;
+  /** Off where the page already titles the block. */
+  heading?: boolean;
 }) {
   return (
-    <section aria-labelledby="como-comprar" className={className}>
-      <h2
-        id="como-comprar"
-        className="font-body text-sm font-bold text-ohc-text"
-      >
-        Como funciona a compra
-      </h2>
-      <ol className="mt-3 grid gap-3">
+    <section
+      aria-labelledby={heading ? "como-comprar" : undefined}
+      aria-label={heading ? undefined : "Como funciona a compra"}
+      className={className}
+    >
+      {heading && (
+        <h2
+          id="como-comprar"
+          className="font-body text-sm font-bold text-ohc-text"
+        >
+          Como funciona a compra
+        </h2>
+      )}
+      <ol className={`${heading ? "mt-3" : ""} grid gap-3`}>
         {PURCHASE_STEPS.map(([title, text], i) => (
           <li key={title} className="grid grid-cols-[28px_minmax(0,1fr)] gap-3">
             <span

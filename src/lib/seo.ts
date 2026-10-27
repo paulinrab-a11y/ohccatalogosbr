@@ -175,6 +175,20 @@ const organizationSchema = {
   logo: `${SITE_ORIGIN}/ohc-logo.webp`,
   areaServed: "BR",
   sameAs: ["https://www.instagram.com/ohcmotorsbr/"],
+  // Stock and dispatch only; there is no shop to visit.
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "São Paulo",
+    addressRegion: "SP",
+    addressCountry: "BR",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+55-11-95579-8211",
+    contactType: "sales",
+    areaServed: "BR",
+    availableLanguage: "Portuguese",
+  },
 };
 
 const websiteSchema = {
@@ -205,6 +219,17 @@ export const compatibilityHead: PageHead = {
     "Descubra se um volante OHC Motors é compatível com seu carro. Informe marca, modelo, ano e versão e envie fotos para uma análise segura.",
   path: "/compatibilidade",
   schema: websiteSchema,
+};
+
+export const aboutHead: PageHead = {
+  title: "Quem somos | OHC Motors",
+  description:
+    "OHC Motors: volantes esportivos de fabricação própria, estoque no Brás, em São Paulo, atendimento pelo WhatsApp e envio para todo o Brasil.",
+  path: "/sobre",
+  schema: {
+    "@context": "https://schema.org",
+    "@graph": [organizationSchema, websiteSchema],
+  },
 };
 
 // Promotions come and go, so the page is not indexed.

@@ -5,6 +5,7 @@ import Catalogo from "./pages/Catalogo";
 import Produto from "./pages/Produto";
 import Compatibilidade from "./pages/Compatibilidade";
 import Promocoes from "./pages/Promocoes";
+import Sobre from "./pages/Sobre";
 import CookieNotice from "./components/CookieNotice";
 import { track } from "./lib/pixel";
 import { reduced } from "./lib/motion";
@@ -69,6 +70,7 @@ function Pages() {
     return <Produto key={route.search.toString()} />;
   if (route.path === "/compatibilidade") return <Compatibilidade />;
   if (route.path === "/promocoes") return <Promocoes />;
+  if (route.path === "/sobre") return <Sobre />;
   if (route.path === "/") return <Home />;
   return (
     <main className="wrap py-16">

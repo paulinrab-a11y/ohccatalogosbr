@@ -79,6 +79,9 @@ export default function Footer() {
             <li>
               <Link href="/compatibilidade">Confirmar compatibilidade</Link>
             </li>
+            <li>
+              <Link href="/sobre">Quem somos</Link>
+            </li>
           </ul>
         </div>
         <div>

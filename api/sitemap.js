@@ -63,6 +63,7 @@ export default async function handler(req, res) {
         changefreq: "weekly",
         priority: "0.8",
       },
+      { loc: `${ORIGIN}/sobre`, changefreq: "monthly", priority: "0.6" },
       ...catalogUrls(products),
       // The site only opens products that have a SKU (src/lib/products.ts).
       ...products

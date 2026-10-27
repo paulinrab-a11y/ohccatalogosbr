@@ -23,7 +23,23 @@ const ITEMS: [string, string][] = [
   ],
   [
     "Como sei se o volante serve no meu carro?",
-    "Você informa marca, modelo, ano e versão e manda três fotos do volante atual. A equipe confere e diz qual SKU serve antes de você pagar.",
+    "No catálogo, informe marca, modelo e ano: o site marca os volantes que servem. Antes de você pagar, a equipe confirma pelo WhatsApp, com três fotos do volante atual.",
+  ],
+  [
+    "O pagamento é seguro?",
+    "Você paga pelo link da InfinitePay que a equipe envia no WhatsApp, só depois de conferir a aplicação no seu carro. O PIX e o cartão são processados pela própria InfinitePay.",
+  ],
+  [
+    "Quanto custa o frete e qual é o prazo?",
+    "O frete e o prazo são calculados no atendimento, para o seu CEP. Os pedidos saem de São Paulo, SP, para todo o Brasil.",
+  ],
+  [
+    "Os botões e o paddle shift vão funcionar?",
+    "Funcionam os comandos que o seu carro já tem de fábrica. Botões de funções que o carro não tem ficam só como estética, e às vezes é preciso um módulo codificador. A equipe avisa antes da compra.",
+  ],
+  [
+    "E se o volante não servir?",
+    "A aplicação é conferida antes do pagamento. Depois da compra, você tem 7 dias para arrependimento, conforme o CDC, e 90 dias de garantia contra defeito de fabricação.",
   ],
 ];
 export default function FAQ() {

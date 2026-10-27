@@ -20,23 +20,28 @@ export default function CarPicker({
   const id = useId();
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
+  const [year, setYear] = useState("");
   const [painting, setPainting] = useState(false);
   useEffect(() => {
     const saved = readCar();
     if (saved) {
       setBrand(saved.brand);
       setModel(saved.model);
+      if (saved.year) setYear(String(saved.year));
     }
   }, []);
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!brand) return;
     const prev = readCar();
-    // Same car as before: keep the year it was saved with.
+    const y = Number(year);
+    // A year typed here wins; otherwise the same car keeps the year it had.
     const car =
-      prev?.year && prev.brand === brand && prev.model === model.trim()
-        ? { brand, model: model.trim(), year: prev.year }
-        : { brand, model: model.trim() };
+      year.length === 4 && y >= 1950
+        ? { brand, model: model.trim(), year: y }
+        : prev?.year && prev.brand === brand && prev.model === model.trim()
+          ? { brand, model: model.trim(), year: prev.year }
+          : { brand, model: model.trim() };
     saveCar(car);
     if (reduced()) return go(carCatalogHref(car));
     setPainting(true);
@@ -54,7 +59,7 @@ export default function CarPicker({
         </p>
       )}
       <div
-        className={`${compact ? "" : "mt-3"} grid gap-3 ${compact ? "grid-cols-[minmax(0,1fr)_auto] items-end" : "sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end"}`}
+        className={`${compact ? "" : "mt-3"} grid gap-3 ${compact ? "grid-cols-[minmax(0,1fr)_auto] items-end" : "sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_6.5rem_auto] sm:items-end"}`}
       >
         <div className="ub-field">
           <label htmlFor={`${id}-marca`}>
@@ -85,7 +90,22 @@ export default function CarPicker({
               autoComplete="off"
               spellCheck={false}
               onChange={(e) => setModel(e.target.value)}
-              placeholder="Ex.: M3, F30, W205…"
+              placeholder="Ex.: 320i, C180, F30"
+            />
+          </div>
+        )}
+        {!compact && (
+          <div className="ub-field">
+            <label htmlFor={`${id}-ano`}>Ano</label>
+            <input
+              id={`${id}-ano`}
+              name="ano"
+              value={year}
+              inputMode="numeric"
+              maxLength={4}
+              autoComplete="off"
+              onChange={(e) => setYear(e.target.value.replace(/\D/g, ""))}
+              placeholder="2015"
             />
           </div>
         )}
@@ -100,7 +120,8 @@ export default function CarPicker({
       <p
         className={`mt-3 text-[13px] text-ohc-steel ${compact ? "hidden sm:block" : ""}`}
       >
-        A equipe confirma a aplicação no seu carro antes da compra.
+        Com o ano, o catálogo marca o que serve no seu carro. A equipe confirma
+        antes da compra.
       </p>
       {painting && (
         <span
